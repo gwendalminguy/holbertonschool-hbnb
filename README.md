@@ -2,19 +2,19 @@
 
 
 ## **Part1: Technical Documentation**  
-### **Context and Objective**  
+### **Context and Objective**
 Creating a comprehensive technical documentation.  
 That will help in understanding the architecture of HBnB Evolution.
 
-### **Problem description**  
+### **Problem description**
 Designing a simplified version of an AirBnB-like application, named HBnB Evolution.  
-Our primery operations are :  
+Our primery operations are :
 - User Management  
 - Place Management  
 - Review Management  
 - Amenity Management  
 
-### **Business rules and requirements**  
+### **Business rules and requirements**
 Creating the objects, uniquely indentified by a ID.  
 The creation and update datetime should be registered for all entities.
 - User entity  
@@ -22,13 +22,13 @@ The creation and update datetime should be registered for all entities.
 - Review entity  
 - Amenity entity  
 
-### **Architecture and layers**  
+### **Architecture and layers**
 The application follows a layered architecture divided into:  
 - Presentation layer  
 - Business Logic Layer  
 - Persistence Layer  
 
-### **Persistance**  
+### **Persistance**
 All data will be persisted in a database. See part 3 of the project.  
 
 ## **Tasks**
@@ -37,9 +37,9 @@ All data will be persisted in a database. See part 3 of the project.
 2. Sequence Diagrams for API Calls  
 3. Documentation Compilation  
 
-## **Tools to help**  
-
+## **Tools to help**
 - UML Basics
+[UML Basics](https://github.com/Mornac/holbertonschool-hbnb/blob/main/media/png/OOP%20-%20Introduction%20to%20UML%20Public.pdf)
 - Package Diagrams  
 [UML Package Diagram Overview](https://www.uml-diagrams.org/package-diagrams.html)  
 [UML Package Diagram Guide](https://www.visual-paradigm.com/guide/uml-unified-modeling-language/what-is-package-diagram/)  
