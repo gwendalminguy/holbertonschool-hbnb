@@ -1,8 +1,10 @@
-# **HBnB - UML - Holbertonschool Toulouse**  
-
 <p align=center>
     <img src="media/png/logo.png" width="250">
 </p>
+
+<h1 align="center">HBnB Evolution  
+
+Holbertonschool Toulouse</h1> 
 
 ## **Part1: Technical Documentation**  
 ### **Context and Objective**
