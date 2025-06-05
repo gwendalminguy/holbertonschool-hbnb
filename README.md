@@ -43,17 +43,17 @@ This project is done in team :
 @Ingrid Mornac
 
 ### **Tools to help**
-- UML Basics
+- UML Basics  
 [UML Basics](https://github.com/Mornac/holbertonschool-hbnb/blob/main/media/png/OOP%20-%20Introduction%20to%20UML%20Public.pdf)
 - Package Diagrams  
 [UML Package Diagram Overview](https://www.uml-diagrams.org/package-diagrams.html)  
 [UML Package Diagram Guide](https://www.visual-paradigm.com/guide/uml-unified-modeling-language/what-is-package-diagram/)  
-- Class Diagrams
+- Class Diagrams  
 [UML Class Diagram Tutorial](https://creately.com/blog/software-teams/class-diagram-tutorial/)  
 [How to Draw UML Class Diagrams](https://www.visual-paradigm.com/guide/uml-unified-modeling-language/what-is-class-diagram/)  
-- Sequence Diagrams
+- Sequence Diagrams  
 [UML Sequence Diagram Tutorial](https://creately.com/guides/sequence-diagram-tutorial/)  
 [Understanding Sequence Diagrams](https://www.uml-diagrams.org/sequence-diagrams.html)  
-- General Diagram Tools
+- General Diagram Tools  
 [Mermaid.js Documentation](http://mermaid.js.org/)  
 [draw.io](https://www.drawio.com/)
