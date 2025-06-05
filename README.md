@@ -1,5 +1,8 @@
 # **HBnB - UML - Holbertonschool Toulouse**  
-![logo](./media/png/logo.png =250x)
+
+<p align=center>
+    <img src="media/png/logo.png" width="250">
+</p>
 
 ## **Part1: Technical Documentation**  
 ### **Context and Objective**
