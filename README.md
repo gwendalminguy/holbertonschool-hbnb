@@ -1,5 +1,5 @@
 # **HBnB - UML - Holbertonschool Toulouse**  
-![logo](https://github.com/Mornac/holbertonschool-hbnb/blob/main/media/png/logo.png)
+![logo](./media/png/logo.png =250x)
 
 ## **Part1: Technical Documentation**  
 ### **Context and Objective**
@@ -38,9 +38,9 @@ All data will be persisted in a database. See part 3 of the project.
 3. Documentation Compilation  
 
 ### **Authors**
-This project is done in team :  
-@Gwendal Minguy-Pèlerin  
-@Ingrid Mornac
+This project was done by :  
+- [Gwendal Minguy-Pèlerin](https://github.com/gwendalminguy/)
+- [Ingrid Mornac](https://github.com/Mornac/)
 
 ### **Tools to help**
 - UML Basics  
