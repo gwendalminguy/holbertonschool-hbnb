@@ -1,5 +1,5 @@
 <p align=center>
-    <img src="media/png/logo.png" width="250">
+    <img src="part1/media/png/logo.png" width="250">
 </p>
 
 <h1 align="center">HBnB Evolution  
