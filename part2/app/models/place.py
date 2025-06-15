@@ -13,7 +13,7 @@ class Place(BaseModel):
         self.rooms = rooms
         self.capacity = capacity
         self.surface = surface
-        self reviews = []
+        self.reviews = []
         self.amenities = []
 
     def add_review(self, review):
