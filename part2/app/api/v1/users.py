@@ -1,0 +1,37 @@
+from flask_restx import Namespace, Resource, fields
+from app.services import facade
+
+api = Namespace('users', description='User operations')
+
+
+user_model = api.model('User', {
+    'id': fields.Integer(readOnly=True, description='The unique identifier of a user'),
+    'first_name': fields.String(required=True, description='The first name of the user'),
+    'last_name': fields.String(required=True, description='The last name of the user'),
+    'email': fields.String(required=True, description='The email address of the user'),
+})
+
+
+@api.route('/')
+class UserList(Resource):
+    @api.expect(user_model, validate=True)
+    @api.response(201, 'User successfully created.')
+    @api.response(400, 'Email already registered')
+    @api.response(400, 'Invalid input data')
+    def post(self):
+        """
+        Register a new user
+        """
+        user_data = api.payload
+
+        existing_user = facade.get_user_by_email(user_data['email'])
+        if existing_user:
+            return {'error': 'Email already registered'}, 400
+
+        new_user = facade.create_user(user_data)
+        return {
+            'id': new_user.id,
+            'first_name': new_user.first_name,
+            'last_name': new_user.last_name,
+            'email': new_user.email
+        }, 201
