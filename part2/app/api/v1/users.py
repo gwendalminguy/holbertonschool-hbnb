@@ -36,6 +36,29 @@ class UserList(Resource):
         }, 201
 
 
+@api.route('/')
+class UserList(Resource):
+    @api.response(200, 'User list retrieved successfully')
+    @api.response(404, 'No user found')
+    def get(self):
+        """
+        Get user list
+        """
+        user_list = facade.get_user_list()
+        users = {}
+        print("HHHHHHHHH")
+        if len(user_list) == 0:
+            return {'error': 'No user found'}, 404
+        for user in user_list:
+            users[user.id] = {
+                'id': user.id,
+                'first_name': user.first_name,
+                'last_name': user.last_name,
+                'email': user.email
+            }
+        return users, 200
+
+
 @api.route('/<user_id>')
 class UserResource(Resource):
     @api.response(200, 'User details retrieved successfully')
@@ -53,28 +76,6 @@ class UserResource(Resource):
             'last_name': user.last_name,
             'email': user.email
         }, 200
-
-
-@api.route('/users')
-class UserList(Resource):
-    @api.response(200, 'User list retrieved successfully')
-    @api.response(404, 'No user found')
-    def get(self):
-        """
-        Get user list
-        """
-        user_list = facade.get_user_list()
-        users = {}
-        if len(user_list) == 0:
-            return {'error': 'No user found'}, 404
-        for user in user_list:
-            users[user.id] = {
-                'id': user.id,
-                'first_name': user.first_name,
-                'last_name': user.last_name,
-                'email': user.email
-            }
-        return users, 200
 
 
 @api.route('/<user_id>')
