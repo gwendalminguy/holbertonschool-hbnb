@@ -57,7 +57,7 @@ class UserResource(Resource):
 
 
 @api.route('/users')
-class UserList(Ressource):
+class UserList(Resource):
     @api.response(200, 'User list retrieved successfully')
     @api.response(404, 'No user found')
     def get(self):
@@ -76,3 +76,28 @@ class UserList(Ressource):
                 'email': user.email
             }
         return users, 200
+
+
+@api.route('/<user_id>')
+class UserResource(Resource):
+    @api.response(200, 'User details updated successfully')
+    @api.response(404, 'User not found')
+    @api.response(400, 'Invalid input data')
+    @api.expect(user_model, validate=True)
+    def put(self, user_id, user_data ):
+        """
+        Update an existing user
+        """
+        user_data = api.payload
+        user = facade.get_user(user_id)
+        if not user:
+            return {'error': 'User not found'}, 404
+        updated_user = facade.update_user(user_id, user_data)
+        if not updated_user:
+            return {'error': 'Invalid input data'}, 400
+        return {
+            'id': updated_user.id,
+            'first_name': updated_user.first_name,
+            'last_name': updated_user.last_name,
+            'email': updated_user.email
+        }, 200
