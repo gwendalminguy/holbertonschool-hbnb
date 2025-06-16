@@ -46,7 +46,6 @@ class UserList(Resource):
         """
         user_list = facade.get_user_list()
         users = {}
-        print("HHHHHHHHH")
         if len(user_list) == 0:
             return {'error': 'No user found'}, 404
         for user in user_list:
