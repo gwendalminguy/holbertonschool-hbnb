@@ -17,7 +17,22 @@ class AmenityList(Resource):
         """
         Register a new amenity
         """
-        pass
+        amenity_data = api.payload
+
+        existing_amenity = facade.get_amenity_by_name(amenity_data['name'])
+        if existing_amenity:
+            return {'error': 'Amenity already exists'}, 400
+        
+        try:
+            new_amenity = facade.create_amenity(amenity_data)
+        except ValueError:
+            return {'error': 'Invalid input data'}, 400
+        else:
+            return {
+                'id': new_amenity.id,
+                'name': new_amenity.name
+            }, 201
+        
 
     @api.response(200, 'List of amenities retrieved successfully')
     def get(self):
@@ -35,7 +50,13 @@ class AmenityResource(Resource):
         """
         Get amenity details by ID
         """
-        pass
+        amenity = facade.get_amenity(amenity_id)
+        if not amenity:
+            return {'error': 'Amenity not found'}, 404
+        return {
+            'id': amenity.id,
+            'name': amenity.name
+        }, 200
 
     @api.expect(amenity_model)
     @api.response(200, 'Amenity updated successfully')
