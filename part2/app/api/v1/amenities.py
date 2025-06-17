@@ -39,7 +39,16 @@ class AmenityList(Resource):
         """
         Retrieve a list of all amenities
         """
-        pass
+        amenity_list = facade.get_all_amenities()
+        amenities = []
+        if len(amenity_list) == 0:
+            return {'error': 'No amenity found'}, 404
+        for amenity in amenity_list:
+            amenities.append({
+                'id': amenity.id,
+                'name': amenity.name
+            })
+        return amenities, 200
 
 
 @api.route('/<amenity_id>')
@@ -66,4 +75,14 @@ class AmenityResource(Resource):
         """
         Update an amenity's information
         """
-        pass
+        amenity_data = api.payload
+        amenity = facade.get_amenity(amenity_id)
+        if not amenity:
+            return {'error': 'Amenity not found'}, 404
+        updated_amenity = facade.update_apenity(amenity_id, amenity_data)
+        if not updated_amenity:
+            return {'error': 'Invalid input data'}, 400
+        return {
+            'id': updated_amenity.id,
+            'name': updated_amenity.name
+        }, 200
