@@ -45,16 +45,16 @@ class UserList(Resource):
         Get user list
         """
         user_list = facade.get_user_list()
-        users = {}
+        users = []
         if len(user_list) == 0:
             return {'error': 'No user found'}, 404
         for user in user_list:
-            users[user.id] = {
+            users.append({
                 'id': user.id,
                 'first_name': user.first_name,
                 'last_name': user.last_name,
                 'email': user.email
-            }
+            })
         return users, 200
 
 
