@@ -13,7 +13,7 @@ class HBnBFacade:
         user = User(**user_data)
         self.user_repo.add(user)
         return user
-    
+
     def update_user(self, user_id, user_data):
         user = self.user_repo.get(user_id)
         if not user:
@@ -33,4 +33,16 @@ class HBnBFacade:
         return self.user_repo.get_by_attribute('email', email)
 
     def get_place(self, place_id):
+        pass
+
+    def create_amenity(self, amenity_data):
+        pass
+
+    def get_amenity(self, amenity_id):
+        pass
+
+    def get_all_amenities(self):
+        pass
+
+    def update_amenity(self, amenity_id, amenity_data):
         pass
