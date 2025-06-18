@@ -39,9 +39,6 @@ class UserList(Resource):
                 'email': new_user.email
             }, 201
 
-
-@api.route('/')
-class UserList(Resource):
     @api.response(200, 'User list retrieved successfully')
     @api.response(404, 'No user found')
     def get(self):
@@ -80,9 +77,6 @@ class UserResource(Resource):
             'email': user.email
         }, 200
 
-
-@api.route('/<user_id>')
-class UserResource(Resource):
     @api.response(200, 'User details updated successfully')
     @api.response(404, 'User not found')
     @api.response(400, 'Invalid input data')
