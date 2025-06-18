@@ -7,15 +7,15 @@ regex = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
 class User(BaseModel):
     def __init__(self, first_name, last_name, email, is_admin=False):
         super().__init__()
-        if isinstance(first_name, str) and len(first_name) <= 50:
+        if len(first_name) <= 50:
             self.__first_name = first_name
         else:
             raise ValueError
-        if isinstance(last_name, str) and len(last_name) <= 50:
+        if len(last_name) <= 50:
             self.__last_name = last_name
         else:
             raise ValueError
-        if isinstance(email, str) and re.match(regex, email):
+        if re.match(regex, email):
             self.__email = email
         else:
             raise ValueError
@@ -27,7 +27,7 @@ class User(BaseModel):
 
     @first_name.setter
     def first_name(self, first_name):
-        if isinstance(first_name, str) and len(first_name) <= 50:
+        if len(first_name) <= 50:
             self.__first_name = first_name
         else:
             raise ValueError
@@ -38,7 +38,7 @@ class User(BaseModel):
 
     @last_name.setter
     def last_name(self, last_name):
-        if isinstance(last_name, str) and len(last_name) <= 50:
+        if len(last_name) <= 50:
             self.__last_name = last_name
         else:
             raise ValueError
@@ -49,7 +49,7 @@ class User(BaseModel):
 
     @email.setter
     def email(self, email):
-        if isinstance(email, str) and re.match(regex, email):
+        if re.match(regex, email):
             self.__email = email
         else:
             raise ValueError
