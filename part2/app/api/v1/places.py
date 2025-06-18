@@ -71,7 +71,6 @@ class PlaceList(Resource):
                 'rooms': new_place.rooms,
                 'capacity': new_place.capacity,
                 'surface': new_place.surface,
-                'reviews': new_place.reviews,
                 'amennities': new_place.amenities
             }, 201
 
