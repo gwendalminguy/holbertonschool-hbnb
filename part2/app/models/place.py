@@ -2,7 +2,7 @@ from app.models.model import BaseModel
 
 
 class Place(BaseModel):
-    def __init__(self, title, description, price, latitude, longitude, owner_id, rooms, capacity=0, surface=0):
+    def __init__(self, title, description, price, latitude, longitude, owner_id, owner, rooms, capacity=0, surface=0):
         super().__init__()
         if len(title) <= 100:
             self.__title = title
@@ -77,3 +77,4 @@ class Place(BaseModel):
             self.__longitude = longitude
         else:
             raise ValueError
+       
