@@ -125,9 +125,11 @@ class PlaceReviewList(Resource):
             return {
                 'place_id': place.id,
                 'reviews': [
+                    {
                     'id': review.id,
                     'text': review.text,
                     'rating': review.rating,
                     'user_id': review.user_id
+                    }
                 ]
             }, 200
