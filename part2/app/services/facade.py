@@ -42,13 +42,19 @@ class HBnBFacade:
         return place
 
     def get_place(self, place_id):
-        pass
+        return self.place_repo.get(place_id)
 
     def get_all_places(self):
-        pass
+        return self.place_repo.get_all()
 
     def update_place(self, place_id, place_data):
-        pass
+        place = self.place_repo.get(place_id)
+        if not place:
+            return None
+        for key, value in place_data.items():
+            setattr(place, key, value)
+        self.place_repo.update(place_id, place_data)
+        return place
 
     #--------AMENITY METHODS--------
     def create_amenity(self, amenity_data):

@@ -71,7 +71,26 @@ class PlaceList(Resource):
         """
         Retrieve a list of all places
         """
-        pass
+        place_list = facade.get_all_places()
+        places = []
+        if len(place_list) == 0:
+            return {'error': 'No place found'}, 404
+        for place in place_list:
+            places.append({
+                'id': place.id,
+                'title': place.title,
+                'description': place.description,
+                'price': place.price,
+                'latitude': place.latitude,
+                'longitude': place.longitude,
+                'owner_id': place.owner_id,
+                'rooms': place.rooms,
+                'capacity': place.capacity,
+                'surface': place.surface,
+                'reviews': place.reviews,
+                'amenities': place.amenities
+            })
+        return places, 200
 
 
 @api.route('/<place_id>')
@@ -82,7 +101,23 @@ class PlaceResource(Resource):
         """
         Get place details by ID
         """
-        pass
+        place = facade.get_place(place_id)
+        if not place:
+            return {'error': 'Place not found'}, 404
+        return {
+            'id': place.id,
+            'title': place.title,
+            'description': place.description,
+            'price': place.price,
+            'latitude': place.latitude,
+            'longitude': place.longitude,
+            'owner_id': place.owner_id,
+            'rooms': place.rooms,
+            'capacity': place.capacity,
+            'surface': place.surface,
+            'reviews': place.reviews,
+            'amenities': [amenity.id for amenity in place.amenities]
+        }, 200
 
     @api.expect(place_model)
     @api.response(200, 'Place updated successfully')
@@ -92,4 +127,24 @@ class PlaceResource(Resource):
         """
         Update a place's information
         """
-        pass
+        place_data = api.payload
+        place = facade.get_place(place_id)
+        if not place:
+            return {'error': 'Place not found'}, 404
+        updated_place = facade.update_place(place_id, place_data)
+        if not updated_place:
+            return {'error': 'Invalid input data'}, 400
+        return {
+            'id': updated_place.id,
+            'title': updated_place.title,
+            'description': updated_place.description,
+            'price': updated_place.price,
+            'latitude': updated_place.latitude,
+            'longitude': updated_place.longitude,
+            'owner_id': updated_place.owner_id,
+            'rooms': updated_place.rooms,
+            'capacity': updated_place.capacity,
+            'surface': updated_place.surface,
+            'reviews': updated_place.reviews,
+            'amenities': updated_place.amenities
+        }, 200
