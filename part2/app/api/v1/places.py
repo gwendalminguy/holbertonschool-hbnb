@@ -41,10 +41,10 @@ class PlaceList(Resource):
         Register a new place
         """
         place_data = api.payload
-        
-        #existing_user = facade.get_user(place_data.get(owner_id))
-        #if not existing_user:
-            #return {'error': 'User not found'}, 404
+
+        existing_user = facade.get_user(place_data["owner_id"])
+        if not existing_user:
+            return {'error': 'User not found'}, 404
 
         try:
             new_place = facade.create_place(place_data)
