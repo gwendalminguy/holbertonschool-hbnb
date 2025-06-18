@@ -23,6 +23,7 @@ place_model = api.model('Place', {
     'latitude': fields.Float(required=True, description='Latitude of the place'),
     'longitude': fields.Float(required=True, description='Longitude of the place'),
     'owner_id': fields.String(required=True, description='ID of the owner'),
+    'owner': fields.Nested(user_model, description='Owner of the place'),
     'rooms': fields.Integer(required=True, description='Number of rooms of the place'),
     'capacity': fields.Integer(description='Maximum number of people allowed'),
     'surface': fields.Float(description='Surface of the place'),
@@ -102,6 +103,7 @@ class PlaceResource(Resource):
         Get place details by ID
         """
         place = facade.get_place(place_id)
+        owner = facade.get_user(place.owner_id)
         if not place:
             return {'error': 'Place not found'}, 404
         return {
@@ -111,7 +113,12 @@ class PlaceResource(Resource):
             'price': place.price,
             'latitude': place.latitude,
             'longitude': place.longitude,
-            'owner_id': place.owner_id,
+            'owner': {
+                "id": owner.id,
+                "first_name": owner.first_name,
+                "last_name": owner.last_name,
+                "email": owner.email
+            },
             'rooms': place.rooms,
             'capacity': place.capacity,
             'surface': place.surface,
