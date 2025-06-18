@@ -112,6 +112,14 @@ class PlaceResource(Resource):
         """
         place = facade.get_place(place_id)
         owner = facade.get_user(place.owner_id)
+        
+        amenities_list = [facade.get_amenity(amenity) for amenity in place.amenities]
+
+        amenities = [{
+            "id": instance.id,
+            "name": instance.name
+        } for instance in amenities_list]
+
         if not place:
             return {'error': 'Place not found'}, 404
         return {
@@ -130,8 +138,7 @@ class PlaceResource(Resource):
             'rooms': place.rooms,
             'capacity': place.capacity,
             'surface': place.surface,
-            'reviews': place.reviews,
-            'amenities': [amenity.id for amenity in place.amenities]
+            'amenities': amenities
         }, 200
 
     @api.expect(place_model)

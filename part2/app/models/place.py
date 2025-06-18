@@ -2,7 +2,7 @@ from app.models.model import BaseModel
 
 
 class Place(BaseModel):
-    def __init__(self, title, description, price, latitude, longitude, owner_id, rooms, capacity=0, surface=0):
+    def __init__(self, title, description, price, latitude, longitude, owner_id, rooms, capacity=0, surface=0, amenities=[]):
         super().__init__()
         if len(title) <= 100:
             self.__title = title
@@ -26,7 +26,7 @@ class Place(BaseModel):
         self.capacity = capacity
         self.surface = surface
         self.reviews = []
-        self.amenities = []
+        self.amenities = [amenity for amenity in amenities]
 
     def add_review(self, review):
         self.reviews.append(review)
