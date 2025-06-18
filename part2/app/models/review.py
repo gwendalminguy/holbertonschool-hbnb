@@ -1,4 +1,4 @@
-from model import BaseModel
+from app.models.model import BaseModel
 
 
 class Review(BaseModel):
