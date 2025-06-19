@@ -27,10 +27,17 @@ export REVIEW_2="$(echo "$RESPONSE" | jq -r '.id')"
 echo "Review ID: $REVIEW_2"
 
 echo -e "\n> Get All Reviews From Single Place:"
-curl -X GET http://localhost:5000/api/v1/reviews/places/$PLACE/reviews
+curl -X GET http://localhost:5000/api/v1/places/$PLACE/reviews
 
-#echo -e "\n> Get Place:"
-#curl -X GET http://localhost:5000/api/v1/places/$PLACE
+echo -e "\n> Get Place:"
+curl -X GET http://localhost:5000/api/v1/places/$PLACE
 
-echo -e "\n> Get All Places:"
-curl -X GET http://localhost:5000/api/v1/places/
+echo -e "\n> Delete Review:"
+curl -X DELETE http://localhost:5000/api/v1/reviews/$REVIEW_1
+echo "Review ID: $REVIEW_1"
+
+echo -e "\n> Get All Reviews:"
+curl -X GET http://localhost:5000/api/v1/reviews/
+
+#echo -e "\n> Get All Places:"
+#curl -X GET http://localhost:5000/api/v1/places/
