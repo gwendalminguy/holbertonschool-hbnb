@@ -10,8 +10,8 @@ class Review(BaseModel):
             self.__rating = rating
         else:
             raise ValueError("Rating must be an integer between 1 and 5")
-        self.place = place
-        self.user = user
+        self.place_id = place
+        self.user_id = user
 
     @property
     def rating(self):
