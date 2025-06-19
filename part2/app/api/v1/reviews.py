@@ -36,6 +36,7 @@ class ReviewList(Resource):
         except ValueError:
             return {'error': 'Invalid input data'}, 400
         else:
+            existing_place.add_review(new_review)
             return {
                 'id': new_review.id,
                 'title': new_review.title,
