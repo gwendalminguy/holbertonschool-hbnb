@@ -62,8 +62,6 @@ class ReviewList(Resource):
                 'title': review.title,
                 'text': review.text,
                 'rating': review.rating,
-                'user_id': review.user_id,
-                'place_id': review.place_id
             })
         return reviews, 200
 
@@ -116,28 +114,3 @@ class ReviewResource(Resource):
             return {'error': 'Review not found'}, 404
         facade.delete_review(review_id)
         return {'message': 'Review deleted successfully'}, 204
-
-
-@api.route('/places/<place_id>/reviews')
-class PlaceReviewList(Resource):
-    @api.response(200, 'List of reviews for the place retrieved successfully')
-    @api.response(404, 'Place not found')
-    def get(self, place_id):
-        """
-        Retrieve all reviews for a specific place
-        """
-        existing_place = facade.get_place(place_id)
-        if not existing_place:
-            return {'error': 'Place not found'}, 404
-
-        review_list = facade.get_reviews_by_place(place_id)
-
-        reviews =[]
-        for review in review_list:
-            reviews.append({
-                'id': review.id,
-                'title': review.title,
-                'text': review.text,
-                'rating': review.rating
-        })
-        return reviews, 200
