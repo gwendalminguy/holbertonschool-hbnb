@@ -26,7 +26,7 @@ class Place(BaseModel):
         self.capacity = capacity
         self.surface = surface
         self.reviews = []
-        self.amenities = [amenity for amenity in amenities]
+        self.amenities = []
 
     def add_review(self, review):
         self.reviews.append(review)

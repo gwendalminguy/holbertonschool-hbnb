@@ -35,7 +35,7 @@ place_model = api.model('Place', {
     'rooms': fields.Integer(required=True, description='Number of rooms of the place'),
     'capacity': fields.Integer(description='Maximum number of people allowed'),
     'surface': fields.Float(description='Surface of the place'),
-    'amenities': fields.List(fields.String, required=True, description="List of amenities ID's"),
+    'amenities': fields.List(fields.Nested(amenity_model), required=True, description="List of amenities"),
     'reviews': fields.List(fields.Nested(review_model), description="List of reviews")
 })
 
@@ -59,20 +59,22 @@ class PlaceList(Resource):
             new_place = facade.create_place(place_data)
         except ValueError:
             return {'error': 'Invalid input data'}, 400
-        else:
-            return {
-                'id': new_place.id,
-                'title': new_place.title,
-                'description': new_place.description,
-                'price': new_place.price,
-                'latitude': new_place.latitude,
-                'longitude': new_place.longitude,
-                'owner_id': new_place.owner_id,
-                'rooms': new_place.rooms,
-                'capacity': new_place.capacity,
-                'surface': new_place.surface,
-                'amennities': new_place.amenities
-            }, 201
+
+        for amenity in place_data["amenities"]:
+            new_place.add_amenity(facade.get_amenity(amenity))
+
+        return {
+            'id': new_place.id,
+            'title': new_place.title,
+            'description': new_place.description,
+            'price': new_place.price,
+            'latitude': new_place.latitude,
+            'longitude': new_place.longitude,
+            'owner_id': new_place.owner_id,
+            'rooms': new_place.rooms,
+            'capacity': new_place.capacity,
+            'surface': new_place.surface,
+        }, 201
 
     @api.response(200, 'List of places retrieved successfully')
     def get(self):
@@ -109,13 +111,11 @@ class PlaceResource(Resource):
         """
         place = facade.get_place(place_id)
         owner = facade.get_user(place.owner_id)
-        
-        amenities_list = [facade.get_amenity(amenity) for amenity in place.amenities]
 
         amenities = [{
             "id": instance.id,
             "name": instance.name
-        } for instance in amenities_list]
+        } for instance in place.amenities]
 
         if not place:
             return {'error': 'Place not found'}, 404
