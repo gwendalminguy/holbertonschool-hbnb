@@ -153,20 +153,7 @@ class PlaceResource(Resource):
         updated_place = facade.update_place(place_id, place_data)
         if not updated_place:
             return {'error': 'Invalid input data'}, 400
-        return {
-            'id': updated_place.id,
-            'title': updated_place.title,
-            'description': updated_place.description,
-            'price': updated_place.price,
-            'latitude': updated_place.latitude,
-            'longitude': updated_place.longitude,
-            'owner_id': updated_place.owner_id,
-            'rooms': updated_place.rooms,
-            'capacity': updated_place.capacity,
-            'surface': updated_place.surface,
-            'reviews': updated_place.reviews,
-            'amenities': updated_place.amenities
-        }, 200
+        return {'message': 'Place updated successfully'}, 200
 
 
 @api.route('/<place_id>/reviews')
