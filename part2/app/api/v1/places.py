@@ -35,7 +35,7 @@ place_model = api.model('Place', {
     'rooms': fields.Integer(required=True, description='Number of rooms of the place'),
     'capacity': fields.Integer(description='Maximum number of people allowed'),
     'surface': fields.Float(description='Surface of the place'),
-    'amenities': fields.List(fields.Nested(amenity_model), required=True, description="List of amenities"),
+    'amenities': fields.List(fields.String, required=True, description="List of amenities ID's"),
     'reviews': fields.List(fields.Nested(review_model), description="List of reviews")
 })
 

@@ -81,7 +81,7 @@ class UserResource(Resource):
     @api.response(404, 'User not found')
     @api.response(400, 'Invalid input data')
     @api.expect(user_model, validate=True)
-    def put(self, user_id, user_data ):
+    def put(self, user_id, user_data):
         """
         Update an existing user
         """
