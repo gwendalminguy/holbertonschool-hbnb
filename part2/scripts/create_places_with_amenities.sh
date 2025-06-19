@@ -18,5 +18,10 @@ RESPONSE=$(curl -s -X POST http://localhost:5000/api/v1/places/ -H "Content-Type
 export PLACE="$(echo "$RESPONSE" | jq -r '.id')"
 echo "Place ID: $PLACE"
 
+echo -e "\n> Create New Review:"
+RESPONSE=$(curl -s -X POST http://localhost:5000/api/v1/reviews/ -H "Content-Type: application/json" -d '{"title": "Great place!", "text": "I had a very good time in Toulouse. Hope to come bck soon!", "rating": 4, "user": "'"$OWNER"'", "place": "'"$PLACE"'"}')
+export REVIEW="$(echo "$RESPONSE" | jq -r '.id')"
+echo "Review ID: $REVIEW"
+
 echo -e "\n> Get Place:"
 curl -X GET http://localhost:5000/api/v1/places/$PLACE
