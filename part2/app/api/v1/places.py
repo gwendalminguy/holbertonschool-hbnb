@@ -15,10 +15,10 @@ user_model = api.model('PlaceUser', {
     'last_name': fields.String(description='Last name of the owner'),
     'email': fields.String(description='Email of the owner')
 })
-
-# Adding the review model
+ 
 review_model = api.model('PlaceReview', {
     'id': fields.String(description='Review ID'),
+    'title': fields.String(description='Title of the review'),
     'text': fields.String(description='Text of the review'),
     'rating': fields.Integer(description='Rating of the place (1-5)'),
     'user_id': fields.String(description='The ID of the user')
