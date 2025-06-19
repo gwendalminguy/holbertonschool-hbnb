@@ -3,6 +3,7 @@ from app.services import facade
 
 api = Namespace('reviews', description='Reviews operations')
 
+
 review_model = api.model('Review', {
     'title': fields.String(required=True, description='Title of the review'),
     'text': fields.String(required=True, description='Text of the review'),

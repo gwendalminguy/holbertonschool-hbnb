@@ -21,7 +21,7 @@ review_model = api.model('PlaceReview', {
     'title': fields.String(description='Title of the review'),
     'text': fields.String(description='Text of the review'),
     'rating': fields.Integer(description='Rating of the place (1-5)'),
-    'user_id': fields.String(description='The ID of the user')
+    'user_id': fields.String(description='ID of the user')
     })
 
 place_model = api.model('Place', {
@@ -95,8 +95,6 @@ class PlaceList(Resource):
                 'rooms': place.rooms,
                 'capacity': place.capacity,
                 'surface': place.surface,
-                'reviews': place.reviews,
-                'amenities': place.amenities
             })
         return places, 200
 
