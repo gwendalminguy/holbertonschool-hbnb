@@ -31,3 +31,6 @@ curl -X GET http://localhost:5000/api/v1/reviews/places/$PLACE/reviews
 
 #echo -e "\n> Get Place:"
 #curl -X GET http://localhost:5000/api/v1/places/$PLACE
+
+echo -e "\n> Get All Places:"
+curl -X GET http://localhost:5000/api/v1/places/
