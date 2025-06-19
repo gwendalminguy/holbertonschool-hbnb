@@ -61,7 +61,7 @@ class PlaceList(Resource):
             return {'error': 'Invalid input data'}, 400
 
         for amenity in place_data["amenities"]:
-            new_place.add_amenity(facade.get_amenity(amenity))
+            new_place.add_amenity(facade.get_amenity(amenity["id"]))
 
         return {
             'id': new_place.id,
