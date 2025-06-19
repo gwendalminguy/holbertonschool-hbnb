@@ -5,5 +5,11 @@ RESPONSE=$(curl -s -X POST http://localhost:5000/api/v1/users/ -H "Content-Type:
 export USER="$(echo "$RESPONSE" | jq -r '.id')"
 echo "User ID: $USER"
 
+echo -e "\n> Get User Details:"
+curl -X GET http://localhost:5000/api/v1/users/$USER
+
 echo -e "\n> Update User:"
 curl -X PUT http://localhost:5000/api/v1/users/$USER -H "Content-Type: application/json" -d '{"first_name": "Fabien", "last_name": "Chavonet", "email": "fabien.chavonet@example.com"}'
+
+echo -e "\n> Get New User Details:"
+curl -X GET http://localhost:5000/api/v1/users/$USER
