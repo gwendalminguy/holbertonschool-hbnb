@@ -24,11 +24,11 @@ class ReviewList(Resource):
         """
         review_data = api.payload
 
-        existing_user = facade.get_user(review_data["user"])
+        existing_user = facade.get_user(review_data["user_id"])
         if not existing_user:
             return {'error': 'User not found'}, 404
 
-        existing_place = facade.get_place(review_data["place"])
+        existing_place = facade.get_place(review_data["place_id"])
         if not existing_place:
             return {'error': 'Place not found'}, 404
 

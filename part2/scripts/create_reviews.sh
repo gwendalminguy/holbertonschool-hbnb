@@ -19,10 +19,10 @@ export PLACE="$(echo "$RESPONSE" | jq -r '.id')"
 echo "Place ID: $PLACE"
 
 echo -e "\n> Create New Reviews:"
-RESPONSE=$(curl -s -X POST http://localhost:5000/api/v1/reviews/ -H "Content-Type: application/json" -d '{"title": "Great place!", "text": "I had a very good time in Toulouse. Hope to come back soon!", "rating": 4, "user": "'"$OWNER"'", "place": "'"$PLACE"'"}')
+RESPONSE=$(curl -s -X POST http://localhost:5000/api/v1/reviews/ -H "Content-Type: application/json" -d '{"title": "Great place!", "text": "I had a very good time in Toulouse. Hope to come back soon!", "rating": 4, "user_id": "'"$OWNER"'", "place_id": "'"$PLACE"'"}')
 export REVIEW_1="$(echo "$RESPONSE" | jq -r '.id')"
 echo "Review ID: $REVIEW_1"
-RESPONSE=$(curl -s -X POST http://localhost:5000/api/v1/reviews/ -H "Content-Type: application/json" -d '{"title": "Hot and noisy...", "text": "Great city, but the apartment lacks air conditioning and the neighbours were pretty loud!", "rating": 2, "user": "'"$OWNER"'", "place": "'"$PLACE"'"}')
+RESPONSE=$(curl -s -X POST http://localhost:5000/api/v1/reviews/ -H "Content-Type: application/json" -d '{"title": "Hot and noisy...", "text": "Great city, but the apartment lacks air conditioning and the neighbours were pretty loud!", "rating": 2, "user_id": "'"$OWNER"'", "place_id": "'"$PLACE"'"}')
 export REVIEW_2="$(echo "$RESPONSE" | jq -r '.id')"
 echo "Review ID: $REVIEW_2"
 
