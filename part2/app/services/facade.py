@@ -99,7 +99,13 @@ class HBnBFacade:
         return place.reviews
 
     def update_review(self, review_id, review_data):
-        return self.review_repo.update(review_id, review_data)
+        review = self.review_repo.get(review_id)
+        if not review:
+            return None
+        for key, value in review_data.items():
+            setattr(review, key, value)
+        self.review_repo.update(review_id, review_data)
+        return review
 
     def delete_review(self, review_id):
         self.review_repo.delete(review_id)
