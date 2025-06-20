@@ -113,9 +113,9 @@ class PlaceResource(Resource):
         owner = facade.get_user(place.owner_id)
 
         amenities = [{
-            "id": instance.id,
-            "name": instance.name
-        } for instance in place.amenities]
+            "id": amenity.id,
+            "name": amenity.name
+        } for amenity in place.amenities]
 
         if not place:
             return {'error': 'Place not found'}, 404
@@ -150,9 +150,15 @@ class PlaceResource(Resource):
         place = facade.get_place(place_id)
         if not place:
             return {'error': 'Place not found'}, 404
+
         updated_place = facade.update_place(place_id, place_data)
         if not updated_place:
             return {'error': 'Invalid input data'}, 400
+
+        place.amenities = []
+        for amenity in place_data["amenities"]:
+            place.add_amenity(facade.get_amenity(amenity["id"]))
+
         return {'message': 'Place updated successfully'}, 200
 
 

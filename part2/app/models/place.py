@@ -2,7 +2,7 @@ from app.models.model import BaseModel
 
 
 class Place(BaseModel):
-    def __init__(self, title, price, latitude, longitude, owner_id, rooms, description=None, owner=None, capacity=0, surface=0, amenities=[]):
+    def __init__(self, title, price, latitude, longitude, owner_id, rooms, description=None, owner=None, capacity=0, surface=0, amenities=[], reviews=[]):
         super().__init__()
         if len(title) <= 100:
             self.__title = title

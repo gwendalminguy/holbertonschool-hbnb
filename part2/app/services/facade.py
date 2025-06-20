@@ -12,7 +12,7 @@ class HBnBFacade:
         self.review_repo = InMemoryRepository()
         self.amenity_repo = InMemoryRepository()
 
-    #--------USER METHODS--------
+    # --------USER METHODS--------
     def create_user(self, user_data):
         user = User(**user_data)
         self.user_repo.add(user)
@@ -36,7 +36,7 @@ class HBnBFacade:
     def get_user_by_email(self, email):
         return self.user_repo.get_by_attribute('email', email)
 
-    #--------PLACE METHODS--------
+    # --------PLACE METHODS--------
     def create_place(self, place_data):
         place = Place(**place_data)
         self.place_repo.add(place)
@@ -53,11 +53,12 @@ class HBnBFacade:
         if not place:
             return None
         for key, value in place_data.items():
-            setattr(place, key, value)
+            if key is not "amenities" and key is not "reviews":
+                setattr(place, key, value)
         self.place_repo.update(place_id, place_data)
         return place
 
-    #--------AMENITY METHODS--------
+    # --------AMENITY METHODS--------
     def create_amenity(self, amenity_data):
         amenity = Amenity(**amenity_data)
         self.amenity_repo.add(amenity)
@@ -71,7 +72,7 @@ class HBnBFacade:
 
     def get_all_amenities(self):
         return self.amenity_repo.get_all()
-    
+
     def update_amenity(self, amenity_id, amenity_data):
         amenity = self.amenity_repo.get(amenity_id)
         if not amenity:
@@ -81,7 +82,7 @@ class HBnBFacade:
         self.amenity_repo.update(amenity_id, amenity_data)
         return amenity
 
-#--------REVIEW METHODS--------
+    # --------REVIEW METHODS--------
     def create_review(self, review_data):
         review = Review(**review_data)
         self.review_repo.add(review)
