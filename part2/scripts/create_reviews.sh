@@ -25,22 +25,3 @@ echo "Review ID: $REVIEW_1"
 RESPONSE=$(curl -s -X POST http://localhost:5000/api/v1/reviews/ -H "Content-Type: application/json" -d '{"title": "Hot and noisy...", "text": "Great city, but the apartment lacks air conditioning and the neighbours were pretty loud!", "rating": 2, "user_id": "'"$OWNER"'", "place_id": "'"$PLACE"'"}')
 export REVIEW_2="$(echo "$RESPONSE" | jq -r '.id')"
 echo "Review ID: $REVIEW_2"
-
-echo -e "\n> Get All Reviews From Single Place:"
-curl -X GET http://localhost:5000/api/v1/places/$PLACE/reviews
-
-echo -e "\n> Get Place:"
-curl -X GET http://localhost:5000/api/v1/places/$PLACE
-
-echo -e "\n> Delete Review:"
-curl -X DELETE http://localhost:5000/api/v1/reviews/$REVIEW_1
-echo "Review ID: $REVIEW_1"
-
-echo -e "\n> Put Review:"
-curl -X PUT http://localhost:5000/api/v1/reviews/$REVIEW_2 -H "Content-Type: application/json" -d '{"title": "Not that bad...", "text": "Thinking about it, the place itself was not that bad. The surrouding atmosphere was the problem, but this was not a problem coming from the place.", "rating": 3, "user_id": "'"$OWNER"'", "place_id": "'"$PLACE"'"}'
-
-echo -e "\n> Get All Reviews:"
-curl -X GET http://localhost:5000/api/v1/reviews/
-
-echo -e "\n> Get All Places:"
-curl -X GET http://localhost:5000/api/v1/places/
