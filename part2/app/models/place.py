@@ -4,20 +4,20 @@ from app.models.model import BaseModel
 class Place(BaseModel):
     def __init__(self, title, price, latitude, longitude, owner_id, rooms, description=None, owner=None, capacity=0, surface=0, amenities=[], reviews=[]):
         super().__init__()
-        if len(title) <= 100:
+        if title is not None and 0 < len(title) <= 100:
             self.__title = title
         else:
             raise ValueError
         self.description = description
-        if price >= 0:
+        if price is not None and price >= 0:
             self.__price = price
         else:
             raise ValueError
-        if -90.0 <= latitude <= 90.0:
+        if latitude is not None and -90.0 <= latitude <= 90.0:
             self.__latitude = latitude
         else:
             raise ValueError
-        if -180.0 <= longitude <= 180.0:
+        if longitude is not None and -180.0 <= longitude <= 180.0:
             self.__longitude = longitude
         else:
             raise ValueError
@@ -40,7 +40,7 @@ class Place(BaseModel):
 
     @title.setter
     def title(self, title):
-        if len(title) <= 100:
+        if title is not None and 0 < len(title) <= 100:
             self.__title = title
         else:
             raise ValueError
@@ -51,7 +51,7 @@ class Place(BaseModel):
 
     @price.setter
     def price(self, price):
-        if price >= 0:
+        if price is not None and price >= 0:
             self.__price = price
         else:
             raise ValueError
@@ -62,7 +62,7 @@ class Place(BaseModel):
 
     @latitude.setter
     def latitude(self, latitude):
-        if -90.0 <= latitude <= 90.0:
+        if latitude is not None and -90.0 <= latitude <= 90.0:
             self.__latitude = latitude
         else:
             raise ValueError
@@ -73,7 +73,7 @@ class Place(BaseModel):
 
     @longitude.setter
     def longitude(self, longitude):
-        if -180.0 <= longitude <= 180.0:
+        if longitude is not None and -180.0 <= longitude <= 180.0:
             self.__longitude = longitude
         else:
             raise ValueError
