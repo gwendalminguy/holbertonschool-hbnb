@@ -37,7 +37,7 @@ curl -X DELETE http://localhost:5000/api/v1/reviews/$REVIEW_1
 echo "Review ID: $REVIEW_1"
 
 echo -e "\n> Put Review:"
-curl -X PUT http://localhost:5000/api/v1/reviews/$REVIEW_2 -H "Content-Type: application/json" -d '{"title": "Not that bad...", "text": "Thinking about it, the place itself was not that bad. The surrouding atmosphere was the problem, but this was not a problem coming from the place.", "rating": 3}'
+curl -X PUT http://localhost:5000/api/v1/reviews/$REVIEW_2 -H "Content-Type: application/json" -d '{"title": "Not that bad...", "text": "Thinking about it, the place itself was not that bad. The surrouding atmosphere was the problem, but this was not a problem coming from the place.", "rating": 3, "user_id": "'"$OWNER"'", "place_id": "'"$PLACE"'"}'
 
 echo -e "\n> Get All Reviews:"
 curl -X GET http://localhost:5000/api/v1/reviews/
