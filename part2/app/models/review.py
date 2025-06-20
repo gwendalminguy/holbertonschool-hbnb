@@ -5,7 +5,10 @@ class Review(BaseModel):
     def __init__(self, title, text, rating, place_id, user_id):
         super().__init__()
         self.title = title
-        self.text = text
+        if text is not None and len(text) > 0:
+            self.__text = text
+        else:
+            raise ValueError("Text can't be empty")
         if 1 <= rating <= 5:
             self.__rating = rating
         else:
@@ -14,12 +17,23 @@ class Review(BaseModel):
         self.user_id = user_id
 
     @property
+    def text(self):
+        return self.__text
+
+    @text.setter
+    def text(self, text):
+        if text is not None and len(text) > 0:
+            self.__text = text
+        else:
+            raise ValueError("Text can't be empty")
+
+    @property
     def rating(self):
         return self.__rating
     
     @rating.setter
-    def rating(self, value):
-        if 1 <= value <= 5:
-            self.__rating = value
+    def rating(self, rating):
+        if 1 <= rating <= 5:
+            self.__rating = rating
         else:   
             raise ValueError("Rating must be an integer between 1 and 5")
