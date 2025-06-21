@@ -1,108 +1,106 @@
-## **Part2: Implementation of Business Logic and API Endpoints**  
+## **Part 2: Implementation of Business Logic and API Endpoints**  
 
-In this second part of the HBnB Project, we had to implement the application. The focus is to build the Presentation and Business Logic Layers of the application, using Python and Flask.
-
-We had created the structure of the project, developped the classes, and implemented the API endpoints.  
+This second part of the HBnB Project focuses on the implementation the application, by building the Presentation and Business Logic Layers of the application. It consists in creating the structure of the project, building the main classes, and implementing API endpoints using Python's Flask framework.
 
 ### **Objectives**
-1. Set up the project structure  
-2. Implement the Business Logic Layer  
-3. Build RESTful API Endpoints  
-4. Test and validate the API  
+1. Set up the project structure
+2. Implement the Business Logic Layer
+3. Build RESTful API Endpoints
+4. Test and validate the API
 
 ### **Project Vision and Scope**
-Creating a functional and scalable foundation for the application :  
+Creating a functional and scalable foundation for the application:  
 - Presentation Layer: defining the services and API endpoint, using Flask and falsk-restx
-- Business Logic Layer: building the core models and logic that drive the applications's functionality  
+- Business Logic Layer: building the core models and logic that drive the applications's functionality
 
-We don't need to worry about user authentification or access control int this part.  
+User authentication and access control will be implemented in a future part of the project.
 
-### **Learning objectives**
+### **Learning Objectives**
 1. Modular Design and Architecture: how to structure a Python application  
 2. API Development with Flask and flask-restx: focus on creating well-documented and scalable endpoints.
-3. Business Logic Implementation: how to translate documented designes into working code, implementing core business logic in a structured and maintainable manner.  
-4. Data Serialization and Composition Handling: returning extended attributes and API responses.  
-5. Testing and Debugging: develop skills in testing and validating APIs.  
+3. Business Logic Implementation: how to translate documented designes into working code, implementing core business logic in a structured and maintainable manner.
+4. Data Serialization and Composition Handling: returning extended attributes and API responses.
+5. Testing and Debugging: develop skills in testing and validating APIs.
 
 ### **Recommended Resources**
-1 - Flask and flask-restx Documentation:  
-[Flask Official Documentation](https://flask.palletsprojects.com/en/stable/)  
-[flask-restx Documentation](https://flask-restx.readthedocs.io/en/latest/)  
-2 - RESTful API Design Best Practices:  
-[Best Practices for designing a Pragmatic RESTful API](https://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api)  
-[REST API Tutorial](https://restfulapi.net/)  
-3 - Python Project Structure and Modular Design:  
-[Structuring Your Python Project](https://docs.python-guide.org/writing/structure/)  
-[Modular Programming with Python](https://realpython.com/python-modules-packages/)  
-4 - Facade Design Pattern:  
-[Facade Pattern in Python](https://refactoring.guru/design-patterns/facade/python/example)  
+1 - Flask and flask-restx Documentation:
+[Flask Official Documentation](https://flask.palletsprojects.com/en/stable/)
+[flask-restx Documentation](https://flask-restx.readthedocs.io/en/latest/)
+2 - RESTful API Design Best Practices:
+[Best Practices for designing a Pragmatic RESTful API](https://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api)
+[REST API Tutorial](https://restfulapi.net/)
+3 - Python Project Structure and Modular Design:
+[Structuring Your Python Project](https://docs.python-guide.org/writing/structure/)
+[Modular Programming with Python](https://realpython.com/python-modules-packages/)
+4 - Facade Design Pattern:
+[Facade Pattern in Python](https://refactoring.guru/design-patterns/facade/python/example)
 
 ### **Tasks**  
-****0. Project Setup and Package Initialization****  
+**0. Project Setup and Package Initialization**
 - Set up the structure for the Presentation, Business Logic, and Persistence layers.
 - Prepare the project to use the Facade pattern for communication between layers.
 - Implement the in-memory repository to handle object storage and validation.
-- Plan for future integration of the Persistence layer, even though it won’t be fully implemented in this part.  
+- Plan for future integration of the Persistence layer, even though it won’t be fully implemented in this part.
 
-****1. Core Business Logic Classes****  
+**1. Core Business Logic Classes**
 - Implement the classes based on your Part 1 design.
 - Ensure relationships between entities are correctly implemented.
-- Handle attribute validation and updates according to the requirements.  
+- Handle attribute validation and updates according to the requirements.
 
-****2. User Endpoints****  
+**2. User Endpoints**
 - Set up the POST, GET, and PUT endpoints for managing users.
 - Implement the logic for handling user-related operations in the Business Logic layer.
-- Integrate the Presentation layer (API) and Business Logic layer, utilizing the repository pattern.  
+- Integrate the Presentation layer (API) and Business Logic layer, utilizing the repository pattern.
 
-****3. Amenity Endpoints****  
+**3. Amenity Endpoints**
 - Set up the POST, GET, and PUT endpoints for managing amenities.
 - Implement the necessary logic for handling amenity-related operations in the Business Logic layer.
-- Integrate the Presentation layer (API) and Business Logic layer through the Facade.  
+- Integrate the Presentation layer (API) and Business Logic layer through the Facade.
 
-****4. Place Endpoints****
+**4. Place Endpoints**
 - Set up the POST, GET, and PUT endpoints for managing places.
 - Implement the logic for handling place-related operations in the Business Logic layer.
 - Integrate the Presentation layer (API) and Business Logic layer through the Facade.
 - Implement validation for specific attributes like price, latitude, and longitude.
-- Ensure that related data such as owner details and amenities are properly handled and returned with the Place data.  
+- Ensure that related data such as owner details and amenities are properly handled and returned with the Place data.
 
-****5. Review Endpoints****  
+**5. Review Endpoints**
 - Set up the POST, GET, PUT, and DELETE endpoints for managing reviews.
 - Implement the logic for handling review-related operations in the Business Logic layer.
 - Integrate the Presentation layer (API) and Business Logic layer through the Facade.
 - Implement validation for specific attributes like the text of the review and ensure that the review is associated with both a user and a place.
-- Update the Place model in api/v1/places.py to include the collection of reviews for a place.  
+- Update the Place model in api/v1/places.py to include the collection of reviews for a place.
 
-****6. Testing and Validation****  
+**6. Testing and Validation**
 - Implement basic validation checks for each of the attributes in your endpoints.
 - Perform black-box testing using cURL and the Swagger documentation generated by Flask-RESTx.
-- Create a detailed testing report, highlighting both successful and failed cases.  
+- Create a detailed testing report, highlighting both successful and failed cases.
 
-### Our Directory Structure:  
+### Our Directory Structure:
 ```
-part2/  
-├── app/  
-│   ├── __init__.py  
-│   ├── api/  
-│   │   ├── __init__.py  
-│   │   ├── v1/  
-│   │       ├── __init__.py  
-│   │       ├── users.py  
-│   │       ├── places.py  
-│   │       ├── reviews.py  
-│   │       ├── amenities.py  
-│   ├── models/  
-│   │   ├── __init__.py  
-│   │   ├── user.py  
-│   │   ├── place.py  
-│   │   ├── review.py  
-│   │   ├── amenity.py  
-│   ├── services/  
-│   │   ├── __init__.py  
-│   │   ├── facade.py  
-│   ├── persistence/  
-│       ├── __init__.py  
-│       ├── repository.py  
+part2/
+├── app/
+│   ├── __init__.py
+│   ├── api/
+│   │   ├── __init__.py
+│   │   ├── v1/
+│   │       ├── __init__.py
+│   │       ├── users.py
+│   │       ├── places.py
+│   │       ├── reviews.py
+│   │       ├── amenities.py
+│   ├── models/
+│   │   ├── __init__.py
+│   │   ├── user.py
+│   │   ├── place.py
+│   │   ├── review.py
+│   │   ├── amenity.py
+│   ├── services/
+│   │   ├── __init__.py
+│   │   ├── facade.py
+│   ├── persistence/
+│       ├── __init__.py
+│       ├── repository.py
 ├── scripts/
 │   ├── create_amenities.sh
 │   ├── create_places.sh
@@ -119,15 +117,21 @@ part2/
 ├── tests/
 │   ├── test_places.py
 │   ├── test_reviews.py
-│   ├── test_amenities.py
-├── __init__.py 
-├── run.py  
-├── config.py  
-├── requirements.txt  
+│   ├── test_users.py
+├── __init__.py
+├── run.py
+├── config.py
+├── requirements.txt
 ├── README.md
 ```  
 
 ### **Tests**  
-The testing part of this API is separated in two parts :  
-- Bash scripts: we have created files containing sequences of cURL commands to test successful methods (POST, GET, PUT and DELETE) for each route (users, places, amenities and reviews). The results of those scripts are printed to the terminal. None of the results should output an error.  Those files are located in the [`part2/scripts/`](https://github.com/Mornac/holbertonschool-hbnb/tree/main/part2/scripts) directory.  
-- Unittests: we have made test files using Python's unittest framework to test the validation of attributes with POST method for each route. These tests ensure wrong inputs raise an error on creation of users, places and reviews. Those files are located in the [`part2/tests/`](https://github.com/Mornac/holbertonschool-hbnb/tree/main/part2/tests) directory.  
+The testing part of this API is separated in two parts :
+
+- Bash Scripts:
+<br>
+Files containing sequences of cURL commands, in order to test successful methods (POST, GET, PUT and DELETE) for each route (users, places, amenities and reviews). The results of those scripts are printed to the terminal. None of the results should output an error.  Those files are located in the [`part2/scripts/`](https://github.com/Mornac/holbertonschool-hbnb/tree/main/part2/scripts) directory.
+
+- Unit Tests:
+<br>
+Files written for Python's `unittest` framework, to test the validation of attributes with POST method for each route. These tests ensure wrong inputs raise an error on creation of users, places and reviews. Those files are located in the [`part2/tests/`](https://github.com/Mornac/holbertonschool-hbnb/tree/main/part2/tests) directory.
