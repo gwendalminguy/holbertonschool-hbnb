@@ -1,11 +1,3 @@
-<p align=center>
-    <img src="part1/media/logo.png" width="250">
-</p>
-
-<h1 align="center">HBnB Evolution
-
-Holberton School Toulouse</h1>
-
 ## **Part 1: Technical Documentation**
 ### **Context and Objective**
 Creating a comprehensive technical documentation that will help in understanding the architecture of HBnB Evolution.

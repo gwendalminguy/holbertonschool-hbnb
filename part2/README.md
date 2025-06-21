@@ -1,4 +1,4 @@
-## **Part 2: Implementation of Business Logic and API Endpoints**  
+## **Part 2: Implementation of Business Logic and API Endpoints**
 
 This second part of the HBnB Project focuses on the implementation the application, by building the Presentation and Business Logic Layers of the application. It consists in creating the structure of the project, building the main classes, and implementing API endpoints using Python's Flask framework.
 
