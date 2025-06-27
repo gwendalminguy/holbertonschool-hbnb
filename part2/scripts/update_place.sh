@@ -21,7 +21,7 @@ echo "Place ID: $PLACE"
 echo -e "\n> Get Place Details:"
 curl -X GET http://localhost:5000/api/v1/places/$PLACE
 
-cho -e "\n> Update Place:"
+echo -e "\n> Update Place:"
 curl -X PUT http://localhost:5000/api/v1/places/$PLACE -H "Content-Type: application/json" -d '{"title": "Los Angeles Loft", "description": "Beautiful place with a view on the beach.", "price": 850.0, "latitude": 65.5, "longitude": -172.5, "owner_id": "'"$OWNER"'", "rooms": 6, "capacity": 8, "surface": 185.5, "amenities": [{"id": "'"$AMENITY_2"'"}]}'
 
 echo -e "\n> Get New Place Details:"
