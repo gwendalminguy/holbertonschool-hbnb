@@ -2,7 +2,7 @@ from app.models.model import BaseModel
 
 
 class Review(BaseModel):
-    def __init__(self, title, text, rating, place_id, user_id):
+    def __init__(self, title, text, rating, place_id, place, user_id, user):
         super().__init__()
         self.title = title
         if text is not None and len(text) > 0:
@@ -14,7 +14,9 @@ class Review(BaseModel):
         else:
             raise ValueError("Rating must be an integer between 1 and 5")
         self.place_id = place_id
+        self.place = place
         self.user_id = user_id
+        self.user = user
 
     @property
     def text(self):

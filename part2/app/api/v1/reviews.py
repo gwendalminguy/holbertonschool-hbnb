@@ -28,9 +28,13 @@ class ReviewList(Resource):
         if not existing_user:
             return {'error': 'User not found'}, 404
 
+        review_data["user"] = existing_user
+
         existing_place = facade.get_place(review_data["place_id"])
         if not existing_place:
             return {'error': 'Place not found'}, 404
+
+        review_data["place"] = existing_place
 
         try:
             new_review = facade.create_review(review_data)

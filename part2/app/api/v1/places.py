@@ -54,6 +54,8 @@ class PlaceList(Resource):
         existing_user = facade.get_user(place_data["owner_id"])
         if not existing_user:
             return {'error': 'User not found'}, 404
+        
+        place_data["owner"] = existing_user
 
         try:
             new_place = facade.create_place(place_data)
