@@ -1,5 +1,6 @@
 from flask_restx import Namespace, Resource, fields
 from app.services import facade
+from flask_jwt_extended import jwt_required, get_jwt_identity
 
 api = Namespace('places', description='Place operations')
 
@@ -15,7 +16,7 @@ user_model = api.model('PlaceUser', {
     'last_name': fields.String(description='Last name of the owner'),
     'email': fields.String(description='Email of the owner')
 })
- 
+
 review_model = api.model('PlaceReview', {
     'id': fields.String(description='Review ID'),
     'title': fields.String(description='Title of the review'),
@@ -42,6 +43,7 @@ place_model = api.model('Place', {
 
 @api.route('/')
 class PlaceList(Resource):
+    @jwt_required()
     @api.expect(place_model)
     @api.response(201, 'Place successfully created')
     @api.response(400, 'Invalid input data')
@@ -49,12 +51,15 @@ class PlaceList(Resource):
         """
         Register a new place
         """
+        current_user = get_jwt_identity()
         place_data = api.payload
 
         existing_user = facade.get_user(place_data["owner_id"])
         if not existing_user:
             return {'error': 'User not found'}, 404
-        
+        if place_data["owner_id"] != current_user:
+            return {'error': 'Unauthorized action'}, 403
+
         place_data["owner"] = existing_user
 
         try:
@@ -144,12 +149,17 @@ class PlaceResource(Resource):
     @api.response(200, 'Place updated successfully')
     @api.response(404, 'Place not found')
     @api.response(400, 'Invalid input data')
+    @jwt_required()
     def put(self, place_id):
         """
         Update a place's information
         """
+        current_user = get_jwt_identity()
         place_data = api.payload
         place = facade.get_place(place_id)
+        if place.owner_id != current_user:
+            return {'error': 'Unauthorized action'}, 403
+
         if not place:
             return {'error': 'Place not found'}, 404
 
@@ -178,12 +188,12 @@ class PlaceReviewList(Resource):
 
         review_list = facade.get_reviews_by_place(place_id)
 
-        reviews =[]
+        reviews = []
         for review in review_list:
             reviews.append({
                 'id': review.id,
                 'title': review.title,
                 'text': review.text,
                 'rating': review.rating
-        })
+            })
         return reviews, 200
