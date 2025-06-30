@@ -1,13 +1,13 @@
 #!/bin/bash
 
 echo -e "\n> Create New User:"
-RESPONSE=$(curl -s -X POST http://localhost:5000/api/v1/users/ -H "Content-Type: application/json" -d '{"first_name": "John", "last_name": "Doe", "email": "john.doe@example.com", "password": "abcd1234"}')
+RESPONSE=$(curl -s -X POST http://localhost:5000/api/v1/users/ -H "Content-Type: application/json" -d '{"first_name": "Janet", "last_name": "Doe", "email": "janet.doe@example.com", "password": "abcd1234"}')
 export OWNER="$(echo "$RESPONSE" | jq -r '.id')"
 echo "User ID: $OWNER"
 
 echo -e "\n> Create Token:"
 RESPONSE=$(curl -s -X POST http://localhost:5000/api/v1/auth/login -H "Content-Type: application/json" -d '{
-	"email": "john.doe@example.com",
+	"email": "janet.doe@example.com",
 	"password": "abcd1234"
 }')
 export JWT="$(echo "$RESPONSE" | jq -r '.access_token')"
