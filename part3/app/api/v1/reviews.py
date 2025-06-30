@@ -16,10 +16,10 @@ review_model = api.model('Review', {
 
 @api.route('/')
 class ReviewList(Resource):
-    @jwt_required()
     @api.expect(review_model)
     @api.response(201, 'Review successfully created')
     @api.response(400, 'Invalid input data')
+    @jwt_required()
     def post(self):
         """
         Register a new review
@@ -100,13 +100,13 @@ class ReviewResource(Resource):
     @api.response(200, 'Review updated successfully')
     @api.response(404, 'Review not found')
     @api.response(400, 'Invalid input data')
-    @jwt_required
+    @jwt_required()
     def put(self, review_id):
         """
         Update a review's information
         """
         review_data = api.payload
-        current_user = get_jwt_identity
+        current_user = get_jwt_identity()
 
         review = facade.get_review(review_id)
         if not review:
