@@ -20,7 +20,7 @@ class User(BaseModel):
             self.__email = email
         else:
             raise ValueError
-        self.__is_admin = is_admin
+        self.is_admin = is_admin
 
     @property
     def first_name(self):
