@@ -8,6 +8,7 @@ user_model = api.model('User', {
     'first_name': fields.String(required=True, description='The first name of the user'),
     'last_name': fields.String(required=True, description='The last name of the user'),
     'email': fields.String(required=True, description='The email address of the user'),
+    'password': fields.String(required=True, description='The password of the user')
 })
 
 
@@ -32,6 +33,7 @@ class UserList(Resource):
         except ValueError:
             return {'error': 'Invalid input data'}, 400
         else:
+            new_user.hash_password(user_data["password"])
             return {
                 'id': new_user.id,
                 'first_name': new_user.first_name,

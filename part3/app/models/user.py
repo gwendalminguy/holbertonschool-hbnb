@@ -1,11 +1,12 @@
 from app.models.model import BaseModel
+import app
 import re
 
 regex = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
 
 
 class User(BaseModel):
-    def __init__(self, first_name, last_name, email, is_admin=False):
+    def __init__(self, first_name, last_name, email, password, is_admin=False):
         super().__init__()
         if len(first_name) <= 50:
             self.__first_name = first_name
@@ -53,3 +54,9 @@ class User(BaseModel):
             self.__email = email
         else:
             raise ValueError
+
+    def hash_password(self, password):
+        self.password = app.bcrypt.generate_password_hash(password).decode('utf-8')
+
+    def verify_password(self, password):
+        return app.bcrypt.check_password_hash(self.password, password)
