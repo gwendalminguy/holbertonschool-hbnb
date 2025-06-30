@@ -43,17 +43,16 @@ place_model = api.model('Place', {
 
 @api.route('/')
 class PlaceList(Resource):
-    @jwt_required()
     @api.expect(place_model)
     @api.response(201, 'Place successfully created')
     @api.response(400, 'Invalid input data')
+    @jwt_required()
     def post(self):
         """
         Register a new place
         """
-        current_user = get_jwt_identity()
         place_data = api.payload
-        print(current_user)
+        current_user = get_jwt_identity()
 
         existing_user = facade.get_user(place_data["owner_id"])
         if not existing_user:
@@ -156,8 +155,9 @@ class PlaceResource(Resource):
         """
         Update a place's information
         """
-        current_user = get_jwt_identity()
         place_data = api.payload
+        current_user = get_jwt_identity()
+
         place = facade.get_place(place_id)
         if place.owner_id != current_user["id"]:
             return {'error': 'Unauthorized action'}, 403
