@@ -38,7 +38,11 @@ class ReviewList(Resource):
             return {'error': 'Place not found'}, 404
 
         if existing_place.owner_id == current_user["id"]:
-            return {'error': 'Unauthorized action'}, 403
+            return {'error': 'You cannot review your own place'}, 400
+
+        for review in existing_place.reviews:
+            if review.user_id == current_user["id"]:
+                return {'error': 'You have already reviewed this place'}, 400
 
         review_data["place"] = existing_place
 
