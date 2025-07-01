@@ -55,7 +55,7 @@ class InMemoryRepository(Repository):
 
 
 class SQLAlchemyRepository(Repository):
-    def __init__(self):
+    def __init__(self, model):
         self.model = model
     
     def add(self, obj):
@@ -64,6 +64,9 @@ class SQLAlchemyRepository(Repository):
 
     def get(self, obj_id):
         return self.model.query.get(obj_id)
+
+    def get_all(self):
+        return self.model.query.all()
 
     def update(self, obj_id, data):
         obj = self.get(obj_id)
