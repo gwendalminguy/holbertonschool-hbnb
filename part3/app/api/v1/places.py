@@ -159,7 +159,7 @@ class PlaceResource(Resource):
         current_user = get_jwt_identity()
 
         place = facade.get_place(place_id)
-        if place.owner_id != current_user["id"]:
+        if place.owner_id != current_user["id"] and not current_user["is_admin"]:
             return {'error': 'Unauthorized action'}, 403
 
         if not place:
