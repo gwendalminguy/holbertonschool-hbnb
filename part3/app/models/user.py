@@ -1,12 +1,15 @@
 from app.models.model import BaseModel
 import app
 import re
+import uuid
+from flask_sqlalchemy import SQLAlchemy
 
 regex = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+db = SQLAlchemy()
 
 
 class User(BaseModel):
-    def __init__(self, first_name, last_name, email, password, is_admin=False):
+    """def __init__(self, first_name, last_name, email, password, is_admin=False):
         super().__init__()
         if len(first_name) <= 50:
             self.__first_name = first_name
@@ -53,7 +56,14 @@ class User(BaseModel):
         if re.match(regex, email):
             self.__email = email
         else:
-            raise ValueError
+            raise ValueError"""
+    __tablename__ = 'users'
+
+    first_name = db.Column(db.String(50), nullable=False)
+    last_name = db.Column(db.String(50), nullable=False)
+    email = db.Column(db.String(120), nullable=False, unique=True)
+    password = db.Column(db.String(128), nullable=False)
+    is_admin = db.Column(db.Boolean, default=False)
 
     def hash_password(self, password):
         self.password = app.bcrypt.generate_password_hash(password).decode('utf-8')
