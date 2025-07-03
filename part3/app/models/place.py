@@ -1,8 +1,11 @@
 from app.models.model import BaseModel
+from flask_sqlalchemy import SQLAlchemy
+
+db = SQLAlchemy()
 
 
 class Place(BaseModel):
-    def __init__(self, title, price, latitude, longitude, owner_id, rooms, owner, description=None, capacity=0, surface=0, amenities=[], reviews=[]):
+    """def __init__(self, title, price, latitude, longitude, owner_id, rooms, owner, description=None, capacity=0, surface=0, amenities=[], reviews=[]):
         super().__init__()
         if title is not None and 0 < len(title) <= 100:
             self.__title = title
@@ -77,5 +80,15 @@ class Place(BaseModel):
         if longitude is not None and -180.0 <= longitude <= 180.0:
             self.__longitude = longitude
         else:
-            raise ValueError
-       
+            raise ValueError"""
+    __tablename__ = 'place'
+
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(100), nullable=False)
+    description = db.Column(db.Text, nullable=False)
+    price = db.Column(db.Float, nullable=False)
+    latitude = db.Column(db.Float, nullable=False)
+    longitude = db.Column(db.Float, nullable=False)
+
+    def __repr__(self):
+        return f"<Place {self.id} - {self.title}>"
