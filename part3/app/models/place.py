@@ -91,4 +91,4 @@ class Place(BaseModel):
     longitude = db.Column(db.Float, nullable=False)
 
     def __repr__(self):
-        return f"<Place {self.id} - {self.title}>"
+        return (f"<Place {self.id} - {self.title}>")
