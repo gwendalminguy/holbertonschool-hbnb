@@ -1,8 +1,11 @@
 from app.models.model import BaseModel
+from flask_sqlalchemy import SQLAlchemy
+
+db = SQLAlechemy()
 
 
 class Amenity(BaseModel):
-    def __init__(self, name):
+    """def __init__(self, name):
         super().__init__()
         if len(name) <= 50:
             self.__name = name
@@ -18,4 +21,11 @@ class Amenity(BaseModel):
         if len(name) <= 50:
             self.__name = name
         else:
-            raise ValueError
+            raise ValueError"""
+    __tablename__ = "amenity"
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(50), nullable=False)
+
+    def __repr__(self):
+        return (f"<Amenity {self.id} - {self.name}")
