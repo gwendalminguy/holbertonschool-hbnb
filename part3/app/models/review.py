@@ -1,8 +1,11 @@
 from app.models.model import BaseModel
+from flask_sqlalchemy import SQLAlchemy
+
+db = SQLAlchemy
 
 
 class Review(BaseModel):
-    def __init__(self, title, text, rating, place_id, place, user_id, user):
+    """def __init__(self, title, text, rating, place_id, place, user_id, user):
         super().__init__()
         self.title = title
         if text is not None and len(text) > 0:
@@ -32,10 +35,19 @@ class Review(BaseModel):
     @property
     def rating(self):
         return self.__rating
-    
+
     @rating.setter
     def rating(self, rating):
         if 1 <= rating <= 5:
             self.__rating = rating
         else:   
+            raise ValueError("Rating must be an integer between 1 and 5")"""
+    __tablename__ = 'review'
+
+    id = db.Column(db.Integer, primary_key=True)
+    text = db.Column(db.Text, nullable=False)
+    rating = db.Column(db.Integer, nullable=False)
+
+    def save(self):
+        if not (1 <= self.rating <= 5):
             raise ValueError("Rating must be an integer between 1 and 5")
