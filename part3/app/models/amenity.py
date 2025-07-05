@@ -1,7 +1,5 @@
 from app.models.model import BaseModel
-from flask_sqlalchemy import SQLAlchemy
-
-db = SQLAlechemy()
+from app.extensions import db
 
 
 class Amenity(BaseModel):

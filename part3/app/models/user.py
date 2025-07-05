@@ -1,11 +1,11 @@
-from app.models.model import BaseModel
+from app.models.model import db, BaseModel
 import app
 import re
 import uuid
-from flask_sqlalchemy import SQLAlchemy
+from app.extensions import db
 
 regex = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
-db = SQLAlchemy()
+#  db = SQLAlchemy()
 
 
 class User(BaseModel):

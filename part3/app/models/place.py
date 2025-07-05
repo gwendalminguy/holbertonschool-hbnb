@@ -1,7 +1,5 @@
-from app.models.model import BaseModel
-from flask_sqlalchemy import SQLAlchemy
-
-db = SQLAlchemy()
+from app.models.model import db, BaseModel
+from app.extensions import db
 
 
 class Place(BaseModel):

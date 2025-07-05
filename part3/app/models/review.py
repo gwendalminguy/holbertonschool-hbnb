@@ -1,7 +1,5 @@
-from app.models.model import BaseModel
-from flask_sqlalchemy import SQLAlchemy
-
-db = SQLAlchemy
+from app.models.model import db, BaseModel
+from app.extensions import db
 
 
 class Review(BaseModel):
@@ -51,3 +49,6 @@ class Review(BaseModel):
     def save(self):
         if not (1 <= self.rating <= 5):
             raise ValueError("Rating must be an integer between 1 and 5")
+
+    def __repr__(self):
+        return (f"<Review {self.id}")

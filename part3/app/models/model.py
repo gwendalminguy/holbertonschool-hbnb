@@ -1,8 +1,6 @@
-from flask_sqlalchemy import SQLAlchemy
+from app.extensions import db
 import uuid
 from datetime import datetime
-
-db = SQLAlchemy()
 
 
 class BaseModel(db.Model):
