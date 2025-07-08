@@ -1,8 +1,7 @@
-from app.models.model import db, BaseModel
-import app
+from app.models.model import BaseModel
 import re
 import uuid
-from app.extensions import db
+from app import db, bcrypt
 
 regex = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
 #  db = SQLAlchemy()
@@ -66,7 +65,7 @@ class User(BaseModel):
     is_admin = db.Column(db.Boolean, default=False)
 
     def hash_password(self, password):
-        self.password = app.bcrypt.generate_password_hash(password).decode('utf-8')
+        self.password = bcrypt.generate_password_hash(password).decode('utf-8')
 
     def verify_password(self, password):
-        return app.bcrypt.check_password_hash(self.password, password)
+        return bcrypt.check_password_hash(self.password, password)

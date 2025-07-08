@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from app.extensions import db
+from app import db
 
 
 class Repository(ABC):

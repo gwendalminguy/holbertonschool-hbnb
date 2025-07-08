@@ -1,5 +1,5 @@
 from app.models.review import Review
-from app.extensions import db
+from app import db
 from app.persistence.repository import SQLAlchemyRepository
 
 
