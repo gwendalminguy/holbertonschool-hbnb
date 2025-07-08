@@ -36,12 +36,6 @@ class Place(BaseModel):
         self.reviews = []
         self.amenities = []
 
-    def add_review(self, review):
-        self.reviews.append(review)
-
-    def add_amenity(self, amenity):
-        self.amenities.append(amenity)
-
     @property
     def title(self):
         return self.__title
@@ -102,3 +96,9 @@ class Place(BaseModel):
 
     def __repr__(self):
         return (f"<Place {self.id} - {self.title}>")
+    
+    def add_review(self, review):
+        self.reviews.append(review)
+
+    def add_amenity(self, amenity):
+        self.amenities.append(amenity)
