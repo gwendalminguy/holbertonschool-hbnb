@@ -40,7 +40,8 @@ class Review(BaseModel):
             self.__rating = rating
         else:   
             raise ValueError("Rating must be an integer between 1 and 5")"""
-    __tablename__ = 'review'
+
+    __tablename__ = 'reviews'
 
     id = db.Column(db.Integer, primary_key=True)
     text = db.Column(db.Text, nullable=False)

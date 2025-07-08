@@ -1,4 +1,5 @@
 from app.models.model import BaseModel
+from sqlalchemy.orm import relationship
 import re
 import uuid
 from app import db, bcrypt
@@ -56,6 +57,7 @@ class User(BaseModel):
             self.__email = email
         else:
             raise ValueError"""
+
     __tablename__ = 'users'
 
     first_name = db.Column(db.String(50), nullable=False)
@@ -63,6 +65,7 @@ class User(BaseModel):
     email = db.Column(db.String(120), nullable=False, unique=True)
     password = db.Column(db.String(128), nullable=False)
     is_admin = db.Column(db.Boolean, default=False)
+    places = relationship('Place', backref='user', lazy=True)
 
     def hash_password(self, password):
         self.password = bcrypt.generate_password_hash(password).decode('utf-8')

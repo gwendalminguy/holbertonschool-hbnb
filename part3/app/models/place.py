@@ -79,7 +79,8 @@ class Place(BaseModel):
             self.__longitude = longitude
         else:
             raise ValueError"""
-    __tablename__ = 'place'
+
+    __tablename__ = 'places'
 
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100), nullable=False)
@@ -87,6 +88,10 @@ class Place(BaseModel):
     price = db.Column(db.Float, nullable=False)
     latitude = db.Column(db.Float, nullable=False)
     longitude = db.Column(db.Float, nullable=False)
+    rooms = db.Column(db.Integer, nullable=False)
+    capacity = db.Column(db.Integer, nullable=False)
+    surface = db.Column(db.Float, nullable=False)
+    owner_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
 
     def __repr__(self):
         return (f"<Place {self.id} - {self.title}>")

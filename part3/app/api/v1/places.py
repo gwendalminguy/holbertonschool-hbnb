@@ -61,15 +61,15 @@ class PlaceList(Resource):
         if place_data["owner_id"] != current_user["id"]:
             return {'error': 'Unauthorized action'}, 403
 
-        place_data["owner"] = existing_user
+        # place_data["owner"] = existing_user
 
         try:
             new_place = facade.create_place(place_data)
         except ValueError:
             return {'error': 'Invalid input data'}, 400
 
-        for amenity in place_data["amenities"]:
-            new_place.add_amenity(facade.get_amenity(amenity["id"]))
+        # for amenity in place_data["amenities"]:
+            # new_place.add_amenity(facade.get_amenity(amenity["id"]))
 
         return {
             'id': new_place.id,
