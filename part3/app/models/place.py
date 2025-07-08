@@ -1,4 +1,5 @@
 from app.models.model import db, BaseModel
+from sqlalchemy.orm import relationship
 from app import db
 
 
@@ -82,7 +83,6 @@ class Place(BaseModel):
 
     __tablename__ = 'places'
 
-    id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100), nullable=False)
     description = db.Column(db.Text, nullable=False)
     price = db.Column(db.Float, nullable=False)
@@ -91,7 +91,8 @@ class Place(BaseModel):
     rooms = db.Column(db.Integer, nullable=False)
     capacity = db.Column(db.Integer, nullable=False)
     surface = db.Column(db.Float, nullable=False)
-    owner_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    owner_id = db.Column(db.String(36), db.ForeignKey('users.id'), nullable=False)
+    reviews = relationship('Review', backref='place', lazy=True)
 
     def __repr__(self):
         return (f"<Place {self.id} - {self.title}>")

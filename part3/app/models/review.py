@@ -43,9 +43,11 @@ class Review(BaseModel):
 
     __tablename__ = 'reviews'
 
-    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.Text, nullable=False)
     text = db.Column(db.Text, nullable=False)
     rating = db.Column(db.Integer, nullable=False)
+    place_id = db.Column(db.String(36), db.ForeignKey('places.id'), nullable=False)
+    user_id = db.Column(db.String(36), db.ForeignKey('users.id'), nullable=False)
 
     def save(self):
         if not (1 <= self.rating <= 5):
