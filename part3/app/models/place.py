@@ -2,6 +2,11 @@ from app.models.model import db, BaseModel
 from sqlalchemy.orm import relationship
 from app import db
 
+place_amenity = db.Table('place_amenity',
+    db.Column('place_id', db.String(36), db.ForeignKey('places.id'), primary_key=True),
+    db.Column('amenity_id', db.String(36), db.ForeignKey('amenities.id'), primary_key=True)
+)
+
 
 class Place(BaseModel):
     """def __init__(self, title, price, latitude, longitude, owner_id, rooms, owner, description=None, capacity=0, surface=0, amenities=[], reviews=[]):
@@ -93,6 +98,7 @@ class Place(BaseModel):
     surface = db.Column(db.Float, nullable=False)
     owner_id = db.Column(db.String(36), db.ForeignKey('users.id'), nullable=False)
     reviews = relationship('Review', backref='place', lazy=True)
+    amenities = relationship('Amenity', secondary=place_amenity, lazy='subquery', backref=db.backref('places', lazy=True))
 
     def __repr__(self):
         return (f"<Place {self.id} - {self.title}>")
