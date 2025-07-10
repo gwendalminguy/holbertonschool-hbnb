@@ -6,7 +6,7 @@ curl -X POST http://localhost:5000/api/v1/users/ -H "Content-Type: application/j
 	"last_name": "Doe",
 	"email": "jane.doe@example.com",
 	"password": "abcd1234",
-	"is_admin": "True"
+	"is_admin": 1
 }'
 
 echo -e "\n> Create Token:"
