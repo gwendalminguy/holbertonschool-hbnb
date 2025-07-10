@@ -1,5 +1,5 @@
 from app.models.model import db, BaseModel
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import relationship, validates
 from app import db
 
 place_amenity = db.Table('place_amenity',
@@ -33,6 +33,34 @@ class Place(BaseModel):
     def add_amenity(self, amenity):
         self.amenities.append(amenity)
 
+    @validates("title")
+    def validate_title(self, key, title):
+        if title is not None and 0 < len(title) <= 100:
+            return title
+        else:
+            raise ValueError
+
+    @validates("price")
+    def validate_price(self, key, price):
+        if price is not None and price >= 0:
+            return price
+        else:
+            raise ValueError
+
+    @validates("latitude")
+    def validate_latitude(self, key, latitude):
+        if latitude is not None and -90.0 <= latitude <= 90.0:
+            return latitude
+        else:
+            raise ValueError
+
+    @validates("longitude")
+    def validate_longitude(self, key, longitude):
+        if longitude is not None and -180.0 <= longitude <= 180.0:
+            return longitude
+        else:
+            raise ValueError
+
     """
     def __init__(self, title, price, latitude, longitude, owner_id, rooms, owner, description=None, capacity=0, surface=0, amenities=[], reviews=[]):
         super().__init__()
@@ -62,48 +90,4 @@ class Place(BaseModel):
         self.surface = surface
         self.reviews = []
         self.amenities = []
-
-    @property
-    def title(self):
-        return self.__title
-
-    @title.setter
-    def title(self, title):
-        if title is not None and 0 < len(title) <= 100:
-            self.__title = title
-        else:
-            raise ValueError
-
-    @property
-    def price(self):
-        return self.__price
-
-    @price.setter
-    def price(self, price):
-        if price is not None and price >= 0:
-            self.__price = price
-        else:
-            raise ValueError
-
-    @property
-    def latitude(self):
-        return self.__latitude
-
-    @latitude.setter
-    def latitude(self, latitude):
-        if latitude is not None and -90.0 <= latitude <= 90.0:
-            self.__latitude = latitude
-        else:
-            raise ValueError
-
-    @property
-    def longitude(self):
-        return self.__longitude
-
-    @longitude.setter
-    def longitude(self, longitude):
-        if longitude is not None and -180.0 <= longitude <= 180.0:
-            self.__longitude = longitude
-        else:
-            raise ValueError
     """
