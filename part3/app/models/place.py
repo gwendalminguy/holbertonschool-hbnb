@@ -20,9 +20,10 @@ class Place(BaseModel):
     capacity = db.Column(db.Integer, nullable=False)
     surface = db.Column(db.Float, nullable=False)
     owner_id = db.Column(db.String(36), db.ForeignKey('users.id'), nullable=False)
+    owner = db.relationship("User", back_populates="places")
 
-    reviews = relationship('Review', backref='places', lazy=True)
-    amenities = relationship('Amenity', secondary=place_amenity, lazy='subquery', backref=db.backref('places', lazy=True))
+    reviews = relationship('Review', back_populates='place', lazy=True)
+    amenities = relationship('Amenity', secondary=place_amenity, back_populates ='places', lazy=True)
 
     def __repr__(self):
         return (f"<Place {self.id} - {self.title}>")

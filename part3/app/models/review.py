@@ -12,6 +12,9 @@ class Review(BaseModel):
     place_id = db.Column(db.String(36), db.ForeignKey('places.id'), nullable=False)
     user_id = db.Column(db.String(36), db.ForeignKey('users.id'), nullable=False)
 
+    place = db.relationship("Place", back_populates="reviews")
+    user = db.relationship("User", back_populates="reviews")
+
     def save(self):
         if not (1 <= self.rating <= 5):
             raise ValueError("Rating must be an integer between 1 and 5")
