@@ -9,8 +9,34 @@ place_amenity = db.Table('place_amenity',
 
 
 class Place(BaseModel):
-    """def __init__(self, title, price, latitude, longitude, owner_id, rooms, owner, description=None, capacity=0, surface=0, amenities=[], reviews=[]):
+    __tablename__ = 'places'
+
+    title = db.Column(db.String(100), nullable=False)
+    description = db.Column(db.Text, nullable=False)
+    price = db.Column(db.Float, nullable=False)
+    latitude = db.Column(db.Float, nullable=False)
+    longitude = db.Column(db.Float, nullable=False)
+    rooms = db.Column(db.Integer, nullable=False)
+    capacity = db.Column(db.Integer, nullable=False)
+    surface = db.Column(db.Float, nullable=False)
+    owner_id = db.Column(db.String(36), db.ForeignKey('users.id'), nullable=False)
+
+    reviews = relationship('Review', backref='place', lazy=True)
+    amenities = relationship('Amenity', secondary=place_amenity, lazy='subquery', backref=db.backref('places', lazy=True))
+
+    def __repr__(self):
+        return (f"<Place {self.id} - {self.title}>")
+    
+    def add_review(self, review):
+        self.reviews.append(review)
+
+    def add_amenity(self, amenity):
+        self.amenities.append(amenity)
+
+    """
+    def __init__(self, title, price, latitude, longitude, owner_id, rooms, owner, description=None, capacity=0, surface=0, amenities=[], reviews=[]):
         super().__init__()
+
         if title is not None and 0 < len(title) <= 100:
             self.__title = title
         else:
@@ -28,6 +54,7 @@ class Place(BaseModel):
             self.__longitude = longitude
         else:
             raise ValueError
+
         self.owner_id = owner_id
         self.owner = owner
         self.rooms = rooms
@@ -78,27 +105,5 @@ class Place(BaseModel):
         if longitude is not None and -180.0 <= longitude <= 180.0:
             self.__longitude = longitude
         else:
-            raise ValueError"""
-
-    __tablename__ = 'places'
-
-    title = db.Column(db.String(100), nullable=False)
-    description = db.Column(db.Text, nullable=False)
-    price = db.Column(db.Float, nullable=False)
-    latitude = db.Column(db.Float, nullable=False)
-    longitude = db.Column(db.Float, nullable=False)
-    rooms = db.Column(db.Integer, nullable=False)
-    capacity = db.Column(db.Integer, nullable=False)
-    surface = db.Column(db.Float, nullable=False)
-    owner_id = db.Column(db.String(36), db.ForeignKey('users.id'), nullable=False)
-    reviews = relationship('Review', backref='place', lazy=True)
-    amenities = relationship('Amenity', secondary=place_amenity, lazy='subquery', backref=db.backref('places', lazy=True))
-
-    def __repr__(self):
-        return (f"<Place {self.id} - {self.title}>")
-    
-    def add_review(self, review):
-        self.reviews.append(review)
-
-    def add_amenity(self, amenity):
-        self.amenities.append(amenity)
+            raise ValueError
+    """

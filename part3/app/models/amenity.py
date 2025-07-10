@@ -3,7 +3,15 @@ from app import db
 
 
 class Amenity(BaseModel):
-    """def __init__(self, name):
+    __tablename__ = "amenities"
+
+    name = db.Column(db.String(50), nullable=False)
+
+    def __repr__(self):
+        return (f"<Amenity {self.id} - {self.name}")
+
+    """
+    def __init__(self, name):
         super().__init__()
         if len(name) <= 50:
             self.__name = name
@@ -19,11 +27,5 @@ class Amenity(BaseModel):
         if len(name) <= 50:
             self.__name = name
         else:
-            raise ValueError"""
-
-    __tablename__ = "amenities"
-
-    name = db.Column(db.String(50), nullable=False)
-
-    def __repr__(self):
-        return (f"<Amenity {self.id} - {self.name}")
+            raise ValueError
+    """
