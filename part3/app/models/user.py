@@ -16,8 +16,8 @@ class User(BaseModel):
     password = db.Column(db.String(128), nullable=False)
     is_admin = db.Column(db.Boolean, default=False)
 
-    places = relationship('Place', backref='user', lazy=True)
-    reviews = relationship('Review', backref='user', lazy=True)
+    places = relationship('Place', backref='users', lazy=True)
+    reviews = relationship('Review', backref='users', lazy=True)
 
     def hash_password(self, password):
         self.password = bcrypt.generate_password_hash(password).decode('utf-8')
