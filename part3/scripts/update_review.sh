@@ -28,8 +28,7 @@ export AMENITY_2="$(echo "$RESPONSE" | jq -r '.id')"
 echo "Amenity ID: $AMENITY_2"
 
 echo -e "\n> Create New Place:"
-# RESPONSE=$(curl -s -X POST http://localhost:5000/api/v1/places/ -H "Content-Type: application/json" -H "Authorization: Bearer $JWT_OWNER" -d '{"title": "Nice French Apartment", "description": "Cozy apartment in the center of Toulouse", "price": 225.0, "latitude": 85, "longitude": 125, "owner_id": "'"$OWNER"'", "rooms": 3, "capacity": 4, "surface": 55.5, "amenities": [{"id": "'"$AMENITY_1"'"}, {"id": "'"$AMENITY_2"'"}]}')
-RESPONSE=$(curl -s -X POST http://localhost:5000/api/v1/places/ -H "Content-Type: application/json" -H "Authorization: Bearer $JWT_OWNER" -d '{"title": "Nice French Apartment", "description": "Cozy apartment in the center of Toulouse", "price": 225.0, "latitude": 85, "longitude": 125, "owner_id": "'"$OWNER"'", "rooms": 3, "capacity": 4, "surface": 55.5}')
+RESPONSE=$(curl -s -X POST http://localhost:5000/api/v1/places/ -H "Content-Type: application/json" -H "Authorization: Bearer $JWT_OWNER" -d '{"title": "Nice French Apartment", "description": "Cozy apartment in the center of Toulouse", "price": 225.0, "latitude": 85, "longitude": 125, "owner_id": "'"$OWNER"'", "rooms": 3, "capacity": 4, "surface": 55.5, "amenities": [{"id": "'"$AMENITY_1"'"}, {"id": "'"$AMENITY_2"'"}]}')
 export PLACE="$(echo "$RESPONSE" | jq -r '.id')"
 echo "Place ID: $PLACE"
 
