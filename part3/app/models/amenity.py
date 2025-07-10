@@ -1,4 +1,5 @@
 from app.models.model import BaseModel
+from sqlalchemy.orm import relationship, validates
 from app import db
 
 
@@ -10,20 +11,16 @@ class Amenity(BaseModel):
     def __repr__(self):
         return (f"<Amenity {self.id} - {self.name}")
 
+    @validates("name")
+    def validate_name(self, key, name):
+        if len(name) <= 50:
+            return name
+        else:
+            raise ValueError
+
     """
     def __init__(self, name):
         super().__init__()
-        if len(name) <= 50:
-            self.__name = name
-        else:
-            raise ValueError
-    
-    @property
-    def name(self):
-        return self.__name
-    
-    @name.setter
-    def name(self, name):
         if len(name) <= 50:
             self.__name = name
         else:
