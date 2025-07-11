@@ -1,7 +1,11 @@
+## Entity Relationship Diagram
+
 ```mermaid
 erDiagram
     users {
         UUID id PK
+		datetime created_at
+		datetime updated_at
         string first_name
         string last_name
         string email
@@ -11,6 +15,8 @@ erDiagram
 
     places {
         UUID id PK
+		datetime created_at
+		datetime updated_at
         string title
         string description
         float price
@@ -24,11 +30,15 @@ erDiagram
 
     amenities {
         UUID id PK
+		datetime created_at
+		datetime updated_at
         string name
     }
 
     reviews {
         UUID id PK
+		datetime created_at
+		datetime updated_at
         string title
         string text
         int rating
@@ -38,12 +48,14 @@ erDiagram
 
     place_amenity {
         UUID place_id FK
+		datetime created_at
+		datetime updated_at
         UUID amenity_id FK
     }
 
     users ||--o{ places : owns
     users ||--o{ reviews : writes
-    places ||--o{ reviews : has
+    places ||--o{ reviews : receives
     places ||--o{ place_amenity : has
     amenities ||--o{ place_amenity : has
 ```
