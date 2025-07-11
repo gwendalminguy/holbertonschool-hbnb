@@ -10,5 +10,5 @@ CREATE TABLE place (
     surface FLOAT NOT NULL,
     owner_id CHAR(36) NOT NULL,
     PRIMARY KEY (id),
-    FOREIGN KEY (owner_id) REFERENCES "user"(id)
+    FOREIGN KEY (owner_id) REFERENCES `user`(id)
 );
