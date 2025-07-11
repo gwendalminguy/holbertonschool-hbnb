@@ -2,7 +2,7 @@ INSERT INTO `users` (`id`, `email`, `password`, `first_name`, `last_name`, `is_a
 VALUES (
     '36c9050e-ddd3-4c3b-9731-9f487208bbc1',
     admin@hbnb.io,
-    'admin_password',
+    '$2b$12$VHvQlCJp4u6r24DoZYk4EupWELP5kgVxSPr02D5oscNon7xxRA7/m',
     'Admin',
     'HBnB',
     TRUE
