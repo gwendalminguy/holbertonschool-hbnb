@@ -1,7 +1,13 @@
 #!/bin/bash
 
 echo -e "\n> Create New User (Place Owner):"
-RESPONSE=$(curl -s -X POST http://localhost:5000/api/v1/users/ -H "Content-Type: application/json" -d '{"first_name": "Johnathan", "last_name": "Doe", "email": "johnathan.doe@example.com", "password": "abcd1234"}')
+RESPONSE=$(curl -s -X POST http://localhost:5000/api/v1/users/ -H "Content-Type: application/json" -d '{
+	"first_name": "Johnathan",
+	"last_name": "Doe",
+	"email": "johnathan.doe@example.com",
+	"password": "abcd1234",
+	"is_admin": 1
+}')
 export OWNER="$(echo "$RESPONSE" | jq -r '.id')"
 echo "Place Owner ID: $OWNER"
 
@@ -13,13 +19,13 @@ RESPONSE=$(curl -s -X POST http://localhost:5000/api/v1/auth/login -H "Content-T
 export JWT_OWNER="$(echo "$RESPONSE" | jq -r '.access_token')"
 echo "Access Token: $JWT_OWNER"
 
-#echo -e "\n> Create New Amenities:"
-#RESPONSE=$(curl -s -X POST http://localhost:5000/api/v1/amenities/ -H "Content-Type: application/json" -d '{"name": "Parking"}')
-#export AMENITY_1="$(echo "$RESPONSE" | jq -r '.id')"
-#echo "Amenity ID: $AMENITY_1"
-#RESPONSE=$(curl -s -X POST http://localhost:5000/api/v1/amenities/ -H "Content-Type: application/json" -d '{"name": "Wi-Fi"}')
-#export AMENITY_2="$(echo "$RESPONSE" | jq -r '.id')"
-#echo "Amenity ID: $AMENITY_2"
+echo -e "\n> Create New Amenities:"
+RESPONSE=$(curl -s -X POST http://localhost:5000/api/v1/amenities/ -H "Content-Type: application/json" -H "Authorization: Bearer $JWT_OWNER" -d '{"name": "Parking"}')
+export AMENITY_1="$(echo "$RESPONSE" | jq -r '.id')"
+echo "Amenity ID: $AMENITY_1"
+RESPONSE=$(curl -s -X POST http://localhost:5000/api/v1/amenities/ -H "Content-Type: application/json" -H "Authorization: Bearer $JWT_OWNER" -d '{"name": "Wi-Fi"}')
+export AMENITY_2="$(echo "$RESPONSE" | jq -r '.id')"
+echo "Amenity ID: $AMENITY_2"
 
 echo -e "\n> Create New Place:"
 # RESPONSE=$(curl -s -X POST http://localhost:5000/api/v1/places/ -H "Content-Type: application/json" -H "Authorization: Bearer $JWT_OWNER" -d '{"title": "Nice French Apartment", "description": "Cozy apartment in the center of Toulouse", "price": 225.0, "latitude": 85, "longitude": 125, "owner_id": "'"$OWNER"'", "rooms": 3, "capacity": 4, "surface": 55.5, "amenities": [{"id": "'"$AMENITY_1"'"}, {"id": "'"$AMENITY_2"'"}]}')

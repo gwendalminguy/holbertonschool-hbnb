@@ -63,13 +63,16 @@ class PlaceList(Resource):
 
         # place_data["owner"] = existing_user
 
+        amenities = []
+        for amenity in place_data["amenities"]:
+            amenities.append(facade.get_amenity(amenity["id"]))
+
+        place_data["amenities"] = amenities
+
         try:
             new_place = facade.create_place(place_data)
         except ValueError:
             return {'error': 'Invalid input data'}, 400
-
-        # for amenity in place_data["amenities"]:
-            # new_place.add_amenity(facade.get_amenity(amenity["id"]))
 
         return {
             'id': new_place.id,
@@ -170,8 +173,8 @@ class PlaceResource(Resource):
             return {'error': 'Invalid input data'}, 400
 
         place.amenities = []
-        for amenity in place_data["amenities"]:
-            place.add_amenity(facade.get_amenity(amenity["id"]))
+        # for amenity in place_data["amenities"]:
+            # place.add_amenity(facade.get_amenity(amenity["id"]))
 
         return {'message': 'Place updated successfully'}, 200
 
