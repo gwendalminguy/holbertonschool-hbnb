@@ -18,9 +18,15 @@ from app.api.v1.auth import api as auth_ns
 
 def create_app(config_class="config.DevelopmentConfig"):
     app = Flask(__name__)
-    CORS(app, origins="https://localhost:5000")
     app.config.from_object(config_class)
-    db.init_app(app)
+
+    CORS(app, ressources={
+        r"/*": {
+            "origins": ["http://localhost:5000", "http://127.0.0.1:5000"],
+            "methods": ["GET", "POST", "PUT", "DELETE"],
+            "allow_headers": ["Content-Type", "Authorization"]
+        }
+    })
 
     api = Api(app, version='1.0', title='HBnB API', description='HBnB Application API', doc='/api/v1/')
 
@@ -30,6 +36,7 @@ def create_app(config_class="config.DevelopmentConfig"):
     api.add_namespace(reviews_ns, path='/api/v1/reviews')
     api.add_namespace(auth_ns, path='/api/v1/auth')
 
+    db.init_app(app)
     bcrypt.init_app(app)
     jwt.init_app(app)
 
