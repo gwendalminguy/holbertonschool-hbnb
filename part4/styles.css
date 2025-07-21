@@ -1,32 +1,150 @@
-/* 
-  This is a SAMPLE File to get you started. Follow the instructions on the project to complete the tasks. 
-  You'll probably need to override some of theese styles.
-*/
+:root {
+	--color-primary: #ff375c;
+	--color-black: #090909;
+	--color-white: #fcfcfc;
+	--color-light-grey: #f2f2f2;
+	--color-dark-grey: #353535;
+    --text-color: var(--color-black);
+	--font-family-base: "Open Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+	--font-family-title: "Raleway", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+	--font-size-small: 1.2rem;
+	--font-size-medium: 1.6rem;
+	--font-size-large: 1.8rem;
+	--font-size-x-large: 2.3rem;
+	--font-size-xx-large: 4.8rem;
+    --font-weight-regular: 400;
+	--font-weight-bold: 700;
+	--line-height-small: 1.2;
+	--line-height-base: 1.5;
+	--line-height-big: 1.8;
+}
+
+/* ----- GENERAL ----- */
 
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: Arial, sans-serif;
+    font-family: var(--font-family-base);
+}
+
+html {
+	scroll-behavior: smooth;
+	font-size: 62.5%;
 }
 
 body {
-    background-color: #f4f4f4;
-    color: #333;
+    background-color: var(--color-light-grey);
+    line-height: var(--line-height-base);
+    color: var(--color-dark-grey);
+    font-size: var(--font-size-medium);
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-family: var(--font-family-title);
+	font-weight: var(--font-weight-bold);
+}
+
+/* ----- HEADER ----- */
+
 header {
-    background-color: #333;
-    color: #fff;
+    background-color: var(--color-dark-grey);
+    color: var(--color-white);
     padding: 1rem;
 }
 
+/* ----- NAVIGATION ----- */
+
 nav a {
-    color: #fff;
+    color: var(--color-white);
     text-decoration: none;
     margin-left: 1rem;
 }
 
+.nav-list {
+    float: right;
+}
+
+.nav-item {
+    display: inline-block;
+}
+
+.nav-link {
+    display: block;
+    padding: 0.5rem 1rem;
+}
+
+/* ----- MAIN ----- */
+
 main {
     padding: 2rem;
+}
+
+.container {
+	width: 960px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+ul {
+    list-style: none;
+}
+
+.col-3 {
+    float: left;
+	width: 33.33%;
+}
+
+.col-2 {
+    float: left;
+	width: 50%;
+}
+
+.place-card,
+.place-details,
+.review-card {
+    margin: 20px;
+    padding: 10px;
+    background-color: var(--color-white);
+    border-radius: 10px;
+    box-shadow:
+		0 10px 15px rgba(0, 0, 0, 0.05),
+		0 8px 10px rgba(0, 0, 0, 0.05);
+}
+
+.place-card:hover {
+    transform: scale(1.05);
+    transition: transform 0.2s ease;
+}
+
+/* ----- FOOTER ----- */
+
+.footer {
+    color: var(--text-color);
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+.footer address,
+.footer p {
+    padding: 1rem 1rem;
+}
+
+.footer ul {
+    text-align: right;
+}
+
+.footer-copyright {
+    font-size: var(--font-size-small);
+}
+
+[data-section-theme="dark"] {
+	--text-color: var(--color-white);
+	background-color: var(--color-dark-grey);
 }
