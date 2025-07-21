@@ -4,9 +4,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
+    <link rel="icon" type="image/png" href="images/icon.png">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+			<div class="logo">
+				<a href="index.html">
+					<img src="images/logo.png" alt="HBnB Logo" width="80" height="80">
+				</a>
+			</div>
+            <div class="login-button">
+                <button>
+                    <a href="login.html" id="login-link">Login</a>
+                </button>
+            </div>
+            <nav class="nav-menu">
+                <ul class="nav-list">
+                    <li class="nav-item">
+                        <a href="index.html" class="nav-link">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="login.html" class="nav-link">Login</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <!-- Main -->
     <main>
         <form id="login-form">
             <h2>Login</h2>
@@ -19,6 +46,44 @@
             <button type="submit">Login</button>
         </form>
     </main>
+    <!-- Footer -->
+    <footer class="footer" data-section-theme="dark">
+        <div class="container">
+            <div class="row">
+                <div class="footer-title">
+                    <p>HBnB Evolution</p>
+                    <address class="footer-address">
+                    Holberton School<br>
+                    37 rue des Marchands<br>
+                    31000 Toulouse, FR
+                    </address>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-2">
+                    <div class="footer-copyright">
+                        <p>© 2025 Gwendal Minguy-Pèlerin - Holberton School.</p>
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="footer-link">
+                        <ul class="nav-list">
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">Terms of use</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">Privacy Policy</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">Cookie Policy</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
     <script src="scripts.js"></script>
 </body>
 </html>
