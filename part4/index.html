@@ -23,9 +23,9 @@
                     </li>
                 </ul>
             </nav>
-            <div class="login-button">
+            <div id="login-link">
                 <button>
-                    <a href="login.html" id="login-link">Login</a>
+                    <a href="login.html">Login</a>
                 </button>
             </div>
         </div>
@@ -36,7 +36,12 @@
             <div class="container">
                 <label for="price-filter">Max Price:</label>
                 <select id="price-filter">
-                    <!-- Options will be populated dynamically -->
+                     <option value=10>10</option>
+                     <option value=50>50</option>
+                     <option value=100>100</option>
+                     <option value=250>250</option>
+                     <option value=500>500</option>
+                     <option value=0>All</option>
                 </select>
             </div>
         </section>
@@ -49,40 +54,11 @@
         </section>
     </main>
     <!-- Footer -->
-    <footer class="footer" data-section-theme="dark">
+    <footer class="footer">
         <div class="container-footer">
-            <div class="row">
-                <div class="footer-title">
-                    <p>HBnB Evolution</p>
-                    <address class="footer-address">
-                    Holberton School<br>
-                    37 rue des Marchands<br>
-                    31000 Toulouse, FR
-                    </address>
-                </div>
-            </div>
             <hr>
-            <div class="row">
-                <div class="col-2">
-                    <div class="footer-copyright">
-                        <p>© 2025 Gwendal Minguy-Pèlerin - Holberton School.</p>
-                    </div>
-                </div>
-                <div class="col-2">
-                    <div class="footer-link">
-                        <ul class="nav-list">
-                            <li class="nav-item">
-                                <a href="#" class="nav-link">Terms of use</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#" class="nav-link">Privacy Policy</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#" class="nav-link">Cookie Policy</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
+            <div class="footer-copyright">
+                <p>© 2025 Gwendal Minguy-Pèlerin - Holberton School.</p>
             </div>
         </div>
     </footer>
