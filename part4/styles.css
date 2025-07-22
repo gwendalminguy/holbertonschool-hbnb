@@ -66,6 +66,10 @@ nav a {
     margin-left: 1rem;
 }
 
+.nav-menu {
+    float: right;
+}
+
 .nav-list {
     float: right;
 }
@@ -85,10 +89,19 @@ main {
     padding: 2rem;
 }
 
-.container {
+.container,
+.container-header,
+.container-footer {
 	width: 960px;
 	margin-left: auto;
 	margin-right: auto;
+}
+
+.container,
+.container-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 ul {
@@ -105,6 +118,11 @@ ul {
 	width: 50%;
 }
 
+.login-card {
+    width: 33%;
+}
+
+.login-card,
 .place-card,
 .place-details,
 .review-card {
