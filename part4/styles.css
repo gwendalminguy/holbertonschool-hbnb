@@ -90,8 +90,7 @@ main {
 }
 
 .container,
-.container-header,
-.container-footer {
+.container-header {
 	width: 960px;
 	margin-left: auto;
 	margin-right: auto;
@@ -149,20 +148,11 @@ ul {
     width: 100%;
 }
 
-.footer address,
 .footer p {
     padding: 1rem 1rem;
 }
 
-.footer ul {
-    text-align: right;
-}
-
 .footer-copyright {
+    text-align: center;
     font-size: var(--font-size-small);
-}
-
-[data-section-theme="dark"] {
-	--text-color: var(--color-white);
-	background-color: var(--color-dark-grey);
 }
