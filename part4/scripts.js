@@ -5,6 +5,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
   checkAuthentication();
 
+  if (placesList) {
+    document.getElementById('price-filter').addEventListener('change', (event) => {
+      const value = document.getElementById('price-filter').value;
+      filterPlaces(value);
+    });
+  }
+
   if (loginForm) {
     loginForm.addEventListener('submit', async (event) => {
       event.preventDefault();
@@ -14,6 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 async function loginUser (email, password) {
+  /* Authenticating a user */
   const response = await fetch('http://127.0.0.1:5000/api/v1/auth/login', {
     method: 'POST',
     headers: {
@@ -22,10 +30,10 @@ async function loginUser (email, password) {
     body: JSON.stringify({ email, password })
   });
 
+  /* Saving token in a cookie */
   if (response.ok) {
     const data = await response.json();
-    document.cookie = `token=${data.access_token};path=/`;
-    /* document.cookie = `username=me;path=/`; */
+    document.cookie = `token=${data.access_token}; path=/`;
     window.location.href = 'index.html';
   } else {
     alert('Login failed: ' + response.statusText);
@@ -43,14 +51,13 @@ async function checkAuthentication() {
 
     if (placesList) {
       const places = await fetchPlaces(token);
-      for (let i = 0; i < places.length; i++) {
-        addPlaceCard(places[i]);
-      }
+      displayPlaces(places);
     }
   }
 }
 
 function getCookie(name) {
+  /* Getting cookie value */
   const cookieList = decodeURIComponent(document.cookie).split('; ');
   for (let i = 0; i < cookieList.length; i++) {
     const cookie = cookieList[i].split('=');
@@ -61,6 +68,7 @@ function getCookie(name) {
 }
 
 async function fetchPlaces(token) {
+  /* Retrieving all places */
   const response = await fetch('http://127.0.0.1:5000/api/v1/places/', {
     method: 'GET',
     headers: {
@@ -77,32 +85,52 @@ async function fetchPlaces(token) {
   }
 }
 
-function addPlaceCard(place) {
-  const li = document.createElement('li');
-  li.classList.add('col-3');
+function displayPlaces(places) {
+  /* Clearing placesList */
+  let lastItem = placesList.lastElementChild;
+  while (lastItem) {
+    placesList.removeChild(lastItem);
+    lastItem = placesList.lastElementChild;
+  }
 
-  const div = document.createElement('div');
-  div.classList.add('place-card');
+  /* Populating placesList */
+  for (let i = 0; i < places.length; i++) {
+    const li = document.createElement('li');
+    li.classList.add('col-3');
 
-  const h3 = document.createElement('h3');
-  h3.classList.add('place-title');
-  h3.textContent = place.title;
+    const div = document.createElement('div');
+    div.classList.add('place-card');
 
-  const p = document.createElement('p');
-  p.classList.add('place-price');
-  p.textContent = `$${place.price}`;
+    const h3 = document.createElement('h3');
+    h3.classList.add('place-title');
+    h3.textContent = places[i].title;
 
-  const button = document.createElement('button');
-  button.classList.add('details-button');
+    const p = document.createElement('p');
+    p.classList.add('place-price');
+    p.textContent = `$${places[i].price}`;
 
-  const a = document.createElement('a');
-  a.href = 'place.html';
-  a.textContent = 'Details';
+    const button = document.createElement('button');
+    button.classList.add('details-button');
 
-  li.appendChild(div);
-  div.appendChild(h3);
-  div.appendChild(p);
-  div.appendChild(button);
-  button.appendChild(a);
-  placesList.appendChild(li);
+    const a = document.createElement('a');
+    a.href = 'place.html';
+    a.textContent = 'Details';
+
+    li.appendChild(div);
+    div.appendChild(h3);
+    div.appendChild(p);
+    div.appendChild(button);
+    button.appendChild(a);
+    placesList.appendChild(li);
+  }
+}
+
+function filterPlaces(value) {
+  if (value > 0) {
+    for (let i = 0; i < placesList.length; i++) {
+      if (placesList[i].price > value) {
+        placesList[i].style.display = none;
+      }
+    }
+  }
 }
