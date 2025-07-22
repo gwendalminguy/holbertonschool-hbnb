@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     loginForm.addEventListener('submit', async (event) => {
       event.preventDefault();
       loginUser(loginForm.email.value, loginForm.password.value);
+      /* document.cookie = "username=admin"; */
     });
   }
 });
@@ -20,9 +21,8 @@ async function loginUser (email, password) {
 
   if (response.ok) {
     const data = await response.json();
-    /*console.log(data);*/
-    document.cookie = `token=${data.access_token}; path=/`;
-    /*window.location.href = 'index.html';*/
+    document.cookie = `token=${data.access_token};path=/`;
+    window.location.href = 'index.html';
   } else {
     alert('Login failed: ' + response.statusText);
   }
