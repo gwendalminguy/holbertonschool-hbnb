@@ -10,53 +10,49 @@
 <body>
     <!-- HEADER -->
     <header class="header">
-        <a href="index.html">
-            <img src="images/logo-white.png" class="logo" alt="HBnB Logo" width="175rem" height="75rem">
+        <a href="index.html" id="logo">
+            <img src="images/logo-horizontal-white.png" class="logo" alt="HBnB Logo" width="150rem" height="50rem">
         </a>
-        <nav class="nav-menu">
-            <ul class="nav-list">
-                <li class="nav-item">
-                    <a href="index.html" class="nav-link">Home</a>
-                </li>
-            </ul>
-        </nav>
         <div id="login-link">
-            <button>
-                <a href="login.html">Login</a>
-            </button>
+            <button>Login</button>
+        </div>
+        <div id="logout-link">
+            <button>Logout</button>
         </div>
     </header>
     <!-- MAIN -->
     <main>
         <section id="place-details">
             <div class="container">
-                <!-- Place details will be populated dynamically -->
-                <div class="place-details">
-                    <h3 class="place-title">Waterfall House</h3>
-                    <p class="place-price">$899</p>
-                    <p class="place-description">Beautiful house designed by American architect Frank Lloyd Wright, partly built over a waterfall on the Bear Run stream.</p>
-                    <p class="place-owner">Host: FLW</p>
-                    <p class="place-capacity">Capacity: 8 people</p>
-                    <p class="place-surface">Surface: 158 m2</p>
-                    <p class="place-roomes">Rooms: 11</p>
-                    <div class="place-info">
-                        <h4 class="place-amenities">Amenities</h4>
-                        <ul class="amenities-list">
-                            <li class="amenity-item">Wi-Fi</li>
-                            <li class="amenity-item">Parking</li>
-                            <li class="amenity-item">Terrace</li>
-                        </ul>
+                <div class="row">
+                    <!-- Place details will be populated dynamically -->
+                    <div class="place-details">
+                        <h3 class="place-title">Waterfall House</h3>
+                        <p class="place-price">$899</p>
+                        <p class="place-description">Beautiful house designed by American architect Frank Lloyd Wright, partly built over a waterfall on the Bear Run stream.</p>
+                        <p class="place-owner">Host: FLW</p>
+                        <p class="place-capacity">Capacity: 8 people</p>
+                        <p class="place-surface">Surface: 158 m2</p>
+                        <p class="place-roomes">Rooms: 11</p>
+                        <div class="place-info">
+                            <h4 class="place-amenities">Amenities</h4>
+                            <ul class="amenities-list">
+                                <li class="amenity-item">Wi-Fi</li>
+                                <li class="amenity-item">Parking</li>
+                                <li class="amenity-item">Terrace</li>
+                            </ul>
+                        </div>
+                        <button class="review-button">
+                            <a href="add_review.html">Add Review</a>
+                        </button>
                     </div>
-                    <button class="review-button">
-                        <a href="add_review.html">Add Review</a>
-                    </button>
                 </div>
             </div>
         </section>
         <section id="reviews">
             <div class="container">
                 <!-- Reviews will be populated dynamically -->
-                <ul class="reviews-list">
+                <ul class="row">
                     <li class="col-3">
                         <div class="review-card">
                             <h3 class="review-title">Amazing place!</h3>
@@ -99,9 +95,7 @@
     <!-- FOOTER -->
     <footer class="footer">
         <hr>
-        <div class="footer-copyright">
-            <p>© 2025 Gwendal Minguy-Pèlerin - Holberton School.</p>
-        </div>
+        <p>© 2025 Gwendal Minguy-Pèlerin - Holberton School.</p>
     </footer>
     <script src="scripts.js"></script>
 </body>
