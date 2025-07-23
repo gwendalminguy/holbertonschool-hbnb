@@ -2,15 +2,36 @@ const placesList = document.querySelector('#places ul');
 
 document.addEventListener('DOMContentLoaded', () => {
   const loginForm = document.getElementById('login-form');
-  const priceFilter = document.getElementById('price-filter');
+  const filter = document.getElementById('filter');
+  const refresh = document.getElementById('filter-button');
+  const loginButton = document.getElementById('login-link');
+  const logoutButton = document.getElementById('logout-link');
 
   checkAuthentication();
 
-  if (priceFilter) {
-    priceFilter.addEventListener('change', (event) => {
-      const value = Number(document.getElementById('price-filter').value);
+  if (filter) {
+
+    let price = 0;
+    let capacity = 1;
+    let rooms = 1;
+    let surface = 1;
+
+    document.getElementById('price-filter').addEventListener('change', (event) => {
+      price = Number(document.getElementById('price-filter').value);
+    });
+    document.getElementById('capacity-filter').addEventListener('input', (event) => {
+      capacity = Number(document.getElementById('capacity-filter').value);
+    });
+    document.getElementById('rooms-filter').addEventListener('input', (event) => {
+      rooms = Number(document.getElementById('rooms-filter').value);
+    });
+    document.getElementById('surface-filter').addEventListener('input', (event) => {
+      surface = Number(document.getElementById('surface-filter').value);
+    });
+
+    refresh.addEventListener('click', (event) => {
       const places = document.querySelectorAll('#places li');
-      filterPlaces(places, value);
+      filterPlaces(places, price, capacity, rooms, surface)
     });
   }
 
@@ -19,6 +40,19 @@ document.addEventListener('DOMContentLoaded', () => {
       event.preventDefault();
       loginUser(loginForm.email.value, loginForm.password.value);
     });
+  }
+
+  if (loginButton) {
+    loginButton.addEventListener('click', (event) => {
+      window.location.href = 'login.html';
+    });
+  }
+
+  if (logoutButton) {
+    logoutButton.addEventListener('click', (event) => {
+      deleteCookie('token');
+      window.location.href = 'login.html';
+    })
   }
 });
 
@@ -43,13 +77,17 @@ async function loginUser (email, password) {
 }
 
 async function checkAuthentication() {
+  /* Displaying login/logout button */
   const token = getCookie('token');
   const loginLink = document.getElementById('login-link');
+  const logoutLink = document.getElementById('logout-link');
 
   if (!token) {
     loginLink.style.display = 'block';
+    logoutLink.style.display = 'none';
   } else {
     loginLink.style.display = 'none';
+    logoutLink.style.display = 'block';
 
     if (placesList) {
       const places = await fetchPlaces(token);
@@ -59,12 +97,23 @@ async function checkAuthentication() {
 }
 
 function getCookie(name) {
-  /* Getting cookie value */
+  /* Getting a cookie value */
   const cookieList = decodeURIComponent(document.cookie).split('; ');
   for (let i = 0; i < cookieList.length; i++) {
     const cookie = cookieList[i].split('=');
     if (name == cookie[0]) {
       return cookie[1];
+    }
+  }
+}
+
+function deleteCookie(name) {
+  /* Deleting a cookie */
+  const cookieList = decodeURIComponent(document.cookie).split('; ');
+  for (let i = 0; i < cookieList.length; i++) {
+    const cookie = cookieList[i].split('=');
+    if (name == cookie[0]) {
+      document.cookie = `token=${cookie[1]}; expires=Thu, 01 Jan 1970 12:00:00 GMT; path=/`;
     }
   }
 }
@@ -100,6 +149,9 @@ function displayPlaces(places) {
     const li = document.createElement('li');
     li.classList.add('col-3');
     li.setAttribute('price', `${places[i].price}`);
+    li.setAttribute('capacity', `${places[i].capacity}`);
+    li.setAttribute('rooms', `${places[i].rooms}`);
+    li.setAttribute('surface', `${places[i].surface}`);
 
     const div = document.createElement('div');
     div.classList.add('place-card');
@@ -108,9 +160,11 @@ function displayPlaces(places) {
     h3.classList.add('place-title');
     h3.textContent = places[i].title;
 
+    const hr = document.createElement('hr');
+
     const p = document.createElement('p');
     p.classList.add('place-price');
-    p.textContent = `${places[i].price}`;
+    p.textContent = `$${places[i].price}`;
 
     const button = document.createElement('button');
     button.classList.add('details-button');
@@ -121,6 +175,43 @@ function displayPlaces(places) {
 
     li.appendChild(div);
     div.appendChild(h3);
+    div.appendChild(hr);
+    div.appendChild(p);
+    div.appendChild(button);
+    button.appendChild(a);
+    placesList.appendChild(li);
+  }
+  for (let i = 0; i < places.length; i++) {
+    const li = document.createElement('li');
+    li.classList.add('col-3');
+    li.setAttribute('price', `${places[i].price}`);
+    li.setAttribute('capacity', `${places[i].capacity}`);
+    li.setAttribute('rooms', `${places[i].rooms}`);
+    li.setAttribute('surface', `${places[i].surface}`);
+
+    const div = document.createElement('div');
+    div.classList.add('place-card');
+
+    const h3 = document.createElement('h3');
+    h3.classList.add('place-title');
+    h3.textContent = places[i].title;
+
+    const hr = document.createElement('hr');
+
+    const p = document.createElement('p');
+    p.classList.add('place-price');
+    p.textContent = `$${places[i].price}`;
+
+    const button = document.createElement('button');
+    button.classList.add('details-button');
+
+    const a = document.createElement('a');
+    a.href = 'place.html';
+    a.textContent = 'Details';
+
+    li.appendChild(div);
+    div.appendChild(h3);
+    div.appendChild(hr);
     div.appendChild(p);
     div.appendChild(button);
     button.appendChild(a);
@@ -128,14 +219,18 @@ function displayPlaces(places) {
   }
 }
 
-function filterPlaces(places, value) {
-    for (let i = 0; i < places.length; i++) {
-      console.log(places[i]);
-      if (Number(places[i].getAttribute('price')) > value && value > 0) {
-        places[i].style.display = 'none';
-      } else {
-        places[i].style.display = 'block';
-
-      }
+function filterPlaces(places, price, capacity, rooms, surface) {
+  /* Filtering places to display */
+  for (let i = 0; i < places.length; i++) {
+    if (
+      (Number(places[i].getAttribute('price')) > price && price > 0) ||
+      (Number(places[i].getAttribute('capacity')) < capacity) ||
+      (Number(places[i].getAttribute('rooms')) < rooms) ||
+      (Number(places[i].getAttribute('surface')) < surface)
+    ) {
+      places[i].style.display = 'none';
+    } else {
+      places[i].style.display = 'block';
     }
   }
+}
