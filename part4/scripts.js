@@ -1,11 +1,12 @@
 const placesList = document.querySelector('#places ul');
+const amenitiesList = document.querySelector('#amenities ul');
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
   const loginForm = document.getElementById('login-form');
-  const filter = document.getElementById('filter');
-  const refresh = document.getElementById('filter-button');
   const loginButton = document.getElementById('login-link');
   const logoutButton = document.getElementById('logout-link');
+  const filter = document.getElementById('filter');
+  const refresh = document.getElementById('filter-button');
 
   checkAuthentication();
 
@@ -15,7 +16,34 @@ document.addEventListener('DOMContentLoaded', () => {
     let capacity = 1;
     let rooms = 1;
     let surface = 1;
+    let amenities = [];
 
+    /* Retrieving all amenities */
+    const amenityItems = await fetchAmenities().then(
+      data => { return data }
+    );
+
+    /* Populating amenities filter */
+    for (let i = 0; i < amenityItems.length; i++) {
+      const li = document.createElement('li');
+
+      const label = document.createElement('label');
+      label.setAttribute('for', amenityItems[i].name);
+      label.textContent = amenityItems[i].name;
+
+      const input = document.createElement('input');
+      input.setAttribute('type', 'checkbox');
+      input.setAttribute('id', amenityItems[i].id);
+      input.setAttribute('value', amenityItems[i].name);
+
+      li.appendChild(label);
+      label.appendChild(input);
+      amenitiesList.appendChild(li);
+
+      /* console.log(amenityItems[i].name, amenityItems[i].id); */
+    }
+
+    /* Setting filters values */
     document.getElementById('price-filter').addEventListener('change', (event) => {
       price = Number(document.getElementById('price-filter').value);
     });
@@ -29,9 +57,24 @@ document.addEventListener('DOMContentLoaded', () => {
       surface = Number(document.getElementById('surface-filter').value);
     });
 
+    let list = document.querySelectorAll('.amenities-filter input');
+    for (let i = 0; i < list.length; i++) {
+      list[i].addEventListener('change', (event) => {
+        if (list[i].checked) {
+          amenities.push(list[i].defaultValue);
+          /* console.log(amenities); */
+        } else {
+          let index = amenities.indexOf(list[i].defaultValue);
+          amenities.splice(index, 1);
+          /* console.log(amenities); */
+        }
+      })
+    }
+
+    /* Filtering places to display */
     refresh.addEventListener('click', (event) => {
       const places = document.querySelectorAll('#places li');
-      filterPlaces(places, price, capacity, rooms, surface)
+      filterPlaces(places, price, capacity, rooms, surface, amenities)
     });
   }
 
@@ -136,6 +179,23 @@ async function fetchPlaces(token) {
   }
 }
 
+async function fetchAmenities() {
+  /* Retrieving all amenities */
+  const response = await fetch('http://127.0.0.1:5000/api/v1/amenities/', {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
+
+  if (response.ok) {
+    const data = await response.json();
+    return data;
+  } else {
+    alert('Fetching amenities failed: ' + response.statusText);
+  }
+}
+
 function displayPlaces(places) {
   /* Clearing placesList */
   let lastItem = placesList.lastElementChild;
@@ -148,10 +208,10 @@ function displayPlaces(places) {
   for (let i = 0; i < places.length; i++) {
     const li = document.createElement('li');
     li.classList.add('col-3');
-    li.setAttribute('price', `${places[i].price}`);
-    li.setAttribute('capacity', `${places[i].capacity}`);
-    li.setAttribute('rooms', `${places[i].rooms}`);
-    li.setAttribute('surface', `${places[i].surface}`);
+    li.setAttribute('price', places[i].price);
+    li.setAttribute('capacity', places[i].capacity);
+    li.setAttribute('rooms', places[i].rooms);
+    li.setAttribute('surface', places[i].surface);
 
     const div = document.createElement('div');
     div.classList.add('place-card');
@@ -159,8 +219,6 @@ function displayPlaces(places) {
     const h3 = document.createElement('h3');
     h3.classList.add('place-title');
     h3.textContent = places[i].title;
-
-    const hr = document.createElement('hr');
 
     const p = document.createElement('p');
     p.classList.add('place-price');
@@ -175,43 +233,6 @@ function displayPlaces(places) {
 
     li.appendChild(div);
     div.appendChild(h3);
-    div.appendChild(hr);
-    div.appendChild(p);
-    div.appendChild(button);
-    button.appendChild(a);
-    placesList.appendChild(li);
-  }
-  for (let i = 0; i < places.length; i++) {
-    const li = document.createElement('li');
-    li.classList.add('col-3');
-    li.setAttribute('price', `${places[i].price}`);
-    li.setAttribute('capacity', `${places[i].capacity}`);
-    li.setAttribute('rooms', `${places[i].rooms}`);
-    li.setAttribute('surface', `${places[i].surface}`);
-
-    const div = document.createElement('div');
-    div.classList.add('place-card');
-
-    const h3 = document.createElement('h3');
-    h3.classList.add('place-title');
-    h3.textContent = places[i].title;
-
-    const hr = document.createElement('hr');
-
-    const p = document.createElement('p');
-    p.classList.add('place-price');
-    p.textContent = `$${places[i].price}`;
-
-    const button = document.createElement('button');
-    button.classList.add('details-button');
-
-    const a = document.createElement('a');
-    a.href = 'place.html';
-    a.textContent = 'Details';
-
-    li.appendChild(div);
-    div.appendChild(h3);
-    div.appendChild(hr);
     div.appendChild(p);
     div.appendChild(button);
     button.appendChild(a);
@@ -219,7 +240,7 @@ function displayPlaces(places) {
   }
 }
 
-function filterPlaces(places, price, capacity, rooms, surface) {
+function filterPlaces(places, price, capacity, rooms, surface, amenities) {
   /* Filtering places to display */
   for (let i = 0; i < places.length; i++) {
     if (
