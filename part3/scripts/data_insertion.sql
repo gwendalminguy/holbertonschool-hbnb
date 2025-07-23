@@ -12,4 +12,6 @@ INSERT INTO `amenities` (`id`, `name`)
 VALUES
     ('4104a0cc-3128-4639-8cbf-ebe56a32b84a', 'Wifi'),
     ('910da42e-cf77-44d6-8383-18bcb192961c', 'Swimming Pool'),
-    ('a0de5556-c903-49ee-8104-e9a77303c7fc', 'Air Conditioning');
+    ('a0de5556-c903-49ee-8104-e9a77303c7fc', 'Air Conditioning'),
+    ('1fcee8b6-64bc-461d-bb88-0f7697f3a920', 'Garden'),
+    ('fd12747f-d73f-4f51-88f6-aff377faec9e', 'Terrace');
