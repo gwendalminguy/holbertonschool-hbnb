@@ -2,13 +2,15 @@ const placesList = document.querySelector('#places ul');
 
 document.addEventListener('DOMContentLoaded', () => {
   const loginForm = document.getElementById('login-form');
+  const priceFilter = document.getElementById('price-filter');
 
   checkAuthentication();
 
-  if (placesList) {
-    document.getElementById('price-filter').addEventListener('change', (event) => {
-      const value = document.getElementById('price-filter').value;
-      filterPlaces(value);
+  if (priceFilter) {
+    priceFilter.addEventListener('change', (event) => {
+      const value = Number(document.getElementById('price-filter').value);
+      const places = document.querySelectorAll('#places li');
+      filterPlaces(places, value);
     });
   }
 
@@ -97,6 +99,7 @@ function displayPlaces(places) {
   for (let i = 0; i < places.length; i++) {
     const li = document.createElement('li');
     li.classList.add('col-3');
+    li.setAttribute('price', `${places[i].price}`);
 
     const div = document.createElement('div');
     div.classList.add('place-card');
@@ -107,7 +110,7 @@ function displayPlaces(places) {
 
     const p = document.createElement('p');
     p.classList.add('place-price');
-    p.textContent = `$${places[i].price}`;
+    p.textContent = `${places[i].price}`;
 
     const button = document.createElement('button');
     button.classList.add('details-button');
@@ -125,12 +128,14 @@ function displayPlaces(places) {
   }
 }
 
-function filterPlaces(value) {
-  if (value > 0) {
-    for (let i = 0; i < placesList.length; i++) {
-      if (placesList[i].price > value) {
-        placesList[i].style.display = none;
+function filterPlaces(places, value) {
+    for (let i = 0; i < places.length; i++) {
+      console.log(places[i]);
+      if (Number(places[i].getAttribute('price')) > value && value > 0) {
+        places[i].style.display = 'none';
+      } else {
+        places[i].style.display = 'block';
+
       }
     }
   }
-}
