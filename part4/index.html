@@ -8,58 +8,52 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- Header -->
+    <!-- HEADER -->
     <header class="header">
-        <div class="container-header">
-            <div class="logo">
-                <a href="index.html">
-                    <img src="images/logo.png" alt="HBnB Logo" width="80" height="80">
-                </a>
-            </div>
-            <nav class="nav-menu">
-                <ul class="nav-list">
-                    <li class="nav-item">
-                        <a href="index.html" class="nav-link">Home</a>
-                    </li>
-                </ul>
-            </nav>
-            <div id="login-link">
-                <button>
-                    <a href="login.html">Login</a>
-                </button>
-            </div>
+        <a href="index.html">
+            <img src="images/logo-white.png" class="logo" alt="HBnB Logo" width="175rem" height="75rem">
+        </a>
+        <nav class="nav-menu">
+            <ul class="nav-list">
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link">Home</a>
+                </li>
+            </ul>
+        </nav>
+        <div id="login-link">
+            <button>
+                <a href="login.html">Login</a>
+            </button>
         </div>
     </header>
-    <!-- Main -->
+    <!-- MAIN -->
     <main>
         <section id="filter">
             <div class="container">
                 <label for="price-filter">Max Price:</label>
                 <select id="price-filter">
-                     <option value=10>10</option>
-                     <option value=50>50</option>
-                     <option value=100>100</option>
-                     <option value=250>250</option>
-                     <option value=500>500</option>
-                     <option value=0>All</option>
+                    <option value=0 selected>All</option>
+                    <option value=50>50</option>
+                    <option value=100>100</option>
+                    <option value=250>250</option>
+                    <option value=500>500</option>
+                    <option value=1000>1000</option>
                 </select>
             </div>
         </section>
         <section id="places">
             <div class="container">
                 <ul class="row">
-                    <!-- LIST OF PLACES -->
+                <!-- PLACES -->
                 </ul>
             </div>
         </section>
     </main>
-    <!-- Footer -->
+    <!-- FOOTER -->
     <footer class="footer">
-        <div class="container-footer">
-            <hr>
-            <div class="footer-copyright">
-                <p>© 2025 Gwendal Minguy-Pèlerin - Holberton School.</p>
-            </div>
+        <hr>
+        <div class="footer-copyright">
+            <p>© 2025 Gwendal Minguy-Pèlerin - Holberton School.</p>
         </div>
     </footer>
     <script src="scripts.js"></script>
