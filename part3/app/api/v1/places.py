@@ -108,6 +108,7 @@ class PlaceList(Resource):
                 'rooms': place.rooms,
                 'capacity': place.capacity,
                 'surface': place.surface,
+                'amenities': [amenity.name for amenity in place.amenities]
             })
         return places, 200
 
