@@ -31,6 +31,8 @@
 html {
 	scroll-behavior: smooth;
 	font-size: 62.5%;
+    width: 100%;
+    height: 100%;
 }
 
 body {
@@ -50,12 +52,23 @@ h6 {
 	font-weight: var(--font-weight-bold);
 }
 
+a {
+    display: flex;
+    align-items: center;
+}
+
 /* ----- HEADER ----- */
 
 header {
-    background-color: var(--color-dark-grey);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--color-primary);
     color: var(--color-white);
-    padding: 1rem;
+    border-radius: 2rem;
+    padding: 2rem;
+    margin: 2rem;
+    height: 100px;
 }
 
 /* ----- NAVIGATION ----- */
@@ -89,18 +102,17 @@ main {
     padding: 2rem;
 }
 
-.container,
-.container-header {
-	width: 960px;
+.container {
+	width: 100%;
 	margin-left: auto;
 	margin-right: auto;
-}
-
-.container,
-.container-header {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.row {
+    width: 50%;
 }
 
 ul {
@@ -110,11 +122,6 @@ ul {
 .col-3 {
     float: left;
 	width: 33.33%;
-}
-
-.col-2 {
-    float: left;
-	width: 50%;
 }
 
 .login-card {
