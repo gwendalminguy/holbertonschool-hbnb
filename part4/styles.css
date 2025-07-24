@@ -69,56 +69,6 @@ h3 {
     transform: scale(1.1);
 }
 
-/* ----- ANIMATION ----- */
-
-#animation {
-    display: none;
-}
-
-.logo-grey {
-    fill: none;
-    stroke: #eeeeee;
-    stroke-miterlimit: 10;
-    stroke-width: 5px;
-}
-
-.logo-red-top {
-    fill: none;
-    stroke: #ff375c;
-    stroke-linecap: round;
-    stroke-miterlimit: 10;
-    stroke-width: 5px;
-    stroke-dasharray: 103.75;
-    stroke-dashoffset: 103.75;
-    animation: top-draw 4.5s linear;
-}
-
-@keyframes top-draw {
-    from {
-        stroke-dashoffset: 622.5;
-    }
-    to {
-        stroke-dashoffset: 103.75;
-    }
-}
-
-.logo-red-bottom {
-    fill: none;
-    stroke: #ff375c;
-    stroke-linecap: round;
-    stroke-miterlimit: 10;
-    stroke-width: 5px;
-    stroke-dasharray: 103.75;
-    stroke-dashoffset: 415;
-    animation: bottom-draw 4.5s linear;
-}
-
-@keyframes bottom-draw {
-    to {
-        stroke-dashoffset: 0;
-    }
-}
-
 /* ----- HEADER ----- */
 
 header {
@@ -188,18 +138,88 @@ ul {
     list-style: none;
 }
 
+.place-amenities li {
+    list-style-type: disc;
+}
+
 main button {
     border-radius: 999px;
     border-color: var(--color-dark-grey);
     border-style: solid;
     color: var(--color-dark-grey);
+    transition-duration: 0.25s;
     padding: 0.5rem 1rem;
     cursor: pointer;
+}
+
+main button:hover {
+    background-color: var(--color-dark-grey);
+    color: var(--color-light-grey);
+}
+
+main #login-form button {
+    margin-left: 5em;
+    margin-right: 5em;
+}
+
+main #login-form input {
+    height: 4rem;
 }
 
 .col-3 {
     float: left;
 	width: 33.33%;
+}
+
+/* ----- ANIMATION ----- */
+
+#animation {
+    height: 100%;
+    display: none;
+}
+
+.logo-grey {
+    fill: none;
+    stroke: #eeeeee;
+    stroke-miterlimit: 10;
+    stroke-width: 5px;
+}
+
+.logo-red-top {
+    fill: none;
+    stroke: #ff375c;
+    stroke-linecap: round;
+    stroke-miterlimit: 10;
+    stroke-width: 5px;
+    stroke-dasharray: 103.75;
+    stroke-dashoffset: 103.75;
+    animation: top-draw 4.5s linear;
+}
+
+@keyframes top-draw {
+    from {
+        stroke-dashoffset: 622.5;
+    }
+    to {
+        stroke-dashoffset: 103.75;
+    }
+}
+
+.logo-red-bottom {
+    fill: none;
+    stroke: #ff375c;
+    stroke-linecap: round;
+    stroke-miterlimit: 10;
+    stroke-width: 5px;
+    stroke-dasharray: 103.75;
+    stroke-dashoffset: 415;
+    animation: bottom-draw 4.5s linear;
+}
+
+@keyframes bottom-draw {
+    to {
+        stroke-dashoffset: 0;
+    }
 }
 
 /* ----- FILTERS ----- */
@@ -283,8 +303,12 @@ input[type="password"] {
 		0 8px 10px rgba(0, 0, 0, 0.05);
 }
 
-.login-card input {
-    margin: 1em; 
+.login-card {
+    height: 250px;
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .place-card:hover,
