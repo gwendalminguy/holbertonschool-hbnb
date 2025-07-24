@@ -5,10 +5,11 @@ document.addEventListener('DOMContentLoaded', async () => {
   const loginForm = document.getElementById('login-form');
   const loginButton = document.getElementById('login-link');
   const logoutButton = document.getElementById('logout-link');
-  const filter = document.getElementById('filter');
-  const refresh = document.getElementById('filter-button');
 
   checkAuthentication();
+
+  const filter = document.getElementById('filter');
+  const refresh = document.getElementById('filter-button');
 
   if (filter) {
 
@@ -36,14 +37,14 @@ document.addEventListener('DOMContentLoaded', async () => {
       input.setAttribute('id', amenityItems[i].id);
       input.setAttribute('value', amenityItems[i].name);
 
+      li.appendChild(input);
       li.appendChild(label);
-      label.appendChild(input);
       amenitiesList.appendChild(li);
 
       /* console.log(amenityItems[i].name, amenityItems[i].id); */
     }
 
-    /* Setting filters values */
+    /* Setting number filters values */
     document.getElementById('price-filter').addEventListener('change', (event) => {
       price = Number(document.getElementById('price-filter').value);
     });
@@ -57,6 +58,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       surface = Number(document.getElementById('surface-filter').value);
     });
 
+    /* Setting amenities filter values */
     let list = document.querySelectorAll('.amenities-filter input');
     for (let i = 0; i < list.length; i++) {
       list[i].addEventListener('change', (event) => {
@@ -133,6 +135,7 @@ async function checkAuthentication() {
     logoutLink.style.display = 'block';
 
     if (placesList) {
+      document.getElementById('filter').style.display = 'block';
       const places = await fetchPlaces(token);
       displayPlaces(places);
     }
@@ -212,6 +215,7 @@ function displayPlaces(places) {
     li.setAttribute('capacity', places[i].capacity);
     li.setAttribute('rooms', places[i].rooms);
     li.setAttribute('surface', places[i].surface);
+    li.setAttribute('amenities', places[i].amenities.join(';'));
 
     const div = document.createElement('div');
     div.classList.add('place-card');
@@ -226,16 +230,15 @@ function displayPlaces(places) {
 
     const button = document.createElement('button');
     button.classList.add('details-button');
-
-    const a = document.createElement('a');
-    a.href = 'place.html';
-    a.textContent = 'Details';
+    button.textContent = 'Details';
+    button.addEventListener('click', (event) => {
+      window.location.href = 'place.html';
+    })
 
     li.appendChild(div);
     div.appendChild(h3);
     div.appendChild(p);
     div.appendChild(button);
-    button.appendChild(a);
     placesList.appendChild(li);
   }
 }
@@ -251,7 +254,29 @@ function filterPlaces(places, price, capacity, rooms, surface, amenities) {
     ) {
       places[i].style.display = 'none';
     } else {
-      places[i].style.display = 'block';
+      if (!isMissing(amenities, places[i].getAttribute('amenities'))) {
+        places[i].style.display = 'block';
+      } else {
+        places[i].style.display = 'none';
+      }
     }
   }
+}
+
+function isMissing(amenities, placeAmenities) {
+  /* Checking placeAmenities */
+  for (let i = 0; i < amenities.length; i++) {
+    const array = placeAmenities.split(';');
+    let missingAmenity = true;
+    for (let j = 0; j < array.length; j++) {
+      if (amenities[i] === array[j]) {
+        missingAmenity = false;
+        break;
+      }
+    }
+    if (missingAmenity) {
+      return true;
+    }
+  }
+  return false;
 }
