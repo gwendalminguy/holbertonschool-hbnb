@@ -1,18 +1,35 @@
+const API_URL = 'http://127.0.0.1:5000/api/v1/';
 const placesList = document.querySelector('#places ul');
 const amenitiesList = document.querySelector('#amenities ul');
+const reviewsList = document.querySelector('#reviews ul');
 
 document.addEventListener('DOMContentLoaded', async () => {
   const loginForm = document.getElementById('login-form');
   const loginButton = document.getElementById('login-link');
   const logoutButton = document.getElementById('logout-link');
 
-  checkAuthentication();
+  const token = await checkAuthentication().then(
+    data => { return data}
+  );
 
   const filter = document.getElementById('filter');
   const refresh = document.getElementById('filter-button');
+  const placeDetails = document.getElementById('place-details');
+  const animation = document.getElementById('animation');
+
+  if (!token && (window.location.pathname === '/index.html')) {
+    /* Displaying animation */
+    animation.style.display = 'block';
+
+    /* Redirecting to login page */
+    window.setTimeout( function() {
+      window.location.href = 'login.html';
+    }, 5000);
+  } else if (animation) {
+    animation.style.display = 'none';
+  }
 
   if (filter) {
-
     let price = 0;
     let capacity = 1;
     let rooms = 1;
@@ -40,7 +57,6 @@ document.addEventListener('DOMContentLoaded', async () => {
       li.appendChild(input);
       li.appendChild(label);
       amenitiesList.appendChild(li);
-
       /* console.log(amenityItems[i].name, amenityItems[i].id); */
     }
 
@@ -80,6 +96,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
   }
 
+  if (placeDetails) {
+    const id = getPlaceIdFromURL();
+    fetchPlaceDetails(token, id);
+  }
+
   if (loginForm) {
     loginForm.addEventListener('submit', async (event) => {
       event.preventDefault();
@@ -103,7 +124,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 async function loginUser (email, password) {
   /* Authenticating a user */
-  const response = await fetch('http://127.0.0.1:5000/api/v1/auth/login', {
+  const response = await fetch(`${API_URL}auth/login`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -139,6 +160,8 @@ async function checkAuthentication() {
       const places = await fetchPlaces(token);
       displayPlaces(places);
     }
+
+    return token;
   }
 }
 
@@ -166,7 +189,7 @@ function deleteCookie(name) {
 
 async function fetchPlaces(token) {
   /* Retrieving all places */
-  const response = await fetch('http://127.0.0.1:5000/api/v1/places/', {
+  const response = await fetch(`${API_URL}places/`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -232,7 +255,8 @@ function displayPlaces(places) {
     button.classList.add('details-button');
     button.textContent = 'Details';
     button.addEventListener('click', (event) => {
-      window.location.href = 'place.html';
+      window.location.href = `place.html?=${places[i].id}`;
+      /*location.search = `${places[i].id}`;*/
     })
 
     li.appendChild(div);
@@ -279,4 +303,117 @@ function isMissing(amenities, placeAmenities) {
     }
   }
   return false;
+}
+
+function getPlaceIdFromURL() {
+  const id = window.location.search.split('=');
+  return id[1];
+}
+
+async function fetchPlaceDetails(token, placeId) {
+  const response = await fetch(`${API_URL}places/${placeId}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    }
+  });
+
+  if (response.ok) {
+    const data = await response.json();
+    displayPlaceDetails(data);
+  } else {
+    alert('Fetching place details failed: ' + response.statusText);
+  }
+}
+
+function displayPlaceDetails(place) {
+  /* Populating place details */
+  const card = document.querySelector('.place-card');
+
+  const title = document.createElement('h3');
+  title.classList.add('place-title');
+  title.textContent = place.title;
+
+  const description = document.createElement('p');
+  description.classList.add('place-description');
+  description.textContent = place.description;
+
+  const price = document.createElement('p');
+  price.classList.add('place-price');
+  price.textContent = `$${place.price} / night`;
+
+  const owner = document.createElement('p');
+  owner.classList.add('place-owner');
+  owner.textContent = `${place.owner.first_name} ${place.owner.last_name}`;
+
+  const capacity = document.createElement('p');
+  capacity.classList.add('place-capacity');
+  capacity.textContent = `Capacity: ${place.capacity} people`;
+
+  const rooms = document.createElement('p');
+  rooms.classList.add('place-rooms');
+  rooms.textContent = `Rooms: ${place.rooms}`;
+
+  const surface = document.createElement('p');
+  surface.classList.add('place-surface');
+  surface.textContent = `${place.surface} m2`;
+
+  const amenities = document.createElement('ul');
+  amenities.classList.add('place-amenities');
+  for (let i = 0; i < place.amenities.length; i++) {
+    let amenity = document.createElement('li');
+    amenity.classList.add('amenity-item');
+    amenity.textContent = place.amenities[i].name;
+    amenities.appendChild(amenity);
+  };
+
+  const button = document.createElement('button');
+  button.classList.add('review-button');
+  button.textContent = 'Review';
+  button.addEventListener('click', (event) => {
+    window.location.href = `add_review.html?=${place.id}`;
+    /*location.search = `${places[i].id}`;*/
+  })
+
+  card.appendChild(title);
+  card.appendChild(description);
+  card.appendChild(price);
+  card.appendChild(owner);
+  card.appendChild(capacity);
+  card.appendChild(surface);
+  card.appendChild(rooms);
+  card.appendChild(amenities);
+  card.appendChild(button)
+
+  displayReviews(place);
+}
+
+function displayReviews(place) {
+  /* Populating place reviews */
+  for (let i = 0; i < place.reviews.length; i++) {
+    let li = document.createElement('li');
+    li.classList.add('col-3');
+
+    let div = document.createElement('div');
+    div.classList.add('review-card');
+
+    let title = document.createElement('h3');
+    title.classList.add('review-title');
+    title.textContent = place.reviews[i].title;
+
+    let rating = document.createElement('p');
+    rating.classList.add('review-rating');
+    rating.textContent = place.reviews[i].rating;
+
+    let text = document.createElement('p');
+    text.classList.add('review-text');
+    text.textContent = place.reviews[i].text;
+
+    li.appendChild(div);
+    div.appendChild(title);
+    div.appendChild(rating);
+    div.appendChild(text);
+    reviewsList.appendChild(li);
+  }
 }
