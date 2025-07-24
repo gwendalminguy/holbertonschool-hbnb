@@ -13,7 +13,8 @@ document.addEventListener('DOMContentLoaded', async () => {
   );
 
   const filter = document.getElementById('filter');
-  const refresh = document.getElementById('filter-button');
+  const filterButton = document.getElementById('filter-button');
+  const resetButton = document.getElementById('reset-button');
   const placeDetails = document.getElementById('place-details');
   const animation = document.getElementById('animation');
 
@@ -90,9 +91,21 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     /* Filtering places to display */
-    refresh.addEventListener('click', (event) => {
+    filterButton.addEventListener('click', (event) => {
       const places = document.querySelectorAll('#places li');
-      filterPlaces(places, price, capacity, rooms, surface, amenities)
+      filterPlaces(places, price, capacity, rooms, surface, amenities);
+    });
+
+    /* Reseting filters and places to display */
+    resetButton.addEventListener('click', (event) => {
+      const places = document.querySelectorAll('#places li');
+      price = 0;
+      capacity = 1;
+      rooms = 1;
+      surface = 10;
+      amenities = [];
+      resetFilters();
+      filterPlaces(places, price, capacity, rooms, surface, amenities);
     });
   }
 
@@ -305,6 +318,19 @@ function isMissing(amenities, placeAmenities) {
   return false;
 }
 
+function resetFilters() {
+  /* Resetting all values to default */
+  document.getElementById('price-filter').value = '0';
+  document.getElementById('capacity-filter').value = '1';
+  document.getElementById('rooms-filter').value = '1';
+  document.getElementById('surface-filter').value = '10';
+
+  /* Unchecking all amenities */
+  for (const element of document.querySelectorAll('.amenities-filter input')) {
+    element.checked = false
+  }
+}
+
 function getPlaceIdFromURL() {
   const id = window.location.search.split('=');
   return id[1];
@@ -357,8 +383,13 @@ function displayPlaceDetails(place) {
 
   const surface = document.createElement('p');
   surface.classList.add('place-surface');
-  surface.textContent = `${place.surface} m2`;
+  surface.textContent = `${place.surface} m`;
+  const square = document.createElement('sup');
+  square.textContent = '2';
+  surface.appendChild(square);
 
+  const h4 = document.createElement('h4');
+  h4.textContent = 'Amenities:';
   const amenities = document.createElement('ul');
   amenities.classList.add('place-amenities');
   for (let i = 0; i < place.amenities.length; i++) {
@@ -383,6 +414,7 @@ function displayPlaceDetails(place) {
   card.appendChild(capacity);
   card.appendChild(surface);
   card.appendChild(rooms);
+  card.appendChild(h4);
   card.appendChild(amenities);
   card.appendChild(button)
 
