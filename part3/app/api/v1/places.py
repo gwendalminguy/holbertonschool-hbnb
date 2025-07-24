@@ -128,6 +128,13 @@ class PlaceResource(Resource):
             "id": amenity.id,
             "name": amenity.name
         } for amenity in place.amenities]
+        
+        reviews = [{
+            "id": review.id,
+            "title": review.title,
+            "text": review.text,
+            "rating": review.rating
+        } for review in place.reviews]
 
         if not place:
             return {'error': 'Place not found'}, 404
@@ -147,7 +154,8 @@ class PlaceResource(Resource):
             'rooms': place.rooms,
             'capacity': place.capacity,
             'surface': place.surface,
-            'amenities': amenities
+            'amenities': amenities,
+            'reviews': reviews
         }, 200
 
     @api.expect(place_model)
