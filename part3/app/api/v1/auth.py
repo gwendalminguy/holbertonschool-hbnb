@@ -27,6 +27,9 @@ class Login(Resource):
 
         access_token = create_access_token(identity={
             'id': str(user.id),
+            'first_name': str(user.first_name),
+            'last_name': str(user.last_name),
+            'email': str(user.email),
             'is_admin': user.is_admin
         })
 

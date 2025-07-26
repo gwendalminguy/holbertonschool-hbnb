@@ -133,7 +133,11 @@ class PlaceResource(Resource):
             "id": review.id,
             "title": review.title,
             "text": review.text,
-            "rating": review.rating
+            "rating": review.rating,
+            "user": {
+                "first_name": facade.get_user(review.user_id).first_name,
+                "last_name": facade.get_user(review.user_id).last_name
+            }
         } for review in place.reviews]
 
         if not place:
@@ -204,10 +208,16 @@ class PlaceReviewList(Resource):
 
         reviews = []
         for review in review_list:
+            user = facade.get_user(review.user_id)
+            print(user.first_name)
             reviews.append({
                 'id': review.id,
                 'title': review.title,
                 'text': review.text,
-                'rating': review.rating
+                'rating': review.rating,
+                'user': {
+                    'first_name': user.first_name,
+                    'last_name': user.last_name
+                }
             })
         return reviews, 200
