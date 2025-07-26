@@ -198,8 +198,8 @@ async function loginUser (email, password) {
     const data = await response.json();
     document.cookie = `token=${data.access_token}; path=/`;
     window.setTimeout( function() {
-      window.location.href = 'index.html';
       animation.style.display = 'none';
+      window.location.href = 'index.html';
     }, 5000);
   } else {
     alert('Login failed: ' + response.statusText);
@@ -306,14 +306,17 @@ function displayPlaces(places) {
 
     const div = document.createElement('div');
     div.classList.add('place-card');
+    li.appendChild(div);
 
     const h3 = document.createElement('h3');
     h3.classList.add('place-title');
     h3.textContent = places[i].title;
+    div.appendChild(h3);
 
     const p = document.createElement('p');
     p.classList.add('place-price');
     p.textContent = `$${places[i].price}`;
+    div.appendChild(p);
 
     const button = document.createElement('button');
     button.classList.add('details-button');
@@ -322,11 +325,8 @@ function displayPlaces(places) {
       window.location.href = `place.html?=${places[i].id}`;
       /*location.search = `${places[i].id}`;*/
     })
-
-    li.appendChild(div);
-    div.appendChild(h3);
-    div.appendChild(p);
     div.appendChild(button);
+
     placesList.appendChild(li);
   }
 }
@@ -411,26 +411,32 @@ function displayPlaceDetails(place) {
   const title = document.createElement('h3');
   title.classList.add('place-title');
   title.textContent = place.title;
+  card.appendChild(title);
 
   const description = document.createElement('p');
   description.classList.add('place-description');
   description.textContent = place.description;
+  card.appendChild(description);
 
   const price = document.createElement('p');
   price.classList.add('place-price');
   price.textContent = `$${place.price} / night`;
+  card.appendChild(price);
 
   const owner = document.createElement('p');
   owner.classList.add('place-owner');
   owner.textContent = `${place.owner.first_name} ${place.owner.last_name}`;
+  card.appendChild(owner);
 
   const capacity = document.createElement('p');
   capacity.classList.add('place-capacity');
   capacity.textContent = `Capacity: ${place.capacity} people`;
+  card.appendChild(capacity);
 
   const rooms = document.createElement('p');
   rooms.classList.add('place-rooms');
   rooms.textContent = `Rooms: ${place.rooms}`;
+  card.appendChild(rooms);
 
   const surface = document.createElement('p');
   surface.classList.add('place-surface');
@@ -438,6 +444,7 @@ function displayPlaceDetails(place) {
   const square = document.createElement('sup');
   square.textContent = '2';
   surface.appendChild(square);
+  card.appendChild(surface);
 
   const h4 = document.createElement('h4');
   h4.textContent = 'Amenities:';
@@ -449,6 +456,8 @@ function displayPlaceDetails(place) {
     amenity.textContent = place.amenities[i].name;
     amenities.appendChild(amenity);
   };
+  card.appendChild(h4);
+  card.appendChild(amenities);
 
   const button = document.createElement('button');
   button.classList.add('review-button');
@@ -457,16 +466,6 @@ function displayPlaceDetails(place) {
     window.location.href = `add_review.html?=${place.id}`;
     /*location.search = `${places[i].id}`;*/
   })
-
-  card.appendChild(title);
-  card.appendChild(description);
-  card.appendChild(price);
-  card.appendChild(owner);
-  card.appendChild(capacity);
-  card.appendChild(surface);
-  card.appendChild(rooms);
-  card.appendChild(h4);
-  card.appendChild(amenities);
   card.appendChild(button)
 
   displayReviews(place);
@@ -480,23 +479,23 @@ function displayReviews(place) {
 
     let div = document.createElement('div');
     div.classList.add('review-card');
+    li.appendChild(div);
 
     let title = document.createElement('h3');
     title.classList.add('review-title');
     title.textContent = place.reviews[i].title;
+    div.appendChild(title);
 
     let rating = document.createElement('p');
     rating.classList.add('review-rating');
     rating.textContent = place.reviews[i].rating;
+    div.appendChild(rating);
 
     let text = document.createElement('p');
     text.classList.add('review-text');
     text.textContent = place.reviews[i].text;
-
-    li.appendChild(div);
-    div.appendChild(title);
-    div.appendChild(rating);
     div.appendChild(text);
+
     reviewsList.appendChild(li);
   }
 }
