@@ -4,9 +4,13 @@ const amenitiesList = document.querySelector('#amenities ul');
 const reviewsList = document.querySelector('#reviews ul');
 const reviewForm = document.getElementById('review-form');
 
+const login = document.getElementById("login");
+const account = document.getElementById("account");
+
 document.addEventListener('DOMContentLoaded', async () => {
   const loginForm = document.getElementById('login-form');
-  const newAccount = document.getElementById('new-account');
+  const newAccountForm = document.getElementById('account-form');
+  const newAccountButton = document.getElementById('new-account');
   const loginButton = document.getElementById('login-link');
   const logoutButton = document.getElementById('logout-link');
 
@@ -19,7 +23,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   const resetButton = document.getElementById('reset-button');
   const placeDetails = document.getElementById('place-details');
   const animation = document.getElementById('animation');
-  const login = document.getElementById("login");
 
   if (filter) {
     let price = 0;
@@ -107,7 +110,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   if (reviewForm) {
     const placeId = getPlaceIdFromURL();
-    const uderId = 
     reviewForm.addEventListener('submit', async (event) => {
       event.preventDefault();
       submitReview(
@@ -126,8 +128,21 @@ document.addEventListener('DOMContentLoaded', async () => {
       event.preventDefault();
       loginUser(loginForm.email.value, loginForm.password.value);
     });
-    newAccount.addEventListener('click', async (event) => {
+    newAccountButton.addEventListener('click', async (event) => {
       window.location.href = 'add_account.html';
+    });
+  }
+
+  if (newAccountForm) {
+    animation.style.display = 'none';
+    newAccountForm.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      createAccount(
+        newAccountForm.first_name.value,
+        newAccountForm.last_name.value,
+        newAccountForm.email.value,
+        newAccountForm.password.value
+      );
     });
   }
 
@@ -145,6 +160,23 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 });
 
+async function createAccount(first_name, last_name, email, password) {
+  /* Creating new account */
+  const response = await fetch(`${API_URL}users/`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ first_name, last_name, email, password })
+  });
+
+  if (response.ok) {
+    loginUser(email, password);
+  } else {
+    alert('Account creation failed: ' + response.statusText);
+  }
+}
+
 async function loginUser (email, password) {
   /* Authenticating a user */
   const response = await fetch(`${API_URL}auth/login`, {
@@ -157,7 +189,11 @@ async function loginUser (email, password) {
 
   /* Saving token in a cookie */
   if (response.ok) {
-    login.style.display = 'none';
+    if (login) {
+      login.style.display = 'none';
+    } else if (account) {
+      account.style.display = 'none';
+    }
     animation.style.display = 'block';
     const data = await response.json();
     document.cookie = `token=${data.access_token}; path=/`;
