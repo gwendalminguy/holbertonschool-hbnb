@@ -11,5 +11,6 @@ echo "Access Token: $JWT"
 
 # AMENITIES CREATION
 echo -e "\n> Create New Amenities:"
-curl -X POST http://localhost:5000/api/v1/amenities/ -H "Content-Type: application/json" -H "Authorization: Bearer $JWT" -d '{"name": "Parking"}'
-curl -X POST http://localhost:5000/api/v1/amenities/ -H "Content-Type: application/json" -H "Authorization: Bearer $JWT" -d '{"name": "Washing Machine"}'
+curl -X POST http://localhost:5000/api/v1/amenities/ -H "Content-Type: application/json" -H "Authorization: Bearer $JWT" -d '{"name": "Coffee Machine"}'
+curl -X POST http://localhost:5000/api/v1/amenities/ -H "Content-Type: application/json" -H "Authorization: Bearer $JWT" -d '{"name": "Oven"}'
+curl -X POST http://localhost:5000/api/v1/amenities/ -H "Content-Type: application/json" -H "Authorization: Bearer $JWT" -d '{"name": "TV"}'
