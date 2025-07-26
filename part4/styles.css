@@ -166,8 +166,8 @@ main button:hover {
 main #account-form button,
 main #login-form button,
 main .review-submission button {
-    margin-left: 8em;
-    margin-right: 8em;
+    margin-left: 7em;
+    margin-right: 7em;
 }
 
 main #account-form input,
@@ -313,6 +313,14 @@ textarea {
 
 .review-rating {
     display: flex;
+}
+
+.review-user {
+    margin-top: 15px;
+    margin-right: 15px;
+    text-align: right;
+    font-weight: var(--font-weight-bold);
+    color: var(--color-dark-grey);
 }
 
 .place-card .details {
