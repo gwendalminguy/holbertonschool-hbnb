@@ -59,8 +59,14 @@ h3 {
     margin-bottom: 10px;
 }
 
+h5 {
+    height: 25px;
+    font-size: var(--font-size-medium);
+    font-weight: var(--font-weight-regular);
+}
+
 #logo {
-    display: flex;
+    display: inline-flex;
     align-items: center;
     transition: transform 0.5s ease-in-out;
 }
@@ -158,9 +164,10 @@ main button:hover {
 }
 
 main #account-form button,
-main #login-form button {
-    margin-left: 5em;
-    margin-right: 5em;
+main #login-form button,
+main .review-submission button {
+    margin-left: 8em;
+    margin-right: 8em;
 }
 
 main #account-form input,
@@ -228,13 +235,16 @@ main #login-form input {
 
 #filter {
     display: none;
+    min-width: 1200px;
 }
 
 select,
 input[type="number"],
 input[type="text"],
 input[type="email"],
-input[type="password"] {
+input[type="email"],
+input[type="password"],
+textarea {
     background-color: var(--color-medium-grey);
     border-radius: 3px;
     text-align: center;
@@ -289,7 +299,8 @@ input[type="password"] {
 .filter-card,
 .place-card,
 .place-details,
-.review-card {
+.review-card,
+.review-submission {
     margin: 20px;
     padding: 15px;
     background-color: var(--color-white);
@@ -300,8 +311,24 @@ input[type="password"] {
 		0 8px 10px rgba(0, 0, 0, 0.05);
 }
 
+.review-rating {
+    display: flex;
+}
+
+.place-card .details {
+    display: flex;
+    align-items: center;
+}
+
+.place-card .amenities {
+    margin-left: 10em;
+    min-width: 225px;
+    width: 33%;
+}
+
 .account-card,
-.login-card {
+.login-card,
+.review-submission {
     width: 350px;
     height: 350px;
 }
@@ -309,7 +336,8 @@ input[type="password"] {
 .account-card #account,
 .account-card #animation,
 .login-card #login,
-.login-card #animation {
+.login-card #animation,
+.review-submission #review {
     height: 100%;
     width: 100%;
     display: flex;
@@ -317,12 +345,19 @@ input[type="password"] {
     justify-content: space-between;
 }
 
-.review-card {
+.amenity-item {
+    margin: 10px;
     display: flex;
-    flex-direction: column;
+    height: 25px;
+    align-items: center;
+    text-align: center;
 }
 
-.review-card textarea {
+.amenity-item h5 {
+    margin-left: 10px;;
+}
+
+.review-submission textarea {
     width: 100%;
     height: 100px;
 }
