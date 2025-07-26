@@ -2,9 +2,11 @@ const API_URL = 'http://127.0.0.1:5000/api/v1/';
 const placesList = document.querySelector('#places ul');
 const amenitiesList = document.querySelector('#amenities ul');
 const reviewsList = document.querySelector('#reviews ul');
+const reviewForm = document.getElementById('review-form');
 
 document.addEventListener('DOMContentLoaded', async () => {
   const loginForm = document.getElementById('login-form');
+  const newAccount = document.getElementById('new-account');
   const loginButton = document.getElementById('login-link');
   const logoutButton = document.getElementById('logout-link');
 
@@ -17,18 +19,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   const resetButton = document.getElementById('reset-button');
   const placeDetails = document.getElementById('place-details');
   const animation = document.getElementById('animation');
-
-  if (!token && (window.location.pathname === '/index.html')) {
-    /* Displaying animation */
-    animation.style.display = 'block';
-
-    /* Redirecting to login page */
-    window.setTimeout( function() {
-      window.location.href = 'login.html';
-    }, 5000);
-  } else if (animation) {
-    animation.style.display = 'none';
-  }
+  const login = document.getElementById("login");
 
   if (filter) {
     let price = 0;
@@ -114,10 +105,29 @@ document.addEventListener('DOMContentLoaded', async () => {
     fetchPlaceDetails(token, id);
   }
 
+  if (reviewForm) {
+    const placeId = getPlaceIdFromURL();
+    const uderId = 
+    reviewForm.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      submitReview(
+        token,
+        reviewForm.title.value,
+        reviewForm.text.value,
+        Number(reviewForm.rating.value),
+        placeId
+      )
+    });
+  }
+
   if (loginForm) {
+    animation.style.display = 'none';
     loginForm.addEventListener('submit', async (event) => {
       event.preventDefault();
       loginUser(loginForm.email.value, loginForm.password.value);
+    });
+    newAccount.addEventListener('click', async (event) => {
+      window.location.href = 'add_account.html';
     });
   }
 
@@ -147,9 +157,14 @@ async function loginUser (email, password) {
 
   /* Saving token in a cookie */
   if (response.ok) {
+    login.style.display = 'none';
+    animation.style.display = 'block';
     const data = await response.json();
     document.cookie = `token=${data.access_token}; path=/`;
-    window.location.href = 'index.html';
+    window.setTimeout( function() {
+      window.location.href = 'index.html';
+      animation.style.display = 'none';
+    }, 5000);
   } else {
     alert('Login failed: ' + response.statusText);
   }
@@ -220,7 +235,7 @@ async function fetchPlaces(token) {
 
 async function fetchAmenities() {
   /* Retrieving all amenities */
-  const response = await fetch('http://127.0.0.1:5000/api/v1/amenities/', {
+  const response = await fetch(`${API_URL}amenities/`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json'
@@ -447,5 +462,28 @@ function displayReviews(place) {
     div.appendChild(rating);
     div.appendChild(text);
     reviewsList.appendChild(li);
+  }
+}
+
+async function submitReview(token, title, text, rating, place_id) {
+  /* Submitting review form */
+  const response = await fetch(`${API_URL}reviews/`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    },
+    body: JSON.stringify({ title, text, rating, place_id })
+  });
+
+  handleResponse(response);
+}
+
+function handleResponse(response) {
+  if (response.ok) {
+    alert('Review submitted successfully!');
+    reviewForm.reset();
+  } else {
+    alert('Failed to submit review: ' + response.statusText);
   }
 }
