@@ -157,11 +157,13 @@ main button:hover {
     color: var(--color-light-grey);
 }
 
+main #account-form button,
 main #login-form button {
     margin-left: 5em;
     margin-right: 5em;
 }
 
+main #account-form input,
 main #login-form input {
     height: 4rem;
 }
@@ -230,6 +232,7 @@ main #login-form input {
 
 select,
 input[type="number"],
+input[type="text"],
 input[type="email"],
 input[type="password"] {
     background-color: var(--color-medium-grey);
@@ -273,12 +276,7 @@ input[type="password"] {
 #amenities li input {
     margin-right: 5px;
 }
-
-.login-card {
-    width: 20%;
-    display: flex;
-    flex-direction: column;
-}
+/* ----- CARDS ----- */
 
 .filter-card {
     display: flex;
@@ -286,9 +284,8 @@ input[type="password"] {
     justify-content: space-around;
 }
 
-/* ----- CARDS ----- */
-
 .login-card,
+.account-card,
 .filter-card,
 .place-card,
 .place-details,
@@ -303,9 +300,17 @@ input[type="password"] {
 		0 8px 10px rgba(0, 0, 0, 0.05);
 }
 
+.account-card,
+.login-card {
+    width: 350px;
+    height: 350px;
+}
+
+.account-card #account,
+.account-card #animation,
 .login-card #login,
 .login-card #animation {
-    height: 250px;
+    height: 100%;
     width: 100%;
     display: flex;
     flex-direction: column;
