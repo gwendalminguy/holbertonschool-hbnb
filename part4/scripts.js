@@ -333,6 +333,8 @@ function displayPlaces(places) {
 
 function filterPlaces(places, price, capacity, rooms, surface, amenities) {
   /* Filtering places to display */
+  const amenityFilter = document.querySelector('.amenities-filter');
+
   for (let i = 0; i < places.length; i++) {
     if (
       (Number(places[i].getAttribute('price')) > price && price > 0) ||
@@ -349,6 +351,21 @@ function filterPlaces(places, price, capacity, rooms, surface, amenities) {
       }
     }
   }
+
+  if (amenityFilter.open == true) {
+    amenityFilter.open = false;
+  }
+}
+
+async function isImage(name) {
+  return fetch(`/images/amenities/${name}.png`, { method: 'HEAD' })
+    .then((response) => {
+      if (response.ok) {
+        return true;
+      } else {
+        return false;
+      }
+    })
 }
 
 function isMissing(amenities, placeAmenities) {
@@ -371,6 +388,8 @@ function isMissing(amenities, placeAmenities) {
 
 function resetFilters() {
   /* Resetting all values to default */
+  const amenityFilter = document.querySelector('.amenities-filter');
+
   document.getElementById('price-filter').value = '0';
   document.getElementById('capacity-filter').value = '1';
   document.getElementById('rooms-filter').value = '1';
@@ -379,6 +398,10 @@ function resetFilters() {
   /* Unchecking all amenities */
   for (const element of document.querySelectorAll('.amenities-filter input')) {
     element.checked = false
+  }
+
+  if (amenityFilter.open == true) {
+    amenityFilter.open = false;
   }
 }
 
@@ -404,7 +427,7 @@ async function fetchPlaceDetails(token, placeId) {
   }
 }
 
-function displayPlaceDetails(place) {
+async function displayPlaceDetails(place) {
   /* Populating place details */
   const card = document.querySelector('.place-card');
 
@@ -446,6 +469,7 @@ function displayPlaceDetails(place) {
   surface.appendChild(square);
   card.appendChild(surface);
 
+  /* Populating place amenities */
   const h4 = document.createElement('h4');
   h4.textContent = 'Amenities:';
   const amenities = document.createElement('ul');
@@ -453,7 +477,19 @@ function displayPlaceDetails(place) {
   for (let i = 0; i < place.amenities.length; i++) {
     let amenity = document.createElement('li');
     amenity.classList.add('amenity-item');
-    amenity.textContent = place.amenities[i].name;
+    let icon = document.createElement('img');
+    let imageFound = await isImage(place.amenities[i].name);
+    if (imageFound) {
+      icon.setAttribute('src', `images/amenities/${place.amenities[i].name}.png`);
+    } else {
+      let path = icon.setAttribute('src', 'images/amenities/None.png');
+    }
+    icon.setAttribute('width', '16px');
+    icon.setAttribute('height', '16px');
+    amenity.appendChild(icon);
+    let name = document.createElement('h5');
+    name.textContent = place.amenities[i].name;
+    amenity.appendChild(name);
     amenities.appendChild(amenity);
   };
   card.appendChild(h4);
