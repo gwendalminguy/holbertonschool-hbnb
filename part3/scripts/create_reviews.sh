@@ -86,10 +86,10 @@ echo "Access Token: $JWT_USER_2"
 
 # REVIEWS CREATION
 echo -e "\n> Create New Reviews:"
-RESPONSE=$(curl -s -X POST http://localhost:5000/api/v1/reviews/ -H "Content-Type: application/json" -H "Authorization: Bearer $JWT_USER_1" -d '{"title": "Great place!", "text": "I had a very good time in Toulouse. Hope to come back soon!", "rating": 4, "user_id": "'"$USER_1"'", "place_id": "'"$PLACE"'"}')
+RESPONSE=$(curl -s -X POST http://localhost:5000/api/v1/reviews/ -H "Content-Type: application/json" -H "Authorization: Bearer $JWT_USER_1" -d '{"title": "Great place!", "text": "I had a very good time in Toulouse. Hope to come back soon!", "rating": 4, "place_id": "'"$PLACE"'"}')
 export REVIEW_1="$(echo "$RESPONSE" | jq -r '.id')"
 echo "Review ID: $REVIEW_1"
-RESPONSE=$(curl -s -X POST http://localhost:5000/api/v1/reviews/ -H "Content-Type: application/json" -H "Authorization: Bearer $JWT_USER_2" -d '{"title": "Hot and noisy...", "text": "Great city, but the apartment lacks air conditioning and the neighbours were pretty loud!", "rating": 2, "user_id": "'"$USER_2"'", "place_id": "'"$PLACE"'"}')
+RESPONSE=$(curl -s -X POST http://localhost:5000/api/v1/reviews/ -H "Content-Type: application/json" -H "Authorization: Bearer $JWT_USER_2" -d '{"title": "Hot and noisy...", "text": "Great city, but the apartment lacks air conditioning and the neighbours were pretty loud!", "rating": 2, "place_id": "'"$PLACE"'"}')
 export REVIEW_2="$(echo "$RESPONSE" | jq -r '.id')"
 echo "Review ID: $REVIEW_2"
 
