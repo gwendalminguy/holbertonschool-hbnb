@@ -303,12 +303,23 @@ input[type="password"] {
 		0 8px 10px rgba(0, 0, 0, 0.05);
 }
 
-.login-card {
+.login-card #login,
+.login-card #animation {
     height: 250px;
-    width: 250px;
+    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+}
+
+.review-card {
+    display: flex;
+    flex-direction: column;
+}
+
+.review-card textarea {
+    width: 100%;
+    height: 100px;
 }
 
 .place-card:hover,
