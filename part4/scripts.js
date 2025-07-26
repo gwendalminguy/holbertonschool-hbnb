@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   const logoutButton = document.getElementById('logout-link');
 
   const token = await checkAuthentication().then(
-    data => { return data}
+    data => { return data }
   );
 
   const filter = document.getElementById('filter');
@@ -561,6 +561,11 @@ function displayReviews(place) {
     text.textContent = place.reviews[i].text;
     div.appendChild(text);
 
+    let user = document.createElement('p');
+    user.classList.add('review-user');
+    user.textContent = `- ${place.reviews[i].user.first_name} ${place.reviews[i].user.last_name[0]}.`;
+    div.appendChild(user);
+
     reviewsList.appendChild(li);
   }
 }
@@ -586,4 +591,9 @@ function handleResponse(response) {
   } else {
     alert('Failed to submit review: ' + response.statusText);
   }
+}
+
+function decodeJWT(token) {
+  const response = JSON.parse(atob(token.split('.')[1]));
+  return response.sub;
 }
