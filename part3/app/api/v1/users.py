@@ -26,8 +26,6 @@ class UserList(Resource):
         """
         user_data = api.payload
         
-        print(user_data.items())
-        
         if ("is_admin", 1) in user_data.items():
             current_user = get_jwt_identity()
             if not current_user or not current_user["is_admin"]:
