@@ -55,6 +55,14 @@ h6 {
 
 h3 {
     border-bottom: 3px solid var(--color-medium-grey);
+    font-size: var(--font-size-x-large);
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+}
+
+h4 {
+    border-bottom: 3px solid var(--color-medium-grey);
+    font-size: var(--font-size-large);
     padding-bottom: 5px;
     margin-bottom: 10px;
 }
@@ -171,7 +179,8 @@ main .review-submission button {
 }
 
 main #account-form input,
-main #login-form input {
+main #login-form input,
+main #review input {
     height: 4rem;
 }
 
@@ -249,7 +258,18 @@ textarea {
     border-radius: 3px;
     text-align: center;
     border: none;
-    height: 1.5em;
+    height: 2em;
+}
+
+textarea {
+    text-align: left;
+    padding: 5px;
+    resize: none;
+}
+
+textarea::placeholder {
+    text-align: center;
+    line-height: 90px;
 }
 
 #amenities {
@@ -362,7 +382,7 @@ textarea {
 }
 
 .amenity-item h5 {
-    margin-left: 10px;;
+    margin-left: 10px;
 }
 
 .review-submission textarea {
@@ -373,6 +393,23 @@ textarea {
 .place-card:hover,
 .review-card:hover {
     transform: scale(1.05);
+}
+
+/* ----- STARS ----- */
+
+.rating {
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.rating path,
+.rating div:hover ~ div svg path {
+    fill: var(--color-medium-grey);
+}
+
+.rating:hover path {
+    fill: var(--color-dark-grey);
 }
 
 /* ----- FOOTER ----- */
