@@ -110,13 +110,21 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   if (reviewForm) {
     const placeId = getPlaceIdFromURL();
+    let rating = 0;
+    for (let i = 0; i < 5; i++) {
+      let star = document.getElementById(`star-${i + 1}`);
+      star.addEventListener('click', (event) => {
+        rating = i + 1;
+        colorStars(rating);
+      });
+    }
     reviewForm.addEventListener('submit', async (event) => {
       event.preventDefault();
       submitReview(
         token,
         reviewForm.title.value,
         reviewForm.text.value,
-        Number(reviewForm.rating.value),
+        rating,
         placeId
       )
     });
@@ -308,15 +316,15 @@ function displayPlaces(places) {
     div.classList.add('place-card');
     li.appendChild(div);
 
-    const h3 = document.createElement('h3');
-    h3.classList.add('place-title');
-    h3.textContent = places[i].title;
-    div.appendChild(h3);
+    const title = document.createElement('h4');
+    title.classList.add('place-title');
+    title.textContent = places[i].title;
+    div.appendChild(title);
 
-    const p = document.createElement('p');
-    p.classList.add('place-price');
-    p.textContent = `$${places[i].price}`;
-    div.appendChild(p);
+    const price = document.createElement('p');
+    price.classList.add('place-price');
+    price.textContent = `$${places[i].price}`;
+    div.appendChild(price);
 
     const button = document.createElement('button');
     button.classList.add('details-button');
@@ -491,8 +499,8 @@ async function displayPlaceDetails(token, place) {
     } else {
       icon.setAttribute('src', 'images/amenities/None.png');
     }
-    icon.setAttribute('width', '16px');
-    icon.setAttribute('height', '16px');
+    icon.setAttribute('width', '20px');
+    icon.setAttribute('height', '20px');
     amenity.appendChild(icon);
     let name = document.createElement('h5');
     name.textContent = place.amenities[i].name;
@@ -509,7 +517,7 @@ async function displayPlaceDetails(token, place) {
     button.textContent = 'Review';
     button.addEventListener('click', (event) => {
       window.location.href = `add_review.html?=${place.id}`;
-      /*location.search = `${places[i].id}`;*/
+      /* location.search = `${places[i].id}`; */
     })
 
     card.appendChild(button);
@@ -528,7 +536,7 @@ function displayReviews(place) {
     div.classList.add('review-card');
     li.appendChild(div);
 
-    let title = document.createElement('h3');
+    let title = document.createElement('h4');
     title.classList.add('review-title');
     title.textContent = place.reviews[i].title;
     div.appendChild(title);
@@ -567,6 +575,17 @@ function displayReviews(place) {
     div.appendChild(user);
 
     reviewsList.appendChild(li);
+  }
+}
+
+function colorStars(rating) {
+  for (let i = rating; i > 0; i--) {
+    let star = document.querySelector(`#star-${i} path`);
+    star.style.fill = '#606060';
+  }
+  for (let i = rating + 1; i < 6; i++) {
+    let star = document.querySelector(`#star-${i} path`);
+    star.style.fill = '#dbdbdb';
   }
 }
 
