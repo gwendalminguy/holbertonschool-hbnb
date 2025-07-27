@@ -25,13 +25,15 @@ class Login(Resource):
         if not user or not user.verify_password(credentials['password']):
             return {'error': 'Invalid credentials'}, 401
 
-        access_token = create_access_token(identity={
-            'id': str(user.id),
-            'first_name': str(user.first_name),
-            'last_name': str(user.last_name),
-            'email': str(user.email),
-            'is_admin': user.is_admin
-        })
+        access_token = create_access_token(
+            identity={
+                'id': str(user.id),
+                'first_name': str(user.first_name),
+                'last_name': str(user.last_name),
+                'email': str(user.email),
+                'is_admin': user.is_admin
+            }, expires_delta=False
+        )
 
         return {'access_token': access_token}, 200
 
