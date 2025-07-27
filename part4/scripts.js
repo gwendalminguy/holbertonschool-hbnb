@@ -1,18 +1,20 @@
 const API_URL = 'http://127.0.0.1:5000/api/v1/';
 const placesList = document.querySelector('#places ul');
-const amenitiesList = document.querySelector('#amenities ul');
+const placeForm = document.getElementById('place-form');
 const reviewsList = document.querySelector('#reviews ul');
 const reviewForm = document.getElementById('review-form');
+const amenitiesList = document.querySelector('.amenities-filter ul');
 
 const login = document.getElementById("login");
 const account = document.getElementById("account");
 
 document.addEventListener('DOMContentLoaded', async () => {
-  const loginForm = document.getElementById('login-form');
   const newAccountForm = document.getElementById('account-form');
   const newAccountButton = document.getElementById('new-account');
+  const loginForm = document.getElementById('login-form');
   const loginButton = document.getElementById('login-link');
   const logoutButton = document.getElementById('logout-link');
+  const newPlaceButton = document.getElementById('new-place');
 
   const token = await checkAuthentication().then(
     data => { return data }
@@ -37,23 +39,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     );
 
     /* Populating amenities filter */
-    for (let i = 0; i < amenityItems.length; i++) {
-      const li = document.createElement('li');
-
-      const label = document.createElement('label');
-      label.setAttribute('for', amenityItems[i].name);
-      label.textContent = amenityItems[i].name;
-
-      const input = document.createElement('input');
-      input.setAttribute('type', 'checkbox');
-      input.setAttribute('id', amenityItems[i].id);
-      input.setAttribute('value', amenityItems[i].name);
-
-      li.appendChild(input);
-      li.appendChild(label);
-      amenitiesList.appendChild(li);
-      /* console.log(amenityItems[i].name, amenityItems[i].id); */
-    }
+    addAmenities(amenityItems);
 
     /* Setting number filters values */
     document.getElementById('price-filter').addEventListener('change', (event) => {
@@ -69,20 +55,8 @@ document.addEventListener('DOMContentLoaded', async () => {
       surface = Number(document.getElementById('surface-filter').value);
     });
 
-    /* Setting amenities filter values */
-    let list = document.querySelectorAll('.amenities-filter input');
-    for (let i = 0; i < list.length; i++) {
-      list[i].addEventListener('change', (event) => {
-        if (list[i].checked) {
-          amenities.push(list[i].defaultValue);
-          /* console.log(amenities); */
-        } else {
-          let index = amenities.indexOf(list[i].defaultValue);
-          amenities.splice(index, 1);
-          /* console.log(amenities); */
-        }
-      })
-    }
+    /* Setting amenities values */
+    setAmenities(amenities, "name");
 
     /* Filtering places to display */
     filterButton.addEventListener('click', (event) => {
@@ -101,6 +75,14 @@ document.addEventListener('DOMContentLoaded', async () => {
       resetFilters();
       filterPlaces(places, price, capacity, rooms, surface, amenities);
     });
+
+    /* Displaying new place button */
+    if (token) {
+      newPlaceButton.style.display = 'block';
+      newPlaceButton.addEventListener('click', (event) => {
+        window.location.href = 'add_place.html';
+      });
+    }
   }
 
   if (placeDetails) {
@@ -109,6 +91,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   if (reviewForm) {
+    /* Getting star rating */
     const placeId = getPlaceIdFromURL();
     let rating = 0;
     for (let i = 0; i < 5; i++) {
@@ -118,6 +101,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         colorStars(rating);
       });
     }
+
+    /* Review submission */
     reviewForm.addEventListener('submit', async (event) => {
       event.preventDefault();
       submitReview(
@@ -126,6 +111,37 @@ document.addEventListener('DOMContentLoaded', async () => {
         reviewForm.text.value,
         rating,
         placeId
+      )
+    });
+  }
+
+  if (placeForm) {
+    /* Retrieving all amenities */
+    let amenities = [];
+    const amenityItems = await fetchAmenities().then(
+      data => { return data }
+    );
+
+    /* Populating amenities list */
+    addAmenities(amenityItems);
+
+    /* Setting amenities values */
+    setAmenities(amenities, "id");
+
+    /* Place submission */
+    placeForm.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      submitPlace(
+        token,
+        placeForm.title.value,
+        placeForm.description.value,
+        parseFloat(placeForm.price.value),
+        Number(placeForm.capacity.value),
+        Number(placeForm.rooms.value),
+        parseFloat(placeForm.surface.value),
+        parseFloat(placeForm.latitude.value),
+        parseFloat(placeForm.longitude.value),
+        amenities
       )
     });
   }
@@ -164,7 +180,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     logoutButton.addEventListener('click', (event) => {
       deleteCookie('token');
       window.location.href = 'login.html';
-    })
+    });
   }
 });
 
@@ -294,6 +310,57 @@ async function fetchAmenities() {
   }
 }
 
+function addAmenities(amenityItems) {
+  /* Populating amenities list */
+  for (let i = 0; i < amenityItems.length; i++) {
+    let li = document.createElement('li');
+
+    let label = document.createElement('label');
+    label.setAttribute('for', amenityItems[i].name);
+    label.textContent = amenityItems[i].name;
+
+    let input = document.createElement('input');
+    input.setAttribute('type', 'checkbox');
+    input.setAttribute('id', amenityItems[i].id);
+    input.setAttribute('value', amenityItems[i].name);
+
+    li.appendChild(input);
+    li.appendChild(label);
+    amenitiesList.appendChild(li);
+  }
+}
+
+function setAmenities(amenities, parameter) {
+  let list = document.querySelectorAll('.amenities-filter input');
+  if (parameter === "name") {
+    for (let i = 0; i < list.length; i++) {
+      list[i].addEventListener('change', (event) => {
+        if (list[i].checked) {
+          amenities.push(list[i].defaultValue);
+          /* console.log(amenities); */
+        } else {
+          let index = amenities.indexOf(list[i].defaultValue);
+          amenities.splice(index, 1);
+          /* console.log(amenities); */
+        }
+      });
+    }
+  } else if (parameter === "id") {
+    for (let i = 0; i < list.length; i++) {
+      list[i].addEventListener('change', (event) => {
+        if (list[i].checked) {
+          amenities.push(list[i].id);
+          /* console.log(amenities); */
+        } else {
+          let index = amenities.indexOf(list[i].id);
+          amenities.splice(index, 1);
+          /* console.log(amenities); */
+        }
+      });
+    }
+  }
+}
+
 function displayPlaces(places) {
   /* Clearing placesList */
   let lastItem = placesList.lastElementChild;
@@ -303,6 +370,74 @@ function displayPlaces(places) {
   }
 
   /* Populating placesList */
+  for (let i = 0; i < places.length; i++) {
+    const li = document.createElement('li');
+    li.classList.add('col-3');
+    li.setAttribute('price', places[i].price);
+    li.setAttribute('capacity', places[i].capacity);
+    li.setAttribute('rooms', places[i].rooms);
+    li.setAttribute('surface', places[i].surface);
+    li.setAttribute('amenities', places[i].amenities.join(';'));
+
+    const div = document.createElement('div');
+    div.classList.add('place-card');
+    li.appendChild(div);
+
+    const title = document.createElement('h4');
+    title.classList.add('place-title');
+    title.textContent = places[i].title;
+    div.appendChild(title);
+
+    const price = document.createElement('p');
+    price.classList.add('place-price');
+    price.textContent = `$${places[i].price}`;
+    div.appendChild(price);
+
+    const button = document.createElement('button');
+    button.classList.add('details-button');
+    button.textContent = 'Details';
+    button.addEventListener('click', (event) => {
+      window.location.href = `place.html?=${places[i].id}`;
+      /*location.search = `${places[i].id}`;*/
+    })
+    div.appendChild(button);
+
+    placesList.appendChild(li);
+  }
+  for (let i = 0; i < places.length; i++) {
+    const li = document.createElement('li');
+    li.classList.add('col-3');
+    li.setAttribute('price', places[i].price);
+    li.setAttribute('capacity', places[i].capacity);
+    li.setAttribute('rooms', places[i].rooms);
+    li.setAttribute('surface', places[i].surface);
+    li.setAttribute('amenities', places[i].amenities.join(';'));
+
+    const div = document.createElement('div');
+    div.classList.add('place-card');
+    li.appendChild(div);
+
+    const title = document.createElement('h4');
+    title.classList.add('place-title');
+    title.textContent = places[i].title;
+    div.appendChild(title);
+
+    const price = document.createElement('p');
+    price.classList.add('place-price');
+    price.textContent = `$${places[i].price}`;
+    div.appendChild(price);
+
+    const button = document.createElement('button');
+    button.classList.add('details-button');
+    button.textContent = 'Details';
+    button.addEventListener('click', (event) => {
+      window.location.href = `place.html?=${places[i].id}`;
+      /*location.search = `${places[i].id}`;*/
+    })
+    div.appendChild(button);
+
+    placesList.appendChild(li);
+  }
   for (let i = 0; i < places.length; i++) {
     const li = document.createElement('li');
     li.classList.add('col-3');
@@ -600,15 +735,42 @@ async function submitReview(token, title, text, rating, place_id) {
     body: JSON.stringify({ title, text, rating, place_id })
   });
 
-  handleResponse(response);
+  handleResponse(response, "Review");
 }
 
-function handleResponse(response) {
+async function submitPlace (token, title, description, price, capacity, rooms, surface, latitude, longitude, list) {
+  /* Submitting place form */
+  const user = decodeJWT(token);
+  const owner_id = user.id;
+  let amenities = [];
+
+  for (let i = 0; i < list.length; i++) {
+    let amenity = {"id": list[i]};
+    amenities.push(amenity);
+  }
+
+  const response = await fetch(`${API_URL}places/`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    },
+    body: JSON.stringify({ title, description, price, capacity, rooms, surface, latitude, longitude, owner_id, amenities })
+  });
+
+  handleResponse(response, "Place");
+}
+
+function handleResponse(response, type) {
   if (response.ok) {
-    alert('Review submitted successfully!');
-    reviewForm.reset();
+    alert(`${type} submitted successfully!`);
+    if (type === "Place") {
+      reviewForm.reset();
+    } else if (type === "Review") {
+      placeForme.reset();
+    }
   } else {
-    alert('Failed to submit review: ' + response.statusText);
+    alert('Failed to submit: ' + response.statusText);
   }
 }
 
