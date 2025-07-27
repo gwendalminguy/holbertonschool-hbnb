@@ -71,6 +71,8 @@ h5 {
     height: 25px;
     font-size: var(--font-size-medium);
     font-weight: var(--font-weight-regular);
+    font-size: var(--font-size-medium);
+    color: var(--color-dark-grey);
 }
 
 #logo {
@@ -188,6 +190,7 @@ main #review input {
 .col-3 {
     float: left;
 	width: 33.33%;
+    height: 100%;
 }
 
 #new-place {
@@ -195,6 +198,7 @@ main #review input {
     position: fixed;
     right: 50px;
     bottom: 100px;
+    z-index: 1;
 }
 
 #new-place button {
@@ -207,6 +211,9 @@ main #review input {
     font-size: medium;
     border-width: 3px;
     border-radius: 999px;
+    box-shadow:
+		0 10px 15px rgba(0, 0, 0, 0.05),
+		0 8px 10px rgba(0, 0, 0, 0.05);
 }
 
 #new-place button:hover {
@@ -366,9 +373,16 @@ textarea::placeholder {
     display: flex;
 }
 
+.review-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
 .review-user {
     margin-top: 15px;
     margin-right: 15px;
+    margin-left: auto;
     text-align: right;
     font-weight: var(--font-weight-bold);
     color: var(--color-dark-grey);
@@ -457,8 +471,8 @@ textarea::placeholder {
     background-color: var(--color-light-grey);
     border-top: 2px solid var(--color-medium-grey);
     box-shadow: 
-        0 0 100px 0 var(--color-medium-grey),
-        0 0 50px 0 var(--color-dark-grey);
+        0 0 75px 0 var(--color-dark-grey),
+        0 0 100px 0 var(--color-medium-grey);
     color: var(--text-color);
     position: fixed;
     bottom: 0;
