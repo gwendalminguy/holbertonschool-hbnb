@@ -210,7 +210,6 @@ class PlaceReviewList(Resource):
         reviews = []
         for review in review_list:
             user = facade.get_user(review.user_id)
-            print(user.first_name)
             reviews.append({
                 'id': review.id,
                 'title': review.title,
