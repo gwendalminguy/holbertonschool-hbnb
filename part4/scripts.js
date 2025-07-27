@@ -242,15 +242,15 @@ async function checkAuthentication() {
   } else {
     loginLink.style.display = 'none';
     logoutLink.style.display = 'block';
+  }
 
-    if (placesList) {
-      document.getElementById('filter').style.display = 'block';
-      const places = await fetchPlaces(token);
-      displayPlaces(places);
-    }
+  if (placesList) {
+    document.getElementById('filter').style.display = 'block';
+    const places = await fetchPlaces(token);
+    displayPlaces(places);
+  }
 
     return token;
-  }
 }
 
 function getCookie(name) {
@@ -388,7 +388,7 @@ function displayPlaces(places) {
     title.textContent = places[i].title;
     div.appendChild(title);
 
-    const price = document.createElement('p');
+    const price = document.createElement('h5');
     price.classList.add('place-price');
     price.textContent = `$${places[i].price}`;
     div.appendChild(price);
@@ -397,75 +397,7 @@ function displayPlaces(places) {
     button.classList.add('details-button');
     button.textContent = 'Details';
     button.addEventListener('click', (event) => {
-      window.location.href = `place.html?=${places[i].id}`;
-      /*location.search = `${places[i].id}`;*/
-    })
-    div.appendChild(button);
-
-    placesList.appendChild(li);
-  }
-  for (let i = 0; i < places.length; i++) {
-    const li = document.createElement('li');
-    li.classList.add('col-3');
-    li.setAttribute('price', places[i].price);
-    li.setAttribute('capacity', places[i].capacity);
-    li.setAttribute('rooms', places[i].rooms);
-    li.setAttribute('surface', places[i].surface);
-    li.setAttribute('amenities', places[i].amenities.join(';'));
-
-    const div = document.createElement('div');
-    div.classList.add('place-card');
-    li.appendChild(div);
-
-    const title = document.createElement('h4');
-    title.classList.add('place-title');
-    title.textContent = places[i].title;
-    div.appendChild(title);
-
-    const price = document.createElement('p');
-    price.classList.add('place-price');
-    price.textContent = `$${places[i].price}`;
-    div.appendChild(price);
-
-    const button = document.createElement('button');
-    button.classList.add('details-button');
-    button.textContent = 'Details';
-    button.addEventListener('click', (event) => {
-      window.location.href = `place.html?=${places[i].id}`;
-      /*location.search = `${places[i].id}`;*/
-    })
-    div.appendChild(button);
-
-    placesList.appendChild(li);
-  }
-  for (let i = 0; i < places.length; i++) {
-    const li = document.createElement('li');
-    li.classList.add('col-3');
-    li.setAttribute('price', places[i].price);
-    li.setAttribute('capacity', places[i].capacity);
-    li.setAttribute('rooms', places[i].rooms);
-    li.setAttribute('surface', places[i].surface);
-    li.setAttribute('amenities', places[i].amenities.join(';'));
-
-    const div = document.createElement('div');
-    div.classList.add('place-card');
-    li.appendChild(div);
-
-    const title = document.createElement('h4');
-    title.classList.add('place-title');
-    title.textContent = places[i].title;
-    div.appendChild(title);
-
-    const price = document.createElement('p');
-    price.classList.add('place-price');
-    price.textContent = `$${places[i].price}`;
-    div.appendChild(price);
-
-    const button = document.createElement('button');
-    button.classList.add('details-button');
-    button.textContent = 'Details';
-    button.addEventListener('click', (event) => {
-      window.location.href = `place.html?=${places[i].id}`;
+      window.location.href = `place.html?place=${places[i].id}`;
       /*location.search = `${places[i].id}`;*/
     })
     div.appendChild(button);
@@ -549,8 +481,17 @@ function resetFilters() {
 }
 
 function getPlaceIdFromURL() {
-  const id = window.location.search.split('=');
-  return id[1];
+  const id = window.location.search.split('=')[1];
+  if (id.includes('&')) {
+    return id.split('&')[0];
+  } else {
+    return id;
+  }
+}
+
+function getReviewIdFromURL() {
+  const id = window.location.search.split('&')[1];
+  return id.split('=')[1];
 }
 
 async function fetchPlaceDetails(token, placeId) {
@@ -596,7 +537,7 @@ async function displayPlaceDetails(token, place) {
 
   const owner = document.createElement('p');
   owner.classList.add('place-owner');
-  owner.textContent = `${place.owner.first_name} ${place.owner.last_name}`;
+  owner.textContent = `${place.owner.first_name} ${place.owner.last_name[0]}.`;
   info.appendChild(owner);
 
   const capacity = document.createElement('p');
@@ -651,17 +592,17 @@ async function displayPlaceDetails(token, place) {
     button.classList.add('review-button');
     button.textContent = 'Review';
     button.addEventListener('click', (event) => {
-      window.location.href = `add_review.html?=${place.id}`;
+      window.location.href = `add_review.html?place=${place.id}`;
       /* location.search = `${places[i].id}`; */
     })
 
     card.appendChild(button);
   }
 
-  displayReviews(place);
+  displayReviews(token, place);
 }
 
-function displayReviews(place) {
+function displayReviews(token, place) {
   /* Populating place reviews */
   for (let i = 0; i < place.reviews.length; i++) {
     let li = document.createElement('li');
@@ -671,6 +612,7 @@ function displayReviews(place) {
     div.classList.add('review-card');
     li.appendChild(div);
 
+    /* Displaying title */
     let title = document.createElement('h4');
     title.classList.add('review-title');
     title.textContent = place.reviews[i].title;
@@ -699,15 +641,38 @@ function displayReviews(place) {
     }
     div.appendChild(rating);
 
+    /* Displaying text */
     let text = document.createElement('p');
     text.classList.add('review-text');
     text.textContent = place.reviews[i].text;
     div.appendChild(text);
 
+    let bottom = document.createElement('span');
+    bottom.classList.add('review-bottom');
+    div.appendChild(bottom);
+
+    /* Allowing edition if current user matches author */
+    if (token) {
+      let userId = decodeJWT(token).id;
+      /* console.log(userId); */
+      if (userId === place.reviews[i].user.id) {
+        /* console.log('Fuck yeah it worked!'); */
+        let edit = document.createElement('button');
+        edit.classList.add('edit-button');
+        edit.textContent = 'Edit';
+        edit.addEventListener('click', (event) => {
+          /* console.log(place.reviews[i].id); */
+          window.location.href = `add_review.html?place=${place.id}&review=${place.reviews[i].id}`;
+        });
+        bottom.appendChild(edit);
+      }
+    }
+
+    /* Displaying author name */
     let user = document.createElement('p');
     user.classList.add('review-user');
     user.textContent = `- ${place.reviews[i].user.first_name} ${place.reviews[i].user.last_name[0]}.`;
-    div.appendChild(user);
+    bottom.appendChild(user);
 
     reviewsList.appendChild(li);
   }
@@ -761,14 +726,15 @@ async function submitPlace (token, title, description, price, capacity, rooms, s
   handleResponse(response, "Place");
 }
 
-function handleResponse(response, type) {
+function handleResponse(response, type, id) {
   if (response.ok) {
     alert(`${type} submitted successfully!`);
     if (type === "Place") {
       reviewForm.reset();
     } else if (type === "Review") {
-      placeForme.reset();
+      placeForm.reset();
     }
+    window.location.href = 'index.html';
   } else {
     alert('Failed to submit: ' + response.statusText);
   }
