@@ -135,6 +135,7 @@ class PlaceResource(Resource):
             "text": review.text,
             "rating": review.rating,
             "user": {
+                "id": facade.get_user(review.user_id).id,
                 "first_name": facade.get_user(review.user_id).first_name,
                 "last_name": facade.get_user(review.user_id).last_name
             }
