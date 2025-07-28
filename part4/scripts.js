@@ -86,13 +86,13 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   if (placeDetails) {
-    const id = getPlaceIdFromURL();
+    const id = getParameterFromURL('place');
     fetchPlaceDetails(token, id);
   }
 
   if (reviewForm) {
     /* Getting star rating */
-    const placeId = getPlaceIdFromURL();
+    const placeId = getParameterFromURL('place');
     let rating = 0;
     for (let i = 0; i < 5; i++) {
       let star = document.getElementById(`star-${i + 1}`);
@@ -480,19 +480,11 @@ function resetFilters() {
   }
 }
 
-function getPlaceIdFromURL() {
-  const id = window.location.search.split('=')[1];
-  if (id.includes('&')) {
-    return id.split('&')[0];
-  } else {
-    return id;
+function getParameterFromURL(name) {
+  const parameters = new URLSearchParams(window.location.search)
+  const value = parameters.get(name);
+    return value;
   }
-}
-
-function getReviewIdFromURL() {
-  const id = window.location.search.split('&')[1];
-  return id.split('=')[1];
-}
 
 async function fetchPlaceDetails(token, placeId) {
   const response = await fetch(`${API_URL}places/${placeId}`, {
