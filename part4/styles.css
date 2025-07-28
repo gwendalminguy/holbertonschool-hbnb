@@ -274,8 +274,10 @@ main #review input {
 
 /* ----- FILTERS ----- */
 
-#filter {
-    display: none;
+#filter,
+#places,
+#reviews,
+#place-details {
     min-width: 1200px;
 }
 
@@ -469,7 +471,6 @@ textarea::placeholder {
 
 .footer {
     background-color: var(--color-light-grey);
-    border-top: 2px solid var(--color-medium-grey);
     box-shadow: 
         0 0 75px 0 var(--color-dark-grey),
         0 0 100px 0 var(--color-medium-grey);
