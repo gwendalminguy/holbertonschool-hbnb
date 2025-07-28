@@ -2,7 +2,7 @@ const API_URL = 'http://127.0.0.1:5000/api/v1/';
 const placesList = document.querySelector('#places ul');
 const placeForm = document.getElementById('place-form');
 const reviewsList = document.querySelector('#reviews ul');
-const reviewForm = document.getElementById('review-form');
+const reviewForm = document.querySelector('#review-form');
 const amenitiesList = document.querySelector('.amenities-filter ul');
 
 const login = document.getElementById("login");
@@ -96,7 +96,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     let rating = 0;
 
-    /* Pre-filling review form if editing */
+    /* Pre-filling review form on edition */
     if (reviewId) {
       const review = await fetchReviewDetails(token, reviewId).then(
         data => { return data }
@@ -109,6 +109,18 @@ document.addEventListener('DOMContentLoaded', async () => {
       title.value = review.title;
       text.value = review.text;
       colorStars(review.rating);
+
+      /* Adding delete button */
+      const section = document.querySelector('#review');
+      const button = document.createElement('button');
+      button.className = 'delete-review';
+      button.setAttribute('type', 'button');
+      button.textContent = 'Delete';
+      section.appendChild(button);
+
+      button.addEventListener('click', (event) => {
+        deleteReview(token, placeId, reviewId);
+      });
     }
 
     /* Getting star rating */
@@ -741,7 +753,7 @@ async function submitReview(token, title, text, rating, place_id) {
     body: JSON.stringify({ title, text, rating, place_id })
   });
 
-  handleResponse(response, "Review");
+  handleResponse(response, "Review", place_id);
 }
 
 async function editReview(token, title, text, rating, place_id, review_id) {
@@ -755,7 +767,20 @@ async function editReview(token, title, text, rating, place_id, review_id) {
     body: JSON.stringify({ title, text, rating, place_id })
   });
 
-  handleResponse(response, "Review");
+  handleResponse(response, "Review", place_id);
+}
+
+async function deleteReview(token, place_id, review_id) {
+  /* Deleting existing review */
+  const response = await fetch(`${API_URL}reviews/${review_id}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    }
+  });
+
+  handleResponse(response, "Review", place_id);
 }
 
 async function submitPlace (token, title, description, price, capacity, rooms, surface, latitude, longitude, list) {
@@ -778,18 +803,15 @@ async function submitPlace (token, title, description, price, capacity, rooms, s
     body: JSON.stringify({ title, description, price, capacity, rooms, surface, latitude, longitude, owner_id, amenities })
   });
 
-  handleResponse(response, "Place");
+  const data = await response.json();
+
+  handleResponse(response, "Place", data.id);
 }
 
-function handleResponse(response, type) {
+function handleResponse(response, type, place_id) {
   if (response.ok) {
     alert(`${type} submitted successfully!`);
-    if (type === "Place") {
-      reviewForm.reset();
-    } else if (type === "Review") {
-      placeForm.reset();
-    }
-    window.location.href = 'index.html';
+    window.location.href = `place.html?place=${place_id}`;
   } else {
     alert('Failed to submit: ' + response.statusText);
   }
