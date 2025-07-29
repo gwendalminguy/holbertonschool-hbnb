@@ -629,59 +629,32 @@ async function fetchPlaceDetails(token, placeId) {
 
 async function displayPlaceDetails(token, place) {
   /* Populating place details */
-
-  const card = document.querySelector('.place-card');
-  const title = document.createElement('h3');
-  title.classList.add('place-title');
+  const title = document.querySelector('.place-title');
   title.textContent = place.title;
-  card.appendChild(title);
 
-  const details = document.createElement('div');
-  details.classList.add('details');
-
-  const info = document.createElement('div');
-  info.classList.add('info');
-
-  const description = document.createElement('p');
-  description.classList.add('place-description');
+  const description = document.querySelector('.place-description');
   description.textContent = place.description;
-  info.appendChild(description);
 
-  const price = document.createElement('p');
-  price.classList.add('place-price');
+  const price = document.querySelector('.place-price');
   price.textContent = `$${place.price} / night`;
-  info.appendChild(price);
 
-  const owner = document.createElement('p');
-  owner.classList.add('place-owner');
+  const owner = document.querySelector('.place-owner');
   owner.textContent = `${place.owner.first_name} ${place.owner.last_name[0]}.`;
-  info.appendChild(owner);
 
-  const capacity = document.createElement('p');
-  capacity.classList.add('place-capacity');
+  const capacity = document.querySelector('.place-capacity');
   capacity.textContent = `Capacity: ${place.capacity} people`;
-  info.appendChild(capacity);
 
-  const rooms = document.createElement('p');
-  rooms.classList.add('place-rooms');
+  const rooms = document.querySelector('.place-rooms');
   rooms.textContent = `Rooms: ${place.rooms}`;
-  info.appendChild(rooms);
 
-  const surface = document.createElement('p');
-  surface.classList.add('place-surface');
+  const surface = document.querySelector('.place-surface');
   surface.textContent = `Surface: ${place.surface} m`;
   const square = document.createElement('sup');
   square.textContent = '2';
   surface.appendChild(square);
-  info.appendChild(surface);
-  details.appendChild(info);
 
   /* Populating place amenities */
-  const amenities = document.createElement('div')
-  amenities.classList.add('amenities')
-
-  const amenitiesList = document.createElement('ul');
-  amenitiesList.classList.add('place-amenities');
+  const amenitiesList = document.querySelector('.place-amenities');
   for (let i = 0; i < place.amenities.length; i++) {
     let amenity = document.createElement('li');
     amenity.classList.add('amenity-item');
@@ -700,11 +673,10 @@ async function displayPlaceDetails(token, place) {
     amenity.appendChild(name);
     amenitiesList.appendChild(amenity);
   };
-  amenities.appendChild(amenitiesList);
-  details.appendChild(amenities);
-  card.appendChild(details);
 
+  /* Adding edit or review button */
   if (token) {
+    const card = document.querySelector('.place-card');
     const user = decodeJWT(token);
     const button = document.createElement('button');
     if (user.id === place.owner.id) {
