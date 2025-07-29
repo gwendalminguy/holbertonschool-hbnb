@@ -252,6 +252,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   if (loginForm) {
+    loginButton.style ='none';
     animation.style.display = 'none';
     loginForm.addEventListener('submit', async (event) => {
       event.preventDefault();
@@ -263,6 +264,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   if (newAccountForm) {
+    loginButton.style.display = 'none';
     animation.style.display = 'none';
     newAccountForm.addEventListener('submit', async (event) => {
       event.preventDefault();
