@@ -75,6 +75,11 @@ h5 {
     color: var(--color-dark-grey);
 }
 
+h6 {
+    font-size: var(--font-size-x-large);
+    font-weight: var(--font-weight-bold);
+}
+
 #logo {
     display: inline-flex;
     align-items: center;
