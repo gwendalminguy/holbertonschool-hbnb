@@ -753,7 +753,7 @@ async function submitReview(token, title, text, rating, place_id) {
     body: JSON.stringify({ title, text, rating, place_id })
   });
 
-  handleResponse(response, "Review", place_id);
+  handleResponse(response, "Review submitted successfully!", place_id);
 }
 
 async function editReview(token, title, text, rating, place_id, review_id) {
@@ -767,7 +767,7 @@ async function editReview(token, title, text, rating, place_id, review_id) {
     body: JSON.stringify({ title, text, rating, place_id })
   });
 
-  handleResponse(response, "Review", place_id);
+  handleResponse(response, "Review edited successfully!", place_id);
 }
 
 async function deleteReview(token, place_id, review_id) {
@@ -780,7 +780,7 @@ async function deleteReview(token, place_id, review_id) {
     }
   });
 
-  handleResponse(response, "Review", place_id);
+  handleResponse(response, "Review deleted successfully!", place_id);
 }
 
 async function submitPlace (token, title, description, price, capacity, rooms, surface, latitude, longitude, list) {
@@ -805,15 +805,18 @@ async function submitPlace (token, title, description, price, capacity, rooms, s
 
   const data = await response.json();
 
-  handleResponse(response, "Place", data.id);
+  handleResponse(response, "Place submitted successfully!", data.id);
 }
 
-function handleResponse(response, type, place_id) {
+async function handleResponse(response, successMessage, place_id) {
   if (response.ok) {
-    alert(`${type} submitted successfully!`);
-    window.location.href = `place.html?place=${place_id}`;
+    alert(`${successMessage}`);
+    if (place_id) {
+      window.location.href = `place.html?place=${place_id}`;
+    }
   } else {
-    alert('Failed to submit: ' + response.statusText);
+    const message = await response.json();
+    alert(`Failure: ${message.error} (${response.statusText})`);
   }
 }
 
