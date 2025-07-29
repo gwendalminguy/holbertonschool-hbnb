@@ -403,13 +403,15 @@ textarea::placeholder {
 
 .place-card .details {
     display: flex;
-    align-items: center;
+    justify-content: space-between;
 }
 
-.place-card .amenities {
-    margin-left: 10em;
-    min-width: 225px;
-    width: 33%;
+.place-card .details .amenities {
+    width: 25%;
+}
+
+.place-card .details .info {
+    width: 75%;
 }
 
 .account-card,
