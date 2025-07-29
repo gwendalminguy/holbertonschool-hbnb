@@ -181,14 +181,17 @@ class PlaceResource(Resource):
 
         if not place:
             return {'error': 'Place not found'}, 404
+        
+        place_data["amenities"] = [facade.get_amenity(amenity["id"]) for amenity in place_data["amenities"]]
 
         updated_place = facade.update_place(place_id, place_data)
+
         if not updated_place:
             return {'error': 'Invalid input data'}, 400
 
-        place.amenities = []
+        # amenities = []
         # for amenity in place_data["amenities"]:
-            # place.add_amenity(facade.get_amenity(amenity["id"]))
+            # amenities.append(facade.get_amenity(amenity["id"]))
 
         return {'message': 'Place updated successfully'}, 200
 
