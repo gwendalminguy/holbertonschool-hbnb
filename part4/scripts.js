@@ -86,8 +86,11 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   if (placeDetails) {
-    const PlaceId = getParameterFromURL('place');
-    fetchPlaceDetails(token, PlaceId);
+    const placeId = getParameterFromURL('place');
+    const place = await fetchPlaceDetails(token, placeId).then(
+      data => { return data }
+    );
+    displayPlaceDetails(token, place);
   }
 
   if (reviewForm) {
@@ -160,6 +163,8 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   if (placeForm) {
+    const placeId = getParameterFromURL('place');
+
     /* Retrieving all amenities */
     let amenities = [];
     const amenityItems = await fetchAmenities().then(
@@ -172,22 +177,78 @@ document.addEventListener('DOMContentLoaded', async () => {
     /* Setting amenities values */
     setAmenities(amenities, "id");
 
+    /* Pre-filling place form on edition */
+    if (placeId) {
+      const place = await fetchPlaceDetails(token, placeId).then(
+        data => { return data }
+      );
+
+      let list = document.querySelectorAll('.amenities-filter input');
+
+      /* Pre-checking amenities */
+      for (let i = 0; i < place.amenities.length; i++) {
+        amenities.push(place.amenities[i].id);
+        for (let j = 0; j < list.length; j++) {
+          if (amenities[i] === list[j].getAttribute('id')) {
+            list[j].checked = true;
+          }
+        }
+      }
+
+      let title = document.getElementById('title');
+      let description = document.getElementById('description');
+      let price = document.getElementById('price');
+      let capacity = document.getElementById('capacity');
+      let rooms = document.getElementById('rooms');
+      let surface = document.getElementById('surface');
+      let latitude = document.getElementById('latitude');
+      let longitude = document.getElementById('longitude');
+
+      title.value = place.title;
+      description.value = place.description;
+      price.value = place.price;
+      capacity.value = place.capacity;
+      rooms.value = place.rooms;
+      surface.value = place.surface;
+      latitude.value = place.latitude;
+      longitude.value = place.longitude;
+    }
+
     /* Place submission */
-    placeForm.addEventListener('submit', async (event) => {
-      event.preventDefault();
-      submitPlace(
-        token,
-        placeForm.title.value,
-        placeForm.description.value,
-        parseFloat(placeForm.price.value),
-        Number(placeForm.capacity.value),
-        Number(placeForm.rooms.value),
-        parseFloat(placeForm.surface.value),
-        parseFloat(placeForm.latitude.value),
-        parseFloat(placeForm.longitude.value),
-        amenities
-      )
-    });
+    if (placeId) { // PUT
+      placeForm.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        editPlace(
+          token,
+          placeForm.title.value,
+          placeForm.description.value,
+          parseFloat(placeForm.price.value),
+          Number(placeForm.capacity.value),
+          Number(placeForm.rooms.value),
+          parseFloat(placeForm.surface.value),
+          parseFloat(placeForm.latitude.value),
+          parseFloat(placeForm.longitude.value),
+          amenities,
+          placeId
+        )
+      });
+    } else { // POST
+      placeForm.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        submitPlace(
+          token,
+          placeForm.title.value,
+          placeForm.description.value,
+          parseFloat(placeForm.price.value),
+          Number(placeForm.capacity.value),
+          Number(placeForm.rooms.value),
+          parseFloat(placeForm.surface.value),
+          parseFloat(placeForm.latitude.value),
+          parseFloat(placeForm.longitude.value),
+          amenities
+        )
+      });
+    }
   }
 
   if (loginForm) {
@@ -558,7 +619,7 @@ async function fetchPlaceDetails(token, placeId) {
 
   if (response.ok) {
     const data = await response.json();
-    displayPlaceDetails(token, data);
+    return data
   } else {
     alert('Fetching place details failed: ' + response.statusText);
   }
@@ -566,6 +627,7 @@ async function fetchPlaceDetails(token, placeId) {
 
 async function displayPlaceDetails(token, place) {
   /* Populating place details */
+
   const card = document.querySelector('.place-card');
   const title = document.createElement('h3');
   title.classList.add('place-title');
@@ -641,14 +703,21 @@ async function displayPlaceDetails(token, place) {
   card.appendChild(details);
 
   if (token) {
+    const user = decodeJWT(token);
     const button = document.createElement('button');
-    button.classList.add('review-button');
-    button.textContent = 'Review';
-    button.addEventListener('click', (event) => {
-      window.location.href = `add_review.html?place=${place.id}`;
-      /* location.search = `${places[i].id}`; */
-    })
-
+    if (user.id === place.owner.id) {
+      button.classList.add('edit-button');
+      button.textContent = 'Edit';
+      button.addEventListener('click', (event) => {
+        window.location.href = `add_place.html?place=${place.id}`;
+      })
+    } else {
+      button.classList.add('review-button');
+      button.textContent = 'Review';
+      button.addEventListener('click', (event) => {
+        window.location.href = `add_review.html?place=${place.id}`;
+      })
+    }
     card.appendChild(button);
   }
 
@@ -806,6 +875,31 @@ async function submitPlace (token, title, description, price, capacity, rooms, s
   const data = await response.json();
 
   handleResponse(response, "Place submitted successfully!", data.id);
+}
+
+async function editPlace (token, title, description, price, capacity, rooms, surface, latitude, longitude, list, place_id) {
+  /* Editing existing place */
+  const user = decodeJWT(token);
+  const owner_id = user.id;
+  let amenities = [];
+
+  for (let i = 0; i < list.length; i++) {
+    let amenity = {"id": list[i]};
+    amenities.push(amenity);
+  }
+
+  const response = await fetch(`${API_URL}places/${place_id}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    },
+    body: JSON.stringify({ title, description, price, capacity, rooms, surface, latitude, longitude, owner_id, amenities })
+  });
+
+  const data = await response.json();
+
+  handleResponse(response, "Place edited successfully!", place_id);
 }
 
 async function handleResponse(response, successMessage, place_id) {
