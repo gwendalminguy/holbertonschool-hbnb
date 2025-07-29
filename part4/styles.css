@@ -369,7 +369,7 @@ textarea::placeholder {
 .review-submission {
     min-height: 75px;
     margin: 20px;
-    padding: 15px;
+    padding: 25px;
     background-color: var(--color-white);
     border-radius: 10px;
     transition: transform 0.25s ease-in-out;
@@ -406,8 +406,14 @@ textarea::placeholder {
     justify-content: space-between;
 }
 
+.place-card .place-description,
+#reviews .review-text {
+    text-align: justify;
+}
+
 .place-card .details .amenities {
     width: 25%;
+    margin-left: 50px;
 }
 
 .place-card .details .info {
