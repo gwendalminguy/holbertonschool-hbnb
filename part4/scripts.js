@@ -635,11 +635,11 @@ async function displayPlaceDetails(token, place) {
   const description = document.querySelector('.place-description');
   description.textContent = place.description;
 
-  const price = document.querySelector('.place-price');
-  price.textContent = `$${place.price} / night`;
-
   const owner = document.querySelector('.place-owner');
   owner.textContent = `${place.owner.first_name} ${place.owner.last_name[0]}.`;
+
+  const price = document.querySelector('.place-price');
+  price.textContent = `$${place.price} / night`;
 
   const capacity = document.querySelector('.place-capacity');
   capacity.textContent = `Capacity: ${place.capacity} people`;
