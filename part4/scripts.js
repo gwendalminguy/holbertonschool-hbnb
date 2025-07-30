@@ -1,5 +1,3 @@
-/* global alert, confirm */
-
 const API_URL = 'http://127.0.0.1:5000/api/v1/';
 const placesList = document.querySelector('#places ul');
 const placeForm = document.getElementById('place-form');
@@ -19,7 +17,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   const newPlaceButton = document.getElementById('new-place');
 
   const token = await checkAuthentication().then(
-    data => { return data }
+    data => { return data; }
   );
 
   const filter = document.getElementById('filter');
@@ -37,7 +35,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     /* Retrieving all amenities */
     const amenityItems = await fetchAmenities().then(
-      data => { return data }
+      data => { return data; }
     );
 
     /* Populating amenities filter */
@@ -90,7 +88,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (placeDetails) {
     const placeId = getParameterFromURL('place');
     const place = await fetchPlaceDetails(token, placeId).then(
-      data => { return data }
+      data => { return data; }
     );
     displayPlaceDetails(token, place);
   }
@@ -104,7 +102,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     /* Pre-filling review form on edition */
     if (reviewId) {
       const review = await fetchReviewDetails(token, reviewId).then(
-        data => { return data }
+        data => { return data; }
       );
 
       const title = document.getElementById('title');
@@ -148,7 +146,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           rating,
           placeId,
           reviewId
-        )
+        );
       });
     } else { // POST
       reviewForm.addEventListener('submit', async (event) => {
@@ -159,7 +157,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           reviewForm.text.value,
           rating,
           placeId
-        )
+        );
       });
     }
   }
@@ -170,7 +168,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     /* Retrieving all amenities */
     const amenities = [];
     const amenityItems = await fetchAmenities().then(
-      data => { return data }
+      data => { return data; }
     );
 
     /* Populating amenities list */
@@ -182,7 +180,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     /* Pre-filling place form on edition */
     if (placeId) {
       const place = await fetchPlaceDetails(token, placeId).then(
-        data => { return data }
+        data => { return data; }
       );
 
       const list = document.querySelectorAll('.amenities-filter input');
@@ -390,7 +388,7 @@ async function fetchPlaces (token) {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`
+      Authorization: `Bearer ${token}`
     }
   });
 
@@ -600,7 +598,7 @@ async function fetchReviewDetails (token, reviewId) {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`
+      Authorization: `Bearer ${token}`
     }
   });
 
@@ -617,7 +615,7 @@ async function fetchPlaceDetails (token, placeId) {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`
+      Authorization: `Bearer ${token}`
     }
   });
 
@@ -793,7 +791,7 @@ async function submitReview (token, title, text, rating, place_id) {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`
+      Authorization: `Bearer ${token}`
     },
     body: JSON.stringify({ title, text, rating, place_id })
   });
@@ -807,7 +805,7 @@ async function editReview (token, title, text, rating, place_id, review_id) {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`
+      Authorization: `Bearer ${token}`
     },
     body: JSON.stringify({ title, text, rating, place_id })
   });
@@ -821,7 +819,7 @@ async function deleteReview (token, place_id, review_id) {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`
+      Authorization: `Bearer ${token}`
     }
   });
 
@@ -835,7 +833,7 @@ async function submitPlace (token, title, description, price, capacity, rooms, s
   const amenities = [];
 
   for (let i = 0; i < list.length; i++) {
-    const amenity = { 'id': list[i] };
+    const amenity = { id: list[i] };
     amenities.push(amenity);
   }
 
@@ -843,7 +841,7 @@ async function submitPlace (token, title, description, price, capacity, rooms, s
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`
+      Authorization: `Bearer ${token}`
     },
     body: JSON.stringify({ title, description, price, capacity, rooms, surface, latitude, longitude, owner_id, amenities })
   });
@@ -860,7 +858,7 @@ async function editPlace (token, title, description, price, capacity, rooms, sur
   const amenities = [];
 
   for (let i = 0; i < list.length; i++) {
-    const amenity = { 'id': list[i] };
+    const amenity = { id: list[i] };
     amenities.push(amenity);
   }
 
@@ -868,7 +866,7 @@ async function editPlace (token, title, description, price, capacity, rooms, sur
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`
+      Authorization: `Bearer ${token}`
     },
     body: JSON.stringify({ title, description, price, capacity, rooms, surface, latitude, longitude, owner_id, amenities })
   });
@@ -878,7 +876,7 @@ async function editPlace (token, title, description, price, capacity, rooms, sur
   handleResponse(response, 'Place edited successfully!', place_id);
 }
 
-async function handleResponse(response, successMessage, place_id) {
+async function handleResponse (response, successMessage, place_id) {
   if (response.ok) {
     alert(`${successMessage}`);
     if (place_id) {
