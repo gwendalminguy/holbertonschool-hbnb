@@ -403,6 +403,7 @@ textarea::placeholder {
     align-items: flex-end;
 }
 
+.place-owner,
 .review-user {
     margin-top: 15px;
     margin-right: 15px;
