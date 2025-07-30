@@ -12,15 +12,19 @@ In this project, our goal was recreate a custom version of the famous AirBnB web
 
 ## 📂 Sections
 
-### [Part 1: Technical Documentation](https://github.com/Mornac/holbertonschool-hbnb/tree/main/part1)
-### [Part 2: Implementation of Business Logic and API Endpoints](https://github.com/Mornac/holbertonschool-hbnb/tree/main/part2)
-### [Part 3: Authentication and Database Integration](https://github.com/Mornac/holbertonschool-hbnb/tree/main/part3)
+### [Part 1: Technical Documentation](https://github.com/gwendalminguy/holbertonschool-hbnb/tree/main/part1)
+### [Part 2: Implementation of Business Logic and API Endpoints](https://github.com/gwendalminguy/holbertonschool-hbnb/tree/main/part2)
+### [Part 3: Authentication and Database Integration](https://github.com/gwendalminguy/holbertonschool-hbnb/tree/main/part3)
+### [Part 4: Simple Web Client](https://github.com/gwendalminguy/holbertonschool-hbnb/tree/main/part3)
 
 ## 🔧 Technologies Used
 
 ![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
 ![Flask](https://img.shields.io/badge/Flask-419696?style=for-the-badge&logo=flask&logoColor=white)
 ![SQLAlchemy](https://img.shields.io/badge/SQLAlchemy-C82828?style=for-the-badge&logo=sqlalchemy&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
+![HTML](https://img.shields.io/badge/HTML-E34f26?style=for-the-badge&logo=html5&logoColor=white)
+![CSS](https://img.shields.io/badge/CSS-CC6699?style=for-the-badge&logo=css&logoColor=white)
 ![VS Code](https://img.shields.io/badge/VSCode-007ACC?style=for-the-badge&logo=vscode&logoColor=white)
 ![Git](https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white)
 ![Linux](https://img.shields.io/badge/Linux-333333?style=for-the-badge&logo=linux&logoColor=white)
