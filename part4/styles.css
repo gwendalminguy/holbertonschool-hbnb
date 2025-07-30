@@ -416,6 +416,7 @@ textarea::placeholder {
 .place-card .element {
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 
 .place-card .block {
