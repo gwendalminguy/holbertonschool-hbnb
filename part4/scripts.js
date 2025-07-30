@@ -101,6 +101,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     /* Pre-filling review form on edition */
     if (reviewId) {
+      const h3 = document.querySelector('#review h3');
+      h3.textContent = 'Edit Review';
       const review = await fetchReviewDetails(token, reviewId).then(
         data => { return data; }
       );
@@ -115,14 +117,16 @@ document.addEventListener('DOMContentLoaded', async () => {
 
       /* Adding delete button */
       const section = document.querySelector('#review');
-      const button = document.createElement('button');
-      button.className = 'delete-review';
-      button.setAttribute('type', 'button');
-      button.textContent = 'Delete';
-      section.appendChild(button);
+      const a = document.createElement('a');
+      a.className = 'link';
+      a.setAttribute('type', 'button');
+      a.setAttribute('href', `place.html?place=${placeId}`);
+      a.textContent = 'Delete';
+      section.appendChild(a);
 
-      button.addEventListener('click', (event) => {
+      a.addEventListener('click', (event) => {
         deleteReview(token, placeId, reviewId);
+        // ALERT NOT WORKING ANYMORE
       });
     }
 
@@ -636,10 +640,10 @@ async function displayPlaceDetails (token, place) {
   description.textContent = place.description;
 
   const owner = document.querySelector('.place-owner');
-  owner.textContent = `${place.owner.first_name} ${place.owner.last_name[0]}.`;
+  owner.textContent = `- ${place.owner.first_name} ${place.owner.last_name[0]}.`;
 
   const price = document.querySelector('.place-price');
-  price.textContent = place.price;
+  price.textContent = place.price + ' $';
 
   const capacity = document.querySelector('.place-capacity');
   capacity.textContent = place.capacity;
@@ -648,7 +652,7 @@ async function displayPlaceDetails (token, place) {
   rooms.textContent = place.rooms;
 
   const surface = document.querySelector('.place-surface');
-  surface.textContent = place.surface + 'm';
+  surface.textContent = place.surface + ' m';
   const square = document.createElement('sup');
   square.textContent = '2';
   surface.appendChild(square);
