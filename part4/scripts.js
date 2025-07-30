@@ -262,9 +262,6 @@ document.addEventListener('DOMContentLoaded', async () => {
       event.preventDefault();
       loginUser(loginForm.email.value, loginForm.password.value);
     });
-    newAccountButton.addEventListener('click', async (event) => {
-      window.location.href = 'add_account.html';
-    });
   }
 
   if (newAccountForm) {
