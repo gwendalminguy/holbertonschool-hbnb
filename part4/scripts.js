@@ -1,3 +1,5 @@
+/* global alert, confirm */
+
 const API_URL = 'http://127.0.0.1:5000/api/v1/';
 const placesList = document.querySelector('#places ul');
 const placeForm = document.getElementById('place-form');
@@ -5,8 +7,8 @@ const reviewsList = document.querySelector('#reviews ul');
 const reviewForm = document.querySelector('#review-form');
 const amenitiesList = document.querySelector('.amenities-filter ul');
 
-const login = document.getElementById("login");
-const account = document.getElementById("account");
+const login = document.getElementById('login');
+const account = document.getElementById('account');
 
 document.addEventListener('DOMContentLoaded', async () => {
   const newAccountForm = document.getElementById('account-form');
@@ -56,7 +58,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
 
     /* Setting amenities values */
-    setAmenities(amenities, "name");
+    setAmenities(amenities, 'name');
 
     /* Filtering places to display */
     filterButton.addEventListener('click', (event) => {
@@ -105,8 +107,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         data => { return data }
       );
 
-      let title = document.getElementById('title');
-      let text = document.getElementById('text');
+      const title = document.getElementById('title');
+      const text = document.getElementById('text');
       rating = review.rating;
 
       title.value = review.title;
@@ -128,7 +130,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     /* Getting star rating */
     for (let i = 0; i < 5; i++) {
-      let star = document.getElementById(`star-${i + 1}`);
+      const star = document.getElementById(`star-${i + 1}`);
       star.addEventListener('click', (event) => {
         rating = i + 1;
         colorStars(rating);
@@ -166,7 +168,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const placeId = getParameterFromURL('place');
 
     /* Retrieving all amenities */
-    let amenities = [];
+    const amenities = [];
     const amenityItems = await fetchAmenities().then(
       data => { return data }
     );
@@ -175,7 +177,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     addAmenities(amenityItems);
 
     /* Setting amenities values */
-    setAmenities(amenities, "id");
+    setAmenities(amenities, 'id');
 
     /* Pre-filling place form on edition */
     if (placeId) {
@@ -183,7 +185,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         data => { return data }
       );
 
-      let list = document.querySelectorAll('.amenities-filter input');
+      const list = document.querySelectorAll('.amenities-filter input');
 
       /* Pre-checking amenities */
       for (let i = 0; i < place.amenities.length; i++) {
@@ -195,14 +197,14 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
       }
 
-      let title = document.getElementById('title');
-      let description = document.getElementById('description');
-      let price = document.getElementById('price');
-      let capacity = document.getElementById('capacity');
-      let rooms = document.getElementById('rooms');
-      let surface = document.getElementById('surface');
-      let latitude = document.getElementById('latitude');
-      let longitude = document.getElementById('longitude');
+      const title = document.getElementById('title');
+      const description = document.getElementById('description');
+      const price = document.getElementById('price');
+      const capacity = document.getElementById('capacity');
+      const rooms = document.getElementById('rooms');
+      const surface = document.getElementById('surface');
+      const latitude = document.getElementById('latitude');
+      const longitude = document.getElementById('longitude');
 
       title.value = place.title;
       description.value = place.description;
@@ -230,7 +232,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           parseFloat(placeForm.longitude.value),
           amenities,
           placeId
-        )
+        );
       });
     } else { // POST
       placeForm.addEventListener('submit', async (event) => {
@@ -246,13 +248,13 @@ document.addEventListener('DOMContentLoaded', async () => {
           parseFloat(placeForm.latitude.value),
           parseFloat(placeForm.longitude.value),
           amenities
-        )
+        );
       });
     }
   }
 
   if (loginForm) {
-    loginButton.style ='none';
+    loginButton.style = 'none';
     animation.style.display = 'none';
     loginForm.addEventListener('submit', async (event) => {
       event.preventDefault();
@@ -291,7 +293,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 });
 
-async function createAccount(first_name, last_name, email, password) {
+async function createAccount (first_name, last_name, email, password) {
   /* Creating new account */
   const response = await fetch(`${API_URL}users/`, {
     method: 'POST',
@@ -328,7 +330,7 @@ async function loginUser (email, password) {
     animation.style.display = 'block';
     const data = await response.json();
     document.cookie = `token=${data.access_token}; path=/`;
-    window.setTimeout( function() {
+    window.setTimeout(function () {
       animation.style.display = 'none';
       window.location.href = 'index.html';
     }, 5000);
@@ -337,7 +339,7 @@ async function loginUser (email, password) {
   }
 }
 
-async function checkAuthentication() {
+async function checkAuthentication () {
   /* Displaying login/logout button */
   const token = getCookie('token');
   const loginLink = document.getElementById('login-link');
@@ -357,32 +359,32 @@ async function checkAuthentication() {
     displayPlaces(places);
   }
 
-    return token;
+  return token;
 }
 
-function getCookie(name) {
+function getCookie (name) {
   /* Getting a cookie value */
   const cookieList = decodeURIComponent(document.cookie).split('; ');
   for (let i = 0; i < cookieList.length; i++) {
     const cookie = cookieList[i].split('=');
-    if (name == cookie[0]) {
+    if (name === cookie[0]) {
       return cookie[1];
     }
   }
 }
 
-function deleteCookie(name) {
+function deleteCookie (name) {
   /* Deleting a cookie */
   const cookieList = decodeURIComponent(document.cookie).split('; ');
   for (let i = 0; i < cookieList.length; i++) {
     const cookie = cookieList[i].split('=');
-    if (name == cookie[0]) {
+    if (name === cookie[0]) {
       document.cookie = `token=${cookie[1]}; expires=Thu, 01 Jan 1970 12:00:00 GMT; path=/`;
     }
   }
 }
 
-async function fetchPlaces(token) {
+async function fetchPlaces (token) {
   /* Retrieving all places */
   const response = await fetch(`${API_URL}places/`, {
     method: 'GET',
@@ -400,7 +402,7 @@ async function fetchPlaces(token) {
   }
 }
 
-async function fetchAmenities() {
+async function fetchAmenities () {
   /* Retrieving all amenities */
   const response = await fetch(`${API_URL}amenities/`, {
     method: 'GET',
@@ -417,16 +419,16 @@ async function fetchAmenities() {
   }
 }
 
-function addAmenities(amenityItems) {
+function addAmenities (amenityItems) {
   /* Populating amenities list */
   for (let i = 0; i < amenityItems.length; i++) {
-    let li = document.createElement('li');
+    const li = document.createElement('li');
 
-    let label = document.createElement('label');
+    const label = document.createElement('label');
     label.setAttribute('for', amenityItems[i].name);
     label.textContent = amenityItems[i].name;
 
-    let input = document.createElement('input');
+    const input = document.createElement('input');
     input.setAttribute('type', 'checkbox');
     input.setAttribute('id', amenityItems[i].id);
     input.setAttribute('value', amenityItems[i].name);
@@ -437,29 +439,29 @@ function addAmenities(amenityItems) {
   }
 }
 
-function setAmenities(amenities, parameter) {
-  let list = document.querySelectorAll('.amenities-filter input');
-  if (parameter === "name") {
+function setAmenities (amenities, parameter) {
+  const list = document.querySelectorAll('.amenities-filter input');
+  if (parameter === 'name') {
     for (let i = 0; i < list.length; i++) {
       list[i].addEventListener('change', (event) => {
         if (list[i].checked) {
           amenities.push(list[i].defaultValue);
           /* console.log(amenities); */
         } else {
-          let index = amenities.indexOf(list[i].defaultValue);
+          const index = amenities.indexOf(list[i].defaultValue);
           amenities.splice(index, 1);
           /* console.log(amenities); */
         }
       });
     }
-  } else if (parameter === "id") {
+  } else if (parameter === 'id') {
     for (let i = 0; i < list.length; i++) {
       list[i].addEventListener('change', (event) => {
         if (list[i].checked) {
           amenities.push(list[i].id);
           /* console.log(amenities); */
         } else {
-          let index = amenities.indexOf(list[i].id);
+          const index = amenities.indexOf(list[i].id);
           amenities.splice(index, 1);
           /* console.log(amenities); */
         }
@@ -468,7 +470,7 @@ function setAmenities(amenities, parameter) {
   }
 }
 
-function displayPlaces(places) {
+function displayPlaces (places) {
   /* Clearing placesList */
   let lastItem = placesList.lastElementChild;
   while (lastItem) {
@@ -505,15 +507,15 @@ function displayPlaces(places) {
     button.textContent = 'Details';
     button.addEventListener('click', (event) => {
       window.location.href = `place.html?place=${places[i].id}`;
-      /*location.search = `${places[i].id}`;*/
-    })
+      /* location.search = `${places[i].id}`; */
+    });
     div.appendChild(button);
 
     placesList.appendChild(li);
   }
 }
 
-function filterPlaces(places, price, capacity, rooms, surface, amenities) {
+function filterPlaces (places, price, capacity, rooms, surface, amenities) {
   /* Filtering places to display */
   const amenityFilter = document.querySelector('.amenities-filter');
 
@@ -534,12 +536,12 @@ function filterPlaces(places, price, capacity, rooms, surface, amenities) {
     }
   }
 
-  if (amenityFilter.open == true) {
+  if (amenityFilter.open === true) {
     amenityFilter.open = false;
   }
 }
 
-async function isImage(name) {
+async function isImage (name) {
   return fetch(`/images/amenities/${name}.png`, { method: 'HEAD' })
     .then((response) => {
       if (response.ok) {
@@ -547,10 +549,10 @@ async function isImage(name) {
       } else {
         return false;
       }
-    })
+    });
 }
 
-function isMissing(amenities, placeAmenities) {
+function isMissing (amenities, placeAmenities) {
   /* Checking placeAmenities */
   for (let i = 0; i < amenities.length; i++) {
     const array = placeAmenities.split(';');
@@ -568,7 +570,7 @@ function isMissing(amenities, placeAmenities) {
   return false;
 }
 
-function resetFilters() {
+function resetFilters () {
   /* Resetting all values to default */
   const amenityFilter = document.querySelector('.amenities-filter');
 
@@ -579,21 +581,21 @@ function resetFilters() {
 
   /* Unchecking all amenities */
   for (const element of document.querySelectorAll('.amenities-filter input')) {
-    element.checked = false
+    element.checked = false;
   }
 
-  if (amenityFilter.open == true) {
+  if (amenityFilter.open === true) {
     amenityFilter.open = false;
   }
 }
 
-function getParameterFromURL(name) {
-  const parameters = new URLSearchParams(window.location.search)
+function getParameterFromURL (name) {
+  const parameters = new URLSearchParams(window.location.search);
   const value = parameters.get(name);
-    return value;
+  return value;
 }
 
-async function fetchReviewDetails(token, reviewId) {
+async function fetchReviewDetails (token, reviewId) {
   const response = await fetch(`${API_URL}reviews/${reviewId}`, {
     method: 'GET',
     headers: {
@@ -610,7 +612,7 @@ async function fetchReviewDetails(token, reviewId) {
   }
 }
 
-async function fetchPlaceDetails(token, placeId) {
+async function fetchPlaceDetails (token, placeId) {
   const response = await fetch(`${API_URL}places/${placeId}`, {
     method: 'GET',
     headers: {
@@ -621,13 +623,13 @@ async function fetchPlaceDetails(token, placeId) {
 
   if (response.ok) {
     const data = await response.json();
-    return data
+    return data;
   } else {
     alert('Fetching place details failed: ' + response.statusText);
   }
 }
 
-async function displayPlaceDetails(token, place) {
+async function displayPlaceDetails (token, place) {
   /* Populating place details */
   const title = document.querySelector('.place-title');
   title.textContent = place.title;
@@ -639,16 +641,16 @@ async function displayPlaceDetails(token, place) {
   owner.textContent = `${place.owner.first_name} ${place.owner.last_name[0]}.`;
 
   const price = document.querySelector('.place-price');
-  price.textContent = `$${place.price} / night`;
+  price.textContent = place.price;
 
   const capacity = document.querySelector('.place-capacity');
-  capacity.textContent = `Capacity: ${place.capacity} people`;
+  capacity.textContent = place.capacity;
 
   const rooms = document.querySelector('.place-rooms');
-  rooms.textContent = `Rooms: ${place.rooms}`;
+  rooms.textContent = place.rooms;
 
   const surface = document.querySelector('.place-surface');
-  surface.textContent = `Surface: ${place.surface} m`;
+  surface.textContent = place.surface + 'm';
   const square = document.createElement('sup');
   square.textContent = '2';
   surface.appendChild(square);
@@ -656,10 +658,10 @@ async function displayPlaceDetails(token, place) {
   /* Populating place amenities */
   const amenitiesList = document.querySelector('.place-amenities');
   for (let i = 0; i < place.amenities.length; i++) {
-    let amenity = document.createElement('li');
+    const amenity = document.createElement('li');
     amenity.classList.add('amenity-item');
-    let icon = document.createElement('img');
-    let imageFound = await isImage(place.amenities[i].name);
+    const icon = document.createElement('img');
+    const imageFound = await isImage(place.amenities[i].name);
     if (imageFound) {
       icon.setAttribute('src', `images/amenities/${place.amenities[i].name}.png`);
     } else {
@@ -668,11 +670,11 @@ async function displayPlaceDetails(token, place) {
     icon.setAttribute('width', '20px');
     icon.setAttribute('height', '20px');
     amenity.appendChild(icon);
-    let name = document.createElement('h5');
+    const name = document.createElement('h5');
     name.textContent = place.amenities[i].name;
     amenity.appendChild(name);
     amenitiesList.appendChild(amenity);
-  };
+  }
 
   /* Adding edit or review button */
   if (token) {
@@ -684,13 +686,13 @@ async function displayPlaceDetails(token, place) {
       button.textContent = 'Edit';
       button.addEventListener('click', (event) => {
         window.location.href = `add_place.html?place=${place.id}`;
-      })
+      });
     } else {
       button.classList.add('review-button');
       button.textContent = 'Review';
       button.addEventListener('click', (event) => {
         window.location.href = `add_review.html?place=${place.id}`;
-      })
+      });
     }
     card.appendChild(button);
   }
@@ -698,28 +700,28 @@ async function displayPlaceDetails(token, place) {
   displayReviews(token, place);
 }
 
-function displayReviews(token, place) {
+function displayReviews (token, place) {
   /* Populating place reviews */
   for (let i = 0; i < place.reviews.length; i++) {
-    let li = document.createElement('li');
+    const li = document.createElement('li');
     li.classList.add('col-3');
 
-    let div = document.createElement('div');
+    const div = document.createElement('div');
     div.classList.add('review-card');
     li.appendChild(div);
 
     /* Displaying title */
-    let title = document.createElement('h4');
+    const title = document.createElement('h4');
     title.classList.add('review-title');
     title.textContent = place.reviews[i].title;
     div.appendChild(title);
 
     /* Displaying rating with stars */
-    let rating = document.createElement('ul');
+    const rating = document.createElement('ul');
     rating.classList.add('review-rating');
     for (let j = 0; j < Number(place.reviews[i].rating); j++) {
-      let star = document.createElement('li');
-      let icon = document.createElement('img');
+      const star = document.createElement('li');
+      const icon = document.createElement('img');
       icon.setAttribute('src', 'images/reviews/star_full.png');
       icon.setAttribute('width', '16px');
       icon.setAttribute('height', '16px');
@@ -727,8 +729,8 @@ function displayReviews(token, place) {
       rating.appendChild(star);
     }
     for (let j = 0; j < 5 - Number(place.reviews[i].rating); j++) {
-      let star = document.createElement('li');
-      let icon = document.createElement('img');
+      const star = document.createElement('li');
+      const icon = document.createElement('img');
       icon.setAttribute('src', 'images/reviews/star_empty.png');
       icon.setAttribute('width', '16px');
       icon.setAttribute('height', '16px');
@@ -738,22 +740,22 @@ function displayReviews(token, place) {
     div.appendChild(rating);
 
     /* Displaying text */
-    let text = document.createElement('p');
+    const text = document.createElement('p');
     text.classList.add('review-text');
     text.textContent = place.reviews[i].text;
     div.appendChild(text);
 
-    let bottom = document.createElement('span');
+    const bottom = document.createElement('span');
     bottom.classList.add('review-bottom');
     div.appendChild(bottom);
 
     /* Allowing edition if current user matches author */
     if (token) {
-      let userId = decodeJWT(token).id;
+      const userId = decodeJWT(token).id;
       /* console.log(userId); */
       if (userId === place.reviews[i].user.id) {
         /* console.log('Fuck yeah it worked!'); */
-        let edit = document.createElement('button');
+        const edit = document.createElement('button');
         edit.classList.add('edit-button');
         edit.textContent = 'Edit';
         edit.addEventListener('click', (event) => {
@@ -765,7 +767,7 @@ function displayReviews(token, place) {
     }
 
     /* Displaying author name */
-    let user = document.createElement('p');
+    const user = document.createElement('p');
     user.classList.add('review-user');
     user.textContent = `- ${place.reviews[i].user.first_name} ${place.reviews[i].user.last_name[0]}.`;
     bottom.appendChild(user);
@@ -774,18 +776,18 @@ function displayReviews(token, place) {
   }
 }
 
-function colorStars(rating) {
+function colorStars (rating) {
   for (let i = rating; i > 0; i--) {
-    let star = document.querySelector(`#star-${i} path`);
+    const star = document.querySelector(`#star-${i} path`);
     star.style.fill = '#606060';
   }
   for (let i = rating + 1; i < 6; i++) {
-    let star = document.querySelector(`#star-${i} path`);
+    const star = document.querySelector(`#star-${i} path`);
     star.style.fill = '#dbdbdb';
   }
 }
 
-async function submitReview(token, title, text, rating, place_id) {
+async function submitReview (token, title, text, rating, place_id) {
   /* Creating new review */
   const response = await fetch(`${API_URL}reviews/`, {
     method: 'POST',
@@ -796,10 +798,10 @@ async function submitReview(token, title, text, rating, place_id) {
     body: JSON.stringify({ title, text, rating, place_id })
   });
 
-  handleResponse(response, "Review submitted successfully!", place_id);
+  handleResponse(response, 'Review submitted successfully!', place_id);
 }
 
-async function editReview(token, title, text, rating, place_id, review_id) {
+async function editReview (token, title, text, rating, place_id, review_id) {
   /* Editing existing review */
   const response = await fetch(`${API_URL}reviews/${review_id}`, {
     method: 'PUT',
@@ -810,10 +812,10 @@ async function editReview(token, title, text, rating, place_id, review_id) {
     body: JSON.stringify({ title, text, rating, place_id })
   });
 
-  handleResponse(response, "Review edited successfully!", place_id);
+  handleResponse(response, 'Review edited successfully!', place_id);
 }
 
-async function deleteReview(token, place_id, review_id) {
+async function deleteReview (token, place_id, review_id) {
   /* Deleting existing review */
   const response = await fetch(`${API_URL}reviews/${review_id}`, {
     method: 'DELETE',
@@ -823,17 +825,17 @@ async function deleteReview(token, place_id, review_id) {
     }
   });
 
-  handleResponse(response, "Review deleted successfully!", place_id);
+  handleResponse(response, 'Review deleted successfully!', place_id);
 }
 
 async function submitPlace (token, title, description, price, capacity, rooms, surface, latitude, longitude, list) {
   /* Submitting place form */
   const user = decodeJWT(token);
   const owner_id = user.id;
-  let amenities = [];
+  const amenities = [];
 
   for (let i = 0; i < list.length; i++) {
-    let amenity = {"id": list[i]};
+    const amenity = { 'id': list[i] };
     amenities.push(amenity);
   }
 
@@ -848,17 +850,17 @@ async function submitPlace (token, title, description, price, capacity, rooms, s
 
   const data = await response.json();
 
-  handleResponse(response, "Place submitted successfully!", data.id);
+  handleResponse(response, 'Place submitted successfully!', data.id);
 }
 
 async function editPlace (token, title, description, price, capacity, rooms, surface, latitude, longitude, list, place_id) {
   /* Editing existing place */
   const user = decodeJWT(token);
   const owner_id = user.id;
-  let amenities = [];
+  const amenities = [];
 
   for (let i = 0; i < list.length; i++) {
-    let amenity = {"id": list[i]};
+    const amenity = { 'id': list[i] };
     amenities.push(amenity);
   }
 
@@ -871,9 +873,9 @@ async function editPlace (token, title, description, price, capacity, rooms, sur
     body: JSON.stringify({ title, description, price, capacity, rooms, surface, latitude, longitude, owner_id, amenities })
   });
 
-  const data = await response.json();
+  /* const data = await response.json(); */
 
-  handleResponse(response, "Place edited successfully!", place_id);
+  handleResponse(response, 'Place edited successfully!', place_id);
 }
 
 async function handleResponse(response, successMessage, place_id) {
@@ -888,7 +890,9 @@ async function handleResponse(response, successMessage, place_id) {
   }
 }
 
-function decodeJWT(token) {
+function decodeJWT (token) {
   const response = JSON.parse(atob(token.split('.')[1]));
   return response.sub;
 }
+
+/* http://maps.google.com/?ll=39.774769,-74.86084 */
