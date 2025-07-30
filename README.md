@@ -14,7 +14,7 @@ In this project, our goal was recreate a custom version of the famous AirBnB web
 
 The project contains several files and directories, which are the following:
 
-| Files | Description |
+| Directory | Description |
 | :---- | :---------- |
 | [`Part 1`](https://github.com/gwendalminguy/holbertonschool-hbnb/tree/main/part1) | Technical Documentation |
 | [`Part 2`](https://github.com/gwendalminguy/holbertonschool-hbnb/tree/main/part2) | Implementation of Business Logic and API Endpoints |
@@ -23,7 +23,7 @@ The project contains several files and directories, which are the following:
 
 ## ⚙️ Installation
 
-In order to install HBnB, the three steps of this guide must be followed:
+In order to install HBnB, the following steps of this guide must be achieved:
 
 **1. Cloning the repository**
 
@@ -50,6 +50,31 @@ In order to work, HBnB needs all the libraries from the `requirements.txt` file.
 ```
 $ pip install -r part3/requirements.txt
 ```
+
+**4. Creating the database**
+
+To use HBnB, SQLite is needed, and a database must be created and initialized. This can be achieved by launching the `install.sh` bash script, and must be done at the root of the HBnB directory, using these commands:
+
+```
+$ cd holbertonschool-hbnb/
+$ chmod u+x install.sh
+$ ./install.sh
+```
+
+<details>
+	<summary><b>Manual Installation Procedure</b></summary>
+<br>
+
+If desired, this installation can also be achieved manually, as follows:
+
+```
+$ cd holbertonschool-hbnb/
+$ mkdir part3/instance
+$ touch part3/instance/development.db
+$ sqlite3 part3/instance/development.db < part3/scripts/table_creation.sql
+$ sqlite3 part3/instance/development.db < part3/scripts/data_insertion.sql
+```
+</details>
 
 ## 🖥️ Usage
 
