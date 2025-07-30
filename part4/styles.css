@@ -142,6 +142,19 @@ header button:hover {
 
 main {
     padding: 2rem;
+    height: 100vh;
+}
+
+.center {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin-top: none;
+}
+
+#filter,
+#place-details {
     margin-top: 100px;
 }
 
@@ -176,7 +189,6 @@ main button {
     border-radius: 999px;
     border-color: var(--color-dark-grey);
     border-style: solid;
-    margin-top: 25px;
     color: var(--color-dark-grey);
     transition-duration: 0.25s;
     padding: 0.5rem 1rem;
