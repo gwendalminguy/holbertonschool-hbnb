@@ -84,8 +84,6 @@ In order to use HBnB through a web interface, the `run.sh` bash script needs to 
 $ ./run.sh
 ```
 
-Once done, the servers needs to be shut down using Ctrl+C.
-
 <details>
 	<summary><b>Manual Running Procedure</b></summary>
 <br>
@@ -101,12 +99,18 @@ Then, running the following command from another terminal will allow the fronten
 ```
 $ python3 -m http.server -d part4
 ```
-</details>
 
-The following URL should then be copied into any web browser:
+Finally, the following URL should be copied into any web browser:
 
 ```
 http://localhost:8000/
+```
+</details>
+
+Once done, the servers needs to be shut down using Ctrl+C. The virtual environment should also be disabled:
+
+```
+$ deactivate
 ```
 
 ## 🔧 Technologies Used
