@@ -498,7 +498,7 @@ function displayPlaces (places) {
 
     const price = document.createElement('h5');
     price.classList.add('place-price');
-    price.textContent = `$${places[i].price}`;
+    price.textContent = `${places[i].price} $ / night`;
     div.appendChild(price);
 
     const button = document.createElement('button');
@@ -696,6 +696,7 @@ async function displayPlaceDetails (token, place) {
     card.appendChild(button);
   }
 
+
   displayReviews(token, place);
 }
 
@@ -744,6 +745,12 @@ function displayReviews (token, place) {
     text.textContent = place.reviews[i].text;
     div.appendChild(text);
 
+    /* Displaying author name */
+    const user = document.createElement('p');
+    user.classList.add('review-user');
+    user.textContent = `- ${place.reviews[i].user.first_name} ${place.reviews[i].user.last_name[0]}.`;
+    div.appendChild(user);
+
     const bottom = document.createElement('span');
     bottom.classList.add('review-bottom');
     div.appendChild(bottom);
@@ -764,12 +771,6 @@ function displayReviews (token, place) {
         bottom.appendChild(edit);
       }
     }
-
-    /* Displaying author name */
-    const user = document.createElement('p');
-    user.classList.add('review-user');
-    user.textContent = `- ${place.reviews[i].user.first_name} ${place.reviews[i].user.last_name[0]}.`;
-    bottom.appendChild(user);
 
     reviewsList.appendChild(li);
   }
