@@ -120,14 +120,21 @@ document.addEventListener('DOMContentLoaded', async () => {
       const a = document.createElement('a');
       a.className = 'link';
       a.setAttribute('type', 'button');
-      a.setAttribute('href', `place.html?place=${placeId}`);
       a.textContent = 'Delete';
       section.appendChild(a);
 
       a.addEventListener('click', (event) => {
-        deleteReview(token, placeId, reviewId);
-        // ALERT NOT WORKING ANYMORE
+        const confirmation = confirm('Delete this review?');
+        if (confirmation) {
+          deleteReview(token, placeId, reviewId);
+        }
       });
+    } else {
+      const h3 = document.querySelector('#review h3');
+      const place = await fetchPlaceDetails(token, placeId).then(
+        data => { return data; }
+      );
+      h3.textContent = place.title;
     }
 
     /* Getting star rating */
@@ -883,6 +890,7 @@ async function editPlace (token, title, description, price, capacity, rooms, sur
 
 async function handleResponse (response, successMessage, place_id) {
   if (response.ok) {
+    console.log("Hello");
     alert(`${successMessage}`);
     if (place_id) {
       window.location.href = `place.html?place=${place_id}`;
@@ -898,4 +906,4 @@ function decodeJWT (token) {
   return response.sub;
 }
 
-/* http://maps.google.com/?ll=39.774769,-74.86084 */
+/* `http://maps.google.com/?ll=${},${}` */
