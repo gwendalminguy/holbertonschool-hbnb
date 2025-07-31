@@ -55,7 +55,7 @@ $ pip install -r part3/requirements.txt
 
 **4. Creating the database**
 
-To use HBnB, SQLite is needed, and a database must be created and initialized. This can be achieved by launching the `install.sh` bash script, and must be done at the root of the HBnB directory, using these commands:
+To use HBnB, *SQLite* is needed, and a database must be created and initialized. This can be achieved by launching the `install.sh` bash script, and must be done at the root of the HBnB directory, using these commands:
 
 ```
 $ cd holbertonschool-hbnb/
@@ -78,6 +78,14 @@ $ sqlite3 part3/instance/development.db < part3/scripts/data_insertion.sql
 ```
 </details>
 
+**5. Populating users, places and reviews tables (optional)**
+
+If desired, the database tables can be populated with sample data. In order to do so, *JSON Query* must be installed, then the `populate.sh` bash script can be launched at the root of the HBnB directory:
+
+```
+$ ./part3/scripts/populate.sh
+```
+
 ## 🖥️ Usage
 
 In order to use HBnB through a web interface, the `run.sh` bash script needs to be launched:
@@ -90,7 +98,7 @@ $ ./run.sh
 	<summary><b>Manual Running Procedure</b></summary>
 <br>
 
-HBnb can also be runned manually. In order to do so, a server needs to be launched at the root of the HBnB directory, to let the backend part work:
+HBnB can also be runned manually. In order to do so, a server needs to be launched at the root of the HBnB directory, to let the backend part work:
 
 ```
 $ python3 part3/run.py
