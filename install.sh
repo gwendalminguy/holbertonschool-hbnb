@@ -1,5 +1,6 @@
 #!/bin/bash
 
+chmod u+x run.sh
 mkdir -p part3/instance
 touch part3/instance/development.db
 
