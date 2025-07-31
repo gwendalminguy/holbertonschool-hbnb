@@ -1,5 +1,12 @@
 #!/bin/bash
 
+PYTHON=$(which python3)
+BACK=$(realpath ./part3/run.py)
+
+# START SERVER
+$PYTHON $BACK &
+sleep 3
+
 # ADMIN TOKEN
 echo -e "\n> Create Admin Token:"
 RESPONSE=$(curl -s -X POST http://localhost:5000/api/v1/auth/login -H "Content-Type: application/json" -d '{
@@ -27,7 +34,7 @@ RESPONSE=$(curl -s -X POST http://localhost:5000/api/v1/auth/login -H "Content-T
 	"password": "abcd1234"
 }')
 export JWT_OWNER="$(echo "$RESPONSE" | jq -r '.access_token')"
-echo "Access Token: $JWT_OWNER"
+# echo "Access Token: $JWT_OWNER"
 
 # PLACES CREATION
 echo -e "\n> Create New Places:"
@@ -68,7 +75,7 @@ RESPONSE=$(curl -s -X POST http://localhost:5000/api/v1/auth/login -H "Content-T
 	"password": "abcd1234"
 }')
 export JWT_USER_1="$(echo "$RESPONSE" | jq -r '.access_token')"
-echo "Access Token: $JWT_USER_1"
+# echo "Access Token: $JWT_USER_1"
 
 # USER 2 CREATION
 echo -e "\n> Create New User (Reviewing User):"
@@ -88,7 +95,7 @@ RESPONSE=$(curl -s -X POST http://localhost:5000/api/v1/auth/login -H "Content-T
 	"password": "ABCD1234"
 }')
 export JWT_USER_2="$(echo "$RESPONSE" | jq -r '.access_token')"
-echo "Access Token: $JWT_USER_2"
+# echo "Access Token: $JWT_USER_2"
 
 # REVIEWS CREATION
 echo -e "\n> Create New Reviews:"
@@ -102,3 +109,7 @@ echo "Review ID: $REVIEW_2"
 # REVIEWS RETRIEVAL
 # echo -e "\n> Get All Reviews From Single Place:"
 # curl -X GET http://localhost:5000/api/v1/places/$PLACE/reviews
+
+# STOP SERVER
+echo -e "\n> Database Populated!"
+fuser -n tcp 5000 | grep -o -E '[0-9]+' | xargs kill
