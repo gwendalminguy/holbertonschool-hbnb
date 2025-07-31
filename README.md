@@ -78,7 +78,19 @@ $ sqlite3 part3/instance/development.db < part3/scripts/data_insertion.sql
 
 ## 🖥️ Usage
 
-In order to use HBnB through a web interface, a server needs to be launched at the root of the HBnB directory, to let the backend part work:
+In order to use HBnB through a web interface, the `run.sh` bash script needs to be launched:
+
+```
+$ ./run.sh
+```
+
+Once done, the servers needs to be shut down using Ctrl+C.
+
+<details>
+	<summary><b>Manual Running Procedure</b></summary>
+<br>
+
+HBnb can also be runned manually. In order to do so, a server needs to be launched at the root of the HBnB directory, to let the backend part work:
 
 ```
 $ python3 part3/run.py
@@ -89,6 +101,7 @@ Then, running the following command from another terminal will allow the fronten
 ```
 $ python3 -m http.server -d part4
 ```
+</details>
 
 The following URL should then be copied into any web browser:
 
