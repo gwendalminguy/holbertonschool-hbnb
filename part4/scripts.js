@@ -636,8 +636,8 @@ async function displayPlaceDetails (token, place) {
   const description = document.querySelector('.place-description');
   description.textContent = place.description;
 
-  const owner = document.querySelector('.place-owner');
-  owner.textContent = `- ${place.owner.first_name} ${place.owner.last_name[0]}.`;
+  /* const owner = document.querySelector('.place-owner');
+  owner.textContent = `- ${place.owner.first_name} ${place.owner.last_name[0]}.`; */
 
   const price = document.querySelector('.place-price');
   price.textContent = place.price + ' $';
