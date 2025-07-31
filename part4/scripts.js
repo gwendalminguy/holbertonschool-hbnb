@@ -396,8 +396,9 @@ async function fetchPlaces (token) {
   if (response.ok) {
     const data = await response.json();
     return data;
-  } else {
-    alert('Fetching places failed: ' + response.statusText);
+  } else if (response.status !== 404) {
+    const message = await response.json();
+    alert(`Failure: ${message.error} (${response.statusText})`);
   }
 }
 
@@ -478,39 +479,41 @@ function displayPlaces (places) {
   }
 
   /* Populating placesList */
-  for (let i = 0; i < places.length; i++) {
-    const li = document.createElement('li');
-    li.classList.add('col-3');
-    li.setAttribute('price', places[i].price);
-    li.setAttribute('capacity', places[i].capacity);
-    li.setAttribute('rooms', places[i].rooms);
-    li.setAttribute('surface', places[i].surface);
-    li.setAttribute('amenities', places[i].amenities.join(';'));
+  if (places) {
+    for (let i = 0; i < places.length; i++) {
+      const li = document.createElement('li');
+      li.classList.add('col-3');
+      li.setAttribute('price', places[i].price);
+      li.setAttribute('capacity', places[i].capacity);
+      li.setAttribute('rooms', places[i].rooms);
+      li.setAttribute('surface', places[i].surface);
+      li.setAttribute('amenities', places[i].amenities.join(';'));
 
-    const div = document.createElement('div');
-    div.classList.add('place-card');
-    li.appendChild(div);
+      const div = document.createElement('div');
+      div.classList.add('place-card');
+      li.appendChild(div);
 
-    const title = document.createElement('h4');
-    title.classList.add('place-title');
-    title.textContent = places[i].title;
-    div.appendChild(title);
+      const title = document.createElement('h4');
+      title.classList.add('place-title');
+      title.textContent = places[i].title;
+      div.appendChild(title);
 
-    const price = document.createElement('h5');
-    price.classList.add('place-price');
-    price.textContent = `${places[i].price} $ / night`;
-    div.appendChild(price);
+      const price = document.createElement('h5');
+      price.classList.add('place-price');
+      price.textContent = `${places[i].price} $ / night`;
+      div.appendChild(price);
 
-    const button = document.createElement('button');
-    button.classList.add('details-button');
-    button.textContent = 'Details';
-    button.addEventListener('click', (event) => {
-      window.location.href = `place.html?place=${places[i].id}`;
-      /* location.search = `${places[i].id}`; */
-    });
-    div.appendChild(button);
+      const button = document.createElement('button');
+      button.classList.add('details-button');
+      button.textContent = 'Details';
+      button.addEventListener('click', (event) => {
+        window.location.href = `place.html?place=${places[i].id}`;
+        /* location.search = `${places[i].id}`; */
+      });
+      div.appendChild(button);
 
-    placesList.appendChild(li);
+      placesList.appendChild(li);
+    }
   }
 }
 
