@@ -1,6 +1,7 @@
 #!/bin/bash
 
 chmod u+x run.sh
+chmod u+x part3/scripts/populate.sh
 mkdir -p part3/instance
 touch part3/instance/development.db
 
