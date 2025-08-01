@@ -1,39 +1,27 @@
 # Part 1: Technical Documentation
 
-## Context and Objective
+This first part of the HBnB project focuses on defining the architecture of the application and creating its technical documentation. It aims at understanding and representing the different classes that will be managed in the project: Users, Places, Amenities and Reviews.
 
-Creating a comprehensive technical documentation that will help in understanding the architecture of HBnB Evolution.
+## Objectives
 
-## Problem Description
-
-Designing a simplified version of an AirBnB-like application, named HBnB Evolution, with the following primary operations:
-- User Management
-- Place Management
-- Review Management
-- Amenity Management
-
-## Business Rules and Requirements
-
-Creating the objects, uniquely indentified by an ID.
-The creation and update datetime should be registered for all entities.
-- User entity
-- Place entity
-- Review entity
-- Amenity entity
+* Creating a comprehensive technical documentation for the HBnB Evolution architecture
+* Understanding entities relationships and the importance of identifying them with a unique ID.
+* Defining attributes that will be implemented for each class.
 
 ## Architecture and Layers
 
-The application follows a layered architecture divided into:
-- Presentation Layer
-- Business Logic Layer
-- Persistence Layer
+To handle operations properly, the application will follow a layered architecture. It will be divided into:
+
+- A Presentation Layer, allowing users to interact with data from a web interface.
+- A Business Logic Layer, that will handle API endpoints to manage operations and permissions.
+- A Persistence Layer, consisting in a database to store information with persistence.
 
 ## Directory Structure
 
 | File | Description |
 | :---- | :---------- |
-| [`docs/`](https://github.com/gwendalminguy/holbertonschool-hbnb/tree/main/part1/docs/) | The directory containg the documentation. |
-| [`media/`](https://github.com/gwendalminguy/holbertonschool-hbnb/tree/main/part1/media/) | The directory containing scripts to initialize the database. |
+| [`docs/`](https://github.com/gwendalminguy/holbertonschool-hbnb/tree/main/part1/docs/) | Directory containg the documentation. |
+| [`media/`](https://github.com/gwendalminguy/holbertonschool-hbnb/tree/main/part1/media/) | Directory containing scripts to initialize the database. |
 
 ## Tasks
 

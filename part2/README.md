@@ -4,79 +4,55 @@ This second part of the HBnB Project focuses on the implementation the applicati
 
 ## Objectives
 
-1. Set up the project structure
-2. Implement the Business Logic Layer
-3. Build RESTful API Endpoints
-4. Test and validate the API
-
-## Project Vision and Scope
-
-Creating a functional and scalable foundation for the application:  
-- Presentation Layer: defining the services and API endpoint, using Flask and falsk-restx
-- Business Logic Layer: building the core models and logic that drive the applications's functionality
-
-User authentication and access control will be implemented in a future part of the project.
-
-## Learning Objectives
-
-1. Modular Design and Architecture: how to structure a Python application  
-2. API Development with Flask and flask-restx: focus on creating well-documented and scalable endpoints.
-3. Business Logic Implementation: how to translate documented designes into working code, implementing core business logic in a structured and maintainable manner.
-4. Data Serialization and Composition Handling: returning extended attributes and API responses.
-5. Testing and Debugging: develop skills in testing and validating APIs.
+* Implementing the Business Logic Layer
+* Building RESTful API Endpoints
+* Testing and validate-ing the API
 
 ## Directory Structure
 
 | File | Description |
-| :---- | :---------- |
-| [`app/`](https://github.com/gwendalminguy/holbertonschool-hbnb/tree/main/part2/app/) | The directory containg the HBnB application. |
-| [`scripts/`](https://github.com/gwendalminguy/holbertonschool-hbnb/tree/main/part2/scripts/) | The directory containing scripts to initialize the database. |
-| [`tests/`](https://github.com/gwendalminguy/holbertonschool-hbnb/tree/main/part2/tests/) | The directory containing scripts to test all API routes. |
-| [`config.py`](https://github.com/gwendalminguy/holbertonschool-hbnb/tree/main/part2/config.py) | The configuration file for the application. |
-| [`requirements.txt`](https://github.com/gwendalminguy/holbertonschool-hbnb/tree/main/part2/requirements.txt) | The text file listing requirements for installation. |
-| [`run.py`](https://github.com/gwendalminguy/holbertonschool-hbnb/tree/main/part2/run.py) | The python script to run the application. |
+| :---- | :--------- |
+| [`app/`](https://github.com/gwendalminguy/holbertonschool-hbnb/tree/main/part2/app/) | Directory containg the HBnB application. |
+| [`scripts/`](https://github.com/gwendalminguy/holbertonschool-hbnb/tree/main/part2/scripts/) | Directory containing scripts to initialize the database. |
+| [`tests/`](https://github.com/gwendalminguy/holbertonschool-hbnb/tree/main/part2/tests/) | Directory containing scripts to test all API routes. |
+| [`config.py`](https://github.com/gwendalminguy/holbertonschool-hbnb/tree/main/part2/config.py) | Configuration file for the application. |
+| [`requirements.txt`](https://github.com/gwendalminguy/holbertonschool-hbnb/tree/main/part2/requirements.txt) | Text file listing requirements for installation. |
+| [`run.py`](https://github.com/gwendalminguy/holbertonschool-hbnb/tree/main/part2/run.py) | Python script to run the application. |
 
 ## Tasks
 
 **0. Project Setup and Package Initialization**
-- Set up the structure for the Presentation, Business Logic, and Persistence layers.
-- Prepare the project to use the Facade pattern for communication between layers.
-- Implement the in-memory repository to handle object storage and validation.
-- Plan for future integration of the Persistence layer, even though it won’t be fully implemented in this part.
+- Setting up the structure for the Presentation, Business Logic, and Persistence layers.
+- Preparing the project to use the facade pattern for communication between layers.
+- Implementing the in-memory repository to handle object storage and validation.
 
 **1. Core Business Logic Classes**
-- Implement the classes based on your Part 1 design.
-- Ensure relationships between entities are correctly implemented.
-- Handle attribute validation and updates according to the requirements.
+- Implementing the classes based on the project design.
+- Ensuring relationships between entities are correctly implemented.
+- Handling attribute validation and updates according to the requirements.
 
 **2. User Endpoints**
-- Set up the POST, GET, and PUT endpoints for managing users.
-- Implement the logic for handling user-related operations in the Business Logic layer.
-- Integrate the Presentation layer (API) and Business Logic layer, utilizing the repository pattern.
+- Setting up the POST, GET, and PUT endpoints to manage users.
+- Implementing the logic to handle user-related operations in the Business Logic layer.
 
 **3. Amenity Endpoints**
-- Set up the POST, GET, and PUT endpoints for managing amenities.
-- Implement the necessary logic for handling amenity-related operations in the Business Logic layer.
-- Integrate the Presentation layer (API) and Business Logic layer through the Facade.
+- Setting up the POST, GET, and PUT endpoints to manage amenities.
+- Implementing the necessary logic to handle amenity-related operations in the Business Logic layer.
 
 **4. Place Endpoints**
-- Set up the POST, GET, and PUT endpoints for managing places.
-- Implement the logic for handling place-related operations in the Business Logic layer.
-- Integrate the Presentation layer (API) and Business Logic layer through the Facade.
-- Implement validation for specific attributes like price, latitude, and longitude.
-- Ensure that related data such as owner details and amenities are properly handled and returned with the Place data.
+- Setting up the POST, GET, and PUT endpoints to manage places.
+- Implementing the logic to handle place-related operations in the Business Logic layer.
+- Implementing validation for specific attributes like price, latitude, and longitude.
 
 **5. Review Endpoints**
-- Set up the POST, GET, PUT, and DELETE endpoints for managing reviews.
-- Implement the logic for handling review-related operations in the Business Logic layer.
-- Integrate the Presentation layer (API) and Business Logic layer through the Facade.
-- Implement validation for specific attributes like the text of the review and ensure that the review is associated with both a user and a place.
-- Update the Place model in api/v1/places.py to include the collection of reviews for a place.
+- Setting up the POST, GET, PUT, and DELETE endpoints to manage reviews.
+- Implementing the logic to handle review-related operations in the Business Logic layer.
+- Implementing validation for specific attributes like the text of the review, and ensuring that the review is associated with both user and place.
 
 **6. Testing and Validation**
-- Implement basic validation checks for each of the attributes in your endpoints.
-- Perform black-box testing using cURL and the Swagger documentation generated by Flask-RESTx.
-- Create a detailed testing report, highlighting both successful and failed cases.
+- Implementing basic validation checks for each of attributes in all endpoints.
+- Performing black-box testing using cURL and the Swagger documentation generated by Flask-RESTx.
+- Creating a detailed testing report, highlighting both successful and failed cases.
 
 ## Resources
 
