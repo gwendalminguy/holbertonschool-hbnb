@@ -125,6 +125,10 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (reviewForm) {
     const placeId = getParameterFromURL('place');
     const reviewId = getParameterFromURL('review');
+    
+    if (!token) {
+      window.location.href = 'index.html';
+    }
 
     let rating = 0;
 
@@ -205,6 +209,11 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (placeForm) {
     const placeId = getParameterFromURL('place');
 
+    /* Redirecting user if not logged in */
+    if (!token) {
+      window.location.href = 'index.html';
+    }
+
     /* Retrieving all amenities */
     const amenities = [];
     const amenityItems = await fetchAmenities().then(
@@ -219,9 +228,15 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     /* Pre-filling place form on edition */
     if (placeId) {
+      const user = decodeJWT(token);
       const place = await fetchPlaceDetails(token, placeId).then(
         data => { return data; }
       );
+
+      /* Redirection user if not the owner */
+      if (user.id !== place.owner.id) {
+        window.location.href = 'index.html';
+      }
 
       const list = document.querySelectorAll('.amenities-filter input');
 
