@@ -16,8 +16,8 @@ document.addEventListener('DOMContentLoaded', async () => {
   const logoutButton = document.getElementById('logout-link');
   const newPlaceButton = document.getElementById('new-place');
   const searchButton = document.getElementById('search-button');
-  let searchTerm = document.getElementById('search-field').value;
-
+  const searchField = document.getElementById('search-field');
+  let searchTerm = document.getElementById('search-field');
 
   const token = await checkAuthentication().then(
     data => { return data; }
@@ -33,8 +33,15 @@ document.addEventListener('DOMContentLoaded', async () => {
     searchButton.addEventListener('click', (event) => {
       const places = document.querySelectorAll('#places li');
       searchTerm = document.getElementById('search-field').value;
-      // console.log(searchTerm);
       searchPlace(places, searchTerm);
+    });
+    searchField.addEventListener('keypress', (event) => {
+      if (event.key === 'Enter') {
+        const places = document.querySelectorAll('#places li');
+        searchTerm = document.getElementById('search-field').value;
+        // console.log(searchTerm);
+        searchPlace(places, searchTerm);
+      }
     });
   }
 
@@ -73,23 +80,28 @@ document.addEventListener('DOMContentLoaded', async () => {
     /* Filtering places to display */
     filterButton.addEventListener('click', (event) => {
       let places = document.querySelectorAll('#places li');
+      searchTerm = document.getElementById('search-field').value;
       /* Filtering only current results in case of a search term */
       if (searchTerm) {
         searchPlace(places, searchTerm);
         places = document.querySelectorAll('#places li:not([style*="display: none;"])');
+      } else {
+        places = document.querySelectorAll('#places li');
       }
       filterPlaces(places, price, capacity, rooms, surface, amenities);
     });
 
     /* Reseting filters and places to display */
     resetButton.addEventListener('click', (event) => {
-      const places = document.querySelectorAll('#places li');
+      let places = document.querySelectorAll('#places li');
       price = 0;
       capacity = 1;
       rooms = 1;
       surface = 10;
       amenities = [];
+      searchField.value = '';
       resetFilters();
+      setAmenities(amenities, 'name');
       filterPlaces(places, price, capacity, rooms, surface, amenities);
     });
 
