@@ -81,7 +81,6 @@ h6 {
 }
 
 #logo {
-    align-items: center;
     transition: transform 0.5s ease-in-out;
 }
 
@@ -110,6 +109,46 @@ header {
     z-index: 1;
 }
 
+header .logo {
+    display: flex;
+    align-items: left;
+    justify-content: left;
+    width: 25%;
+}
+
+header .search-bar {
+    display: flex;
+    align-items: center;
+}
+
+header #search-field {
+    background-color: var(--color-light-grey);
+    height: 45px;
+    border-radius: 45px;
+    text-align: left;
+    padding-left: 25px;
+    width: 250px;
+}
+
+header #search-button {
+    background-color: var(--color-light-grey);
+    border-style: none;
+    margin-left: -45px;
+    width: 35px;
+    height: 35px;
+}
+
+header #search-button svg {
+    margin-left: -8px;
+}
+
+header .login-logout {
+    display: flex;
+    align-items: right;
+    justify-content: right;
+    width: 25%;
+}
+
 header button {
     padding: 1rem 2rem;
     background-color: var(--color-primary);
@@ -121,7 +160,6 @@ header button {
     font-size: medium;
     border-width: 3px;
     border-radius: 999px;
-    right: 10rem;
     cursor: pointer;
 }
 
