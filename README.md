@@ -10,18 +10,50 @@ Welcome to the HBnB Evolution project!
 
 In this project, our goal was recreate a custom version of the famous AirBnB website. We worked as a team to develop a simplified version the applicaiton, by creating different layers to set a functional API handling Users, Places, Reviews and Amenities operations.
 
+## 🛠 Features
+
+HBnB Evolution supports the following features:
+
+### Users Management
+
+* Account Creation
+* Secure Login & Logout
+
+### Places Management
+
+* Places Display
+* Place Creation
+* Place Edition
+
+### Reviews Management
+
+* Reviews Display
+* Review Creation
+* Review Edition
+* Review Deletion
+
+### Special Features
+
+* Keyword Search Bar
+* Result Filters:
+	* Price
+	* Capacity
+	* Rooms
+	* Surface
+	* Amenities
+
 ## 📂 Project Structure
 
 The project contains several files and directories, which are the following:
 
 | File | Description |
 | :---- | :---------- |
-| [`part1/`](https://github.com/gwendalminguy/holbertonschool-hbnb/tree/main/part1/) | Technical Documentation |
-| [`part2/`](https://github.com/gwendalminguy/holbertonschool-hbnb/tree/main/part2/) | Implementation of Business Logic and API Endpoints |
-| [`part3/`](https://github.com/gwendalminguy/holbertonschool-hbnb/tree/main/part3/) | Authentication and Database Integration |
-| [`part4/`](https://github.com/gwendalminguy/holbertonschool-hbnb/tree/main/part4/) | Simple Web Client |
-| [`install.sh`](https://github.com/gwendalminguy/holbertonschool-hbnb/tree/main/install.sh) | The bash script handling the database creation. |
-| [`run.sh`](https://github.com/gwendalminguy/holbertonschool-hbnb/tree/main/run.sh) | The bash script launching the backend and frontend servers. |
+| [`part1/`](https://github.com/gwendalminguy/holbertonschool-hbnb/tree/main/part1/) | Directory for technical documentation. |
+| [`part2/`](https://github.com/gwendalminguy/holbertonschool-hbnb/tree/main/part2/) | Directory for the  implementation of business logic and API endpoints. |
+| [`part3/`](https://github.com/gwendalminguy/holbertonschool-hbnb/tree/main/part3/) | Directory for the  authentication and database integration. |
+| [`part4/`](https://github.com/gwendalminguy/holbertonschool-hbnb/tree/main/part4/) | Directory of the simple web client.  |
+| [`install.sh`](https://github.com/gwendalminguy/holbertonschool-hbnb/tree/main/install.sh) | Bash script handling the database creation. |
+| [`run.sh`](https://github.com/gwendalminguy/holbertonschool-hbnb/tree/main/run.sh) | Bash script launching the backend and frontend servers. |
 
 ## ⚙️ Installation
 
