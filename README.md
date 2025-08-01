@@ -14,12 +14,12 @@ In this project, our goal was recreate a custom version of the famous AirBnB web
 
 The project contains several files and directories, which are the following:
 
-| Directory | Description |
+| File | Description |
 | :---- | :---------- |
-| [`Part 1`](https://github.com/gwendalminguy/holbertonschool-hbnb/tree/main/part1) | Technical Documentation |
-| [`Part 2`](https://github.com/gwendalminguy/holbertonschool-hbnb/tree/main/part2) | Implementation of Business Logic and API Endpoints |
-| [`Part 3`](https://github.com/gwendalminguy/holbertonschool-hbnb/tree/main/part3) | Authentication and Database Integration |
-| [`Part 4`](https://github.com/gwendalminguy/holbertonschool-hbnb/tree/main/part4) | Simple Web Client |
+| [`part1/`](https://github.com/gwendalminguy/holbertonschool-hbnb/tree/main/part1/) | Technical Documentation |
+| [`part2/`](https://github.com/gwendalminguy/holbertonschool-hbnb/tree/main/part2/) | Implementation of Business Logic and API Endpoints |
+| [`part3/`](https://github.com/gwendalminguy/holbertonschool-hbnb/tree/main/part3/) | Authentication and Database Integration |
+| [`part4/`](https://github.com/gwendalminguy/holbertonschool-hbnb/tree/main/part4/) | Simple Web Client |
 | [`install.sh`](https://github.com/gwendalminguy/holbertonschool-hbnb/tree/main/install.sh) | The bash script handling the database creation. |
 | [`run.sh`](https://github.com/gwendalminguy/holbertonschool-hbnb/tree/main/run.sh) | The bash script launching the backend and frontend servers. |
 

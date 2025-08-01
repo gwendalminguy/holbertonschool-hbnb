@@ -1,34 +1,43 @@
-## **Part 3: Authentication and Database Integration**
+# Part 3: Authentication and Database Integration
 
 This third part of the HBnB Project focuses on the implementation of user authentication and authorization, and on the database integration. It consists in securing the backend and introducing persistent storage using Python's SQLAlchemy framework.
 
-### **Objectives**
+## Objectives
+
 1. Implement JWT-based user authentication
 2. Replace in-memory storage using ORM
 3. Refactor all CRUD operations to interact with a persistent database
 4. Design the database schema showing entity relationships
 5. Ensure that data validation and constraints are properly enforced in the models
 
-### **Project Context**
+## Project Context
+
 Securing the application and allowing it to scale effectively:
 - Introducing JWT-based authentication to secure the API
 - Transitioning from in-memory storage to persistent storage with a database
 
-### **Learning Objectives**
+## Learning Objectives
+
 1. Implement JWT authentication to secure your API and manage user sessions.
 2. Enforce role-based access control to restrict access based on user roles (regular users and administrators).
 3. Replace in-memory repositories with a SQLite-based persistence layer using SQLAlchemy for development and configure MySQL for production.
 4. Design and visualize a relational database schema using mermaid.js to handle relationships between users, places, reviews, and amenities.
 5. Ensure the backend is secure, scalable, and provides reliable data storage for production environments.
 
-### **Recommended Resources**
-1 - [JWT Authentication](https://flask-jwt-extended.readthedocs.io/en/stable/)
-2 - [SQLAlchemy ORM](https://docs.sqlalchemy.org/en/14/)
-3 - [SQLite](https://sqlite.org/docs.html)
-4 - [Flask Documentation](https://flask.palletsprojects.com/en/stable/)
-5 - [Mermaid.js for ER Diagrams](https://mermaid.js.org)
+## Directory Structure
 
-### **Tasks**  
+| File | Description |
+| :---- | :---------- |
+| [`app/`](https://github.com/gwendalminguy/holbertonschool-hbnb/tree/main/part3/app/) | The directory containg the HBnB application. |
+| [`scripts/`](https://github.com/gwendalminguy/holbertonschool-hbnb/tree/main/part3/scripts/) | The directory containing scripts to initialize the database. |
+| [`tests/`](https://github.com/gwendalminguy/holbertonschool-hbnb/tree/main/part3/tests/) | The directory containing scripts to test all API routes. |
+| [`config.py`](https://github.com/gwendalminguy/holbertonschool-hbnb/tree/main/part3/config.py) | The configuration file for the application. |
+| [`diagram.md`](https://github.com/gwendalminguy/holbertonschool-hbnb/tree/main/part3/diagram.md) | The diagram representing entity relationships. |
+| [`requirements.txt`](https://github.com/gwendalminguy/holbertonschool-hbnb/tree/main/part3/requirements.txt) | The text file listing requirements for installation. |
+| [`run.py`](https://github.com/gwendalminguy/holbertonschool-hbnb/tree/main/part3/run.py) | The python script to run the application. |
+
+## Tasks
+
 **0. Including the Configuration in Application Factory**
 - Update the Flask Application Factory to include the configuration object.
 
@@ -78,55 +87,10 @@ Securing the application and allowing it to scale effectively:
 - Generate diagrams that represent the User, Place, Review, Amenity, and Place_Amenity tables, along with their relationships.
 - Ensure consistency in the schema visualization, using Mermaid.js as the primary tool for diagram generation.
 
-### Directory Structure:
-```
-part3/
-├── app/
-│   ├── __init__.py
-│   ├── api/
-│   │   ├── __init__.py
-│   │   ├── v1/
-│   │       ├── __init__.py
-│   │       ├── amenities.py
-│   │       ├── auth.py
-│   │       ├── places.py
-│   │       ├── reviews.py
-│   │       ├── users.py
-│   ├── models/
-│   │   ├── __init__.py
-│   │   ├── amenity.py
-│   │   ├── model.py
-│   │   ├── place.py
-│   │   ├── review.py
-│   │   ├── user.py
-│   ├── persistence/
-│   │   ├── __init__.py
-│   │   ├── repository.py
-│   ├── services/
-│       ├── __init__.py
-│       ├── facade.py
-│       ├── repositories/
-│           ├── amenity_repository.py
-│           ├── place_repository.py
-│           ├── review_repository.py
-│           ├── user_repository.py
-├── scripts/
-│   ├── create_amenities.sh
-│   ├── create_places.sh
-│   ├── create_reviews.sh
-│   ├── create_token.sh
-│   ├── create_users.sh
-│   ├── get_amenities.sh
-│   ├── get_places.sh
-│   ├── get_reviews.sh
-│   ├── get_users.sh
-│   ├── update_amenities.sh
-│   ├── update_places.sh
-│   ├── update_reviews.sh
-│   ├── update_users.sh
-├── config.py
-├── diagram.md
-├── README.md
-├── requirements.txt
-├── run.py
-```
+## Resources
+
+* [JWT](https://flask-jwt-extended.readthedocs.io/en/stable/)
+* [SQLAlchemy](https://docs.sqlalchemy.org/en/14/)
+* [SQLite](https://sqlite.org/docs.html)
+* [Flask](https://flask.palletsprojects.com/en/stable/)
+* [Mermaid](https://mermaid.js.org)
