@@ -15,6 +15,9 @@ document.addEventListener('DOMContentLoaded', async () => {
   const loginButton = document.getElementById('login-link');
   const logoutButton = document.getElementById('logout-link');
   const newPlaceButton = document.getElementById('new-place');
+  const searchButton = document.getElementById('search-button');
+  let searchTerm = document.getElementById('search-field').value;
+
 
   const token = await checkAuthentication().then(
     data => { return data; }
@@ -25,6 +28,15 @@ document.addEventListener('DOMContentLoaded', async () => {
   const resetButton = document.getElementById('reset-button');
   const placeDetails = document.getElementById('place-details');
   const animation = document.getElementById('animation');
+
+  if (searchButton) {
+    searchButton.addEventListener('click', (event) => {
+      const places = document.querySelectorAll('#places li');
+      searchTerm = document.getElementById('search-field').value;
+      // console.log(searchTerm);
+      searchPlace(places, searchTerm);
+    });
+  }
 
   if (filter) {
     let price = 0;
@@ -60,7 +72,12 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     /* Filtering places to display */
     filterButton.addEventListener('click', (event) => {
-      const places = document.querySelectorAll('#places li');
+      let places = document.querySelectorAll('#places li');
+      /* Filtering only current results in case of a search term */
+      if (searchTerm) {
+        searchPlace(places, searchTerm);
+        places = document.querySelectorAll('#places li:not([style*="display: none;"])');
+      }
       filterPlaces(places, price, capacity, rooms, surface, amenities);
     });
 
@@ -299,6 +316,16 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 });
 
+function searchPlace (places, searchTerm) {
+  for (let i = 0; i < places.length; i++) {
+    if (places[i].getAttribute('title').toLowerCase().includes(searchTerm)) {
+      places[i].style.display = 'block';
+    } else {
+      places[i].style.display = 'none';
+    }
+  }
+}
+
 async function createAccount (first_name, last_name, email, password) {
   /* Creating new account */
   const response = await fetch(`${API_URL}users/`, {
@@ -490,6 +517,7 @@ function displayPlaces (places) {
     for (let i = 0; i < places.length; i++) {
       const li = document.createElement('li');
       li.classList.add('col-3');
+      li.setAttribute('title', places[i].title);
       li.setAttribute('price', places[i].price);
       li.setAttribute('capacity', places[i].capacity);
       li.setAttribute('rooms', places[i].rooms);
