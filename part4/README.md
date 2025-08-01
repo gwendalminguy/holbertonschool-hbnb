@@ -4,7 +4,10 @@ This fourth part of the HBnB Project focuses on the frontend development of the 
 
 ## Objectives
 
-...
+* Developping a user-friendly interface.
+* Implementing client-side functionalities to interact with the backend API.
+* Ensuring secure and efficient data handling using JavaScript.
+* Applying modern practices to create a dynamic and responsive web application.
 
 ## Directory Structure
 
