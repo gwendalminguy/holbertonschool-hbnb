@@ -267,6 +267,21 @@ document.addEventListener('DOMContentLoaded', async () => {
       surface.value = place.surface;
       latitude.value = place.latitude;
       longitude.value = place.longitude;
+
+      /* Adding delete button */
+      const section = document.querySelector('#place');
+      const a = document.createElement('a');
+      a.className = 'link';
+      a.setAttribute('type', 'button');
+      a.textContent = 'Delete';
+      section.appendChild(a);
+
+      a.addEventListener('click', (event) => {
+        const confirmation = confirm('Delete this place?');
+        if (confirmation) {
+          deletePlace(token, placeId);
+        }
+      });
     }
 
     /* Place submission */
@@ -943,12 +958,26 @@ async function editPlace (token, title, description, price, capacity, rooms, sur
   handleResponse(response, 'Place edited successfully!', place_id);
 }
 
+async function deletePlace (token, place_id) {
+  /* Deleting existing place */
+  const response = await fetch(`${API_URL}places/${place_id}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
+    }
+  });
+
+  handleResponse(response, 'Place deleted successfully!');
+}
+
 async function handleResponse (response, successMessage, place_id) {
   if (response.ok) {
-    console.log("Hello");
     alert(`${successMessage}`);
     if (place_id) {
       window.location.href = `place.html?place=${place_id}`;
+    } else {
+      window.location.href = 'index.html';
     }
   } else {
     const message = await response.json();
