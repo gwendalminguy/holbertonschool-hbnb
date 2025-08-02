@@ -9,11 +9,12 @@ class Review(BaseModel):
     title = db.Column(db.Text, nullable=False)
     text = db.Column(db.Text, nullable=False)
     rating = db.Column(db.Integer, nullable=False)
-    place_id = db.Column(db.String(36), db.ForeignKey('places.id'), nullable=False)
-    user_id = db.Column(db.String(36), db.ForeignKey('users.id'), nullable=False)
+    place_id = db.Column(db.String(36), db.ForeignKey('places.id', ondelete='CASCADE'), nullable=False)
+    user_id = db.Column(db.String(36), db.ForeignKey('users.id', ondelete='CASCADE'), nullable=False)
 
-    place = db.relationship("Place", back_populates="reviews")
-    user = db.relationship("User", back_populates="reviews")
+    # Relationships
+    place = db.relationship("Place", back_populates="reviews", passive_deletes=True, lazy=True)
+    user = db.relationship("User", back_populates="reviews", passive_deletes=True, lazy=True)
 
     def __repr__(self):
         return (f"<Review {self.id}")
@@ -31,21 +32,3 @@ class Review(BaseModel):
             return rating
         else:   
             raise ValueError("Rating must be an integer between 1 and 5")
-
-    """
-    def __init__(self, title, text, rating, place_id, place, user_id, user):
-        super().__init__()
-        self.title = title
-        if text is not None and len(text) > 0:
-            self.__text = text
-        else:
-            raise ValueError("Text can't be empty")
-        if 1 <= rating <= 5:
-            self.__rating = rating
-        else:
-            raise ValueError("Rating must be an integer between 1 and 5")
-        self.place_id = place_id
-        self.place = place
-        self.user_id = user_id
-        self.user = user
-    """

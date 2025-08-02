@@ -16,8 +16,9 @@ class User(BaseModel):
     password = db.Column(db.String(128), nullable=False)
     is_admin = db.Column(db.Boolean, default=False)
 
-    places = relationship('Place', back_populates='owner', lazy=True)
-    reviews = relationship('Review', back_populates='user', lazy=True)
+    # Relationships
+    places = db.relationship('Place', back_populates='owner', passive_deletes=True, lazy=True)
+    reviews = db.relationship('Review', back_populates='user', passive_deletes=True, lazy=True)
 
     def hash_password(self, password):
         self.password = bcrypt.generate_password_hash(password).decode('utf-8')
@@ -45,21 +46,3 @@ class User(BaseModel):
             return email
         else:
             raise ValueError
-
-    """
-    def __init__(self, first_name, last_name, email, password, is_admin=False):
-        super().__init__()
-        if len(first_name) <= 50:
-            self.__first_name = first_name
-        else:
-            raise ValueError
-        if len(last_name) <= 50:
-            self.__last_name = last_name
-        else:
-            raise ValueError
-        if re.match(regex, email):
-            self.__email = email
-        else:
-            raise ValueError
-        self.is_admin = is_admin
-    """

@@ -19,12 +19,3 @@ class Amenity(BaseModel):
             return name
         else:
             raise ValueError
-
-    """
-    def __init__(self, name):
-        super().__init__()
-        if len(name) <= 50:
-            self.__name = name
-        else:
-            raise ValueError
-    """
