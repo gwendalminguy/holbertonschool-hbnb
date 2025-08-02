@@ -21,7 +21,7 @@ To handle operations properly, the application will follow a layered architectur
 | File | Description |
 | :---- | :---------- |
 | [`docs/`](https://github.com/gwendalminguy/holbertonschool-hbnb/tree/main/part1/docs/) | Directory containg the documentation. |
-| [`media/`](https://github.com/gwendalminguy/holbertonschool-hbnb/tree/main/part1/media/) | Directory containing scripts to initialize the database. |
+| [`medias/`](https://github.com/gwendalminguy/holbertonschool-hbnb/tree/main/part1/media/) | Directory containing media files. |
 
 ## Tasks
 
