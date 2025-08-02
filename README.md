@@ -1,5 +1,5 @@
 <p align=center>
-    <img src="part1/media/logo.png" width="250">
+    <img src="part1/medias/logo.png" width="250">
 </p>
 
 <h1 align="center">
@@ -8,7 +8,7 @@
 
 Welcome to the HBnB Evolution project!
 
-In this project, our goal was recreate a custom version of the famous AirBnB website. We worked as a team to develop a simplified version the applicaiton, by creating different layers to set a functional API handling Users, Places, Reviews and Amenities operations.
+In this project, our goal was recreate a custom version of the famous AirBnB website. We worked as a team to develop a simplified version the application, by creating different layers to set a functional API handling Users, Places, Reviews and Amenities operations. We also developped a modern and responsive web interface, connecting the backend part to provide a user-friendly way to use the application.
 
 ## 🛠 Features
 
@@ -21,14 +21,15 @@ HBnB Evolution supports the following features:
 
 ### Places Management
 
-* Places Display
 * Place Creation
+* Place Display
 * Place Edition
+* Place Deletion
 
 ### Reviews Management
 
-* Reviews Display
 * Review Creation
+* Review Display
 * Review Edition
 * Review Deletion
 
@@ -85,7 +86,7 @@ In order to work, HBnB needs all the libraries from the `requirements.txt` file.
 $ pip install -r part3/requirements.txt
 ```
 
-**4. Creating the database**
+**4. Creating and initializing the database**
 
 To use HBnB, *SQLite* is needed, and a database must be created and initialized. This can be achieved by launching the `install.sh` bash script, and must be done at the root of the HBnB directory, using these commands:
 
@@ -110,9 +111,9 @@ $ sqlite3 part3/instance/development.db < part3/scripts/data_insertion.sql
 ```
 </details>
 
-**5. Populating users, places and reviews tables (optional)**
+**5. Populating the database with sample data (optional)**
 
-If desired, the database tables can be populated with sample data. In order to do so, *JSON Query* must be installed, then the `populate.sh` bash script can be launched at the root of the HBnB directory:
+If desired, the users, places and reviews tables in the database can be populated with sample data. In order to do so, *JSON Query* must be installed, then the `populate.sh` bash script can be launched at the root of the HBnB directory:
 
 ```
 $ ./part3/scripts/populate.sh
