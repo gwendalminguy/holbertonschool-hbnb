@@ -189,11 +189,26 @@ class PlaceResource(Resource):
         if not updated_place:
             return {'error': 'Invalid input data'}, 400
 
-        # amenities = []
-        # for amenity in place_data["amenities"]:
-            # amenities.append(facade.get_amenity(amenity["id"]))
-
         return {'message': 'Place updated successfully'}, 200
+
+    @api.response(200, 'Place deleted successfully')
+    @api.response(404, 'Place not found')
+    @jwt_required()
+    def delete(self, place_id):
+        """
+        Delete a place
+        """
+        current_user = get_jwt_identity()
+
+        place = facade.get_place(place_id)
+        if not place:
+            return {'error': 'Place not found'}, 404
+
+        if place.owner_id != current_user["id"] and not current_user["is_admin"]:
+            return {'error': 'Unauthorized action'}, 403
+
+        facade.delete_place(place_id)
+        return {'message': 'Place deleted successfully'}, 204
 
 
 @api.route('/<place_id>/reviews')
