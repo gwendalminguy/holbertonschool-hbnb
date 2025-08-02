@@ -32,16 +32,10 @@ To handle operations properly, the application will follow a layered architectur
 
 ## Resources
 
-- UML Basics
-[UML Basics](https://github.com/Mornac/holbertonschool-hbnb/blob/main/media/png/OOP%20-%20Introduction%20to%20UML%20Public.pdf)
-- Package Diagrams
-[UML Package Diagram Overview](https://www.uml-diagrams.org/package-diagrams.html)  
-[UML Package Diagram Guide](https://www.visual-paradigm.com/guide/uml-unified-modeling-language/what-is-package-diagram/)
-- Class Diagrams
-[UML Class Diagram Tutorial](https://creately.com/blog/software-teams/class-diagram-tutorial/)
-[How to Draw UML Class Diagrams](https://www.visual-paradigm.com/guide/uml-unified-modeling-language/what-is-class-diagram/)
-- Sequence Diagrams
-[UML Sequence Diagram Tutorial](https://creately.com/guides/sequence-diagram-tutorial/)
-[Understanding Sequence Diagrams](https://www.uml-diagrams.org/sequence-diagrams.html)
-- General Diagram Tools
-[Mermaid](http://mermaid.js.org/)
+* [UML Basics](https://github.com/Mornac/holbertonschool-hbnb/blob/main/media/png/OOP%20-%20Introduction%20to%20UML%20Public.pdf)
+* [UML Package Diagram Overview](https://www.uml-diagrams.org/package-diagrams.html)  
+* [UML Package Diagram Guide](https://www.visual-paradigm.com/guide/uml-unified-modeling-language/what-is-package-diagram/)
+* [UML Class Diagram Tutorial](https://creately.com/blog/software-teams/class-diagram-tutorial/)
+* [UML Sequence Diagram Tutorial](https://creately.com/guides/sequence-diagram-tutorial/)
+* [Understanding Sequence Diagrams](https://www.uml-diagrams.org/sequence-diagrams.html)
+* [Mermaid](http://mermaid.js.org/)
