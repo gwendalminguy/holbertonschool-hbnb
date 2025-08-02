@@ -56,17 +56,12 @@ This second part of the HBnB Project focuses on the implementation the applicati
 
 ## Resources
 
-1 - Flask and flask-restx Documentation:
-[Flask](https://flask.palletsprojects.com/en/stable/)
-[Flask-Restx](https://flask-restx.readthedocs.io/en/latest/)
-2 - RESTful API Design Best Practices:
-[Best Practices for RESTful API](https://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api)
-[RESTful API](https://restfulapi.net/)
-3 - Python Project Structure and Modular Design:
-[Python Project Structure](https://docs.python-guide.org/writing/structure/)
-[Python Modular Programming](https://realpython.com/python-modules-packages/)
-4 - Facade Design Pattern:
-[Python Facade Pattern](https://refactoring.guru/design-patterns/facade/python/example)
+* [Flask](https://flask.palletsprojects.com/en/stable/)
+* [Flask-Restx](https://flask-restx.readthedocs.io/en/latest/)
+* [RESTful API](https://restfulapi.net/)
+* [Python Project Structure](https://docs.python-guide.org/writing/structure/)
+* [Python Modular Programming](https://realpython.com/python-modules-packages/)
+* [Python Facade Pattern](https://refactoring.guru/design-patterns/facade/python/example)
 
 ## Tests
 
