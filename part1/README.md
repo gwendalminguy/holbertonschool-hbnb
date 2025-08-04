@@ -8,7 +8,7 @@ This first part of the HBnB project focuses on defining the architecture of the 
 * Understanding entities relationships and the importance of identifying them with a unique ID.
 * Defining attributes that will be implemented for each class.
 
-## Architecture and Layers
+## Architecture & Layers
 
 To handle operations properly, the application will follow a layered architecture. It will be divided into:
 
@@ -25,10 +25,17 @@ To handle operations properly, the application will follow a layered architectur
 
 ## Tasks
 
-0. High-Level Package Diagram
-1. Detailed Class Diagram for Business Logic Layer
-2. Sequence Diagrams for API Calls
-3. Documentation Compilation
+**0. High-Level Package Diagram**
+- Creating a high-level package diagram that illustrates the three-layer architecture of the application and the communication between these layers via the facade pattern.
+
+**1. Class Diagram for Business Logic Layer**
+- Designing a detailed class diagram for the Business Logic layer, focusing on the User, Place, Review, and Amenity entities, including their attributes, methods, and relationships.
+
+**2. Sequence Diagrams for API Calls**
+- Developping sequence diagrams for four different API calls to show the interaction between the layers and the flow of information.
+
+**3. Documentation Compilation**
+- Compiling all diagrams and explanatory notes into a comprehensive technical document.
 
 ## Resources
 
