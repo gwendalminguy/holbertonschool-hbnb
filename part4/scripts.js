@@ -39,7 +39,6 @@ document.addEventListener('DOMContentLoaded', async () => {
       if (event.key === 'Enter') {
         const places = document.querySelectorAll('#places li');
         searchTerm = document.getElementById('search-field').value;
-        // console.log(searchTerm);
         searchPlace(places, searchTerm);
       }
     });
@@ -522,11 +521,9 @@ function setAmenities (amenities, parameter) {
       list[i].addEventListener('change', (event) => {
         if (list[i].checked) {
           amenities.push(list[i].defaultValue);
-          /* console.log(amenities); */
         } else {
           const index = amenities.indexOf(list[i].defaultValue);
           amenities.splice(index, 1);
-          /* console.log(amenities); */
         }
       });
     }
@@ -535,11 +532,9 @@ function setAmenities (amenities, parameter) {
       list[i].addEventListener('change', (event) => {
         if (list[i].checked) {
           amenities.push(list[i].id);
-          /* console.log(amenities); */
         } else {
           const index = amenities.indexOf(list[i].id);
           amenities.splice(index, 1);
-          /* console.log(amenities); */
         }
       });
     }
@@ -585,7 +580,6 @@ function displayPlaces (places) {
       button.textContent = 'Details';
       button.addEventListener('click', (event) => {
         window.location.href = `place.html?place=${places[i].id}`;
-        /* location.search = `${places[i].id}`; */
       });
       div.appendChild(button);
 
@@ -838,14 +832,11 @@ function displayReviews (token, place) {
     /* Allowing edition if current user matches author */
     if (token) {
       const userId = decodeJWT(token).id;
-      /* console.log(userId); */
       if (userId === place.reviews[i].user.id) {
-        /* console.log('Fuck yeah it worked!'); */
         const edit = document.createElement('button');
         edit.classList.add('edit-button');
         edit.textContent = 'Edit';
         edit.addEventListener('click', (event) => {
-          /* console.log(place.reviews[i].id); */
           window.location.href = `add_review.html?place=${place.id}&review=${place.reviews[i].id}`;
         });
         bottom.appendChild(edit);
@@ -952,8 +943,6 @@ async function editPlace (token, title, description, price, capacity, rooms, sur
     },
     body: JSON.stringify({ title, description, price, capacity, rooms, surface, latitude, longitude, owner_id, amenities })
   });
-
-  /* const data = await response.json(); */
 
   handleResponse(response, 'Place edited successfully!', place_id);
 }
